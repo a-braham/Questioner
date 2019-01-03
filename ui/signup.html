@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Questioner - Learn, share and develop as a community</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles/home.css" />
+    <link rel="icon" type="image/png" href="img/logo.png" />
+    <style>
+        input[type=search] {
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            width: 20%;
+            background: #f1f1f1;
+        }
+        .bt {
+            width: 5%;
+            padding: 8px;
+            background: #2196F3;
+            color: white;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            border-left: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Questioner</a>
+        <a href="#" class="navbar-item">Home</a>
+        <a href="#" class="navbar-item">Meetups</a>
+        <a href="#" class="navbar-item">Tags</a>
+        <input type="search" placeholder="Search Question here" />
+        <button class="bt" type="submit">Search</button>
+        <a class="navbar-item url-link btn-signup" type="submit" href="signup.html">Signin</a>
+    </nav>
+
+    <div class="meetup-bar">
+        <ul>
+            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Active Meetups</a></h3>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
+        </ul>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="signup-bar">
+        <ul>
+            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Create account</a></h3>
+        </ul>
+        <form>
+                <label class="form-label">Enter username</label><br>
+                <input class="form-input" type="text" required><br><br>
+                <label class="form-label">Enter email</label><br>
+                <input class="form-input" type="text" required><br><br>
+                <label class="form-label">Enter password</label><br>
+                <input class="form-input" type="password" required><br><br>
+                <input class="btn-form btn-margins btn-primary" value="Sign up" type="submit"><br>
+                <p class="log-footer">By clicking "Sign up", you acknowledge that you have read our terms of service, privacy policy and cookie policy, and that your continued use of the website is subject to these policies</p>
+            </form>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2019 Questioner Andela</p>
+    </footer>
+</body>
+
+</html>
