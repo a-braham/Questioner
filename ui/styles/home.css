@@ -58,14 +58,15 @@
     margin-top: 18%;
 }
 .meetup-h3{
-    border-bottom: 0.5px solid #CFCFCF;
+    /* border-bottom: 0.5px solid #CFCFCF; */
     margin-right: 10%;
     margin-left: -10%;
     float: none;
     position: static;
 }
 .meetup-url{
-    color: #4C4C4C;
+    font-family:"Bodoni MT", Didot, "Didot LT STD", "Book Antiqua", Garamond, "Times New Roman", serif;
+    color: #1C680F;
 }
 .meetup-item{
     margin-bottom: 10px;
