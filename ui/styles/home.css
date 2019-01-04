@@ -91,6 +91,16 @@
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
 }
+.reset-bar{
+    list-style-type: none;
+    width: 30%;
+    position: fixed;
+    margin-top: 7%;
+    margin-left: 40%;
+    height: 70%;
+    border: 0.5px solid #BDE5F8;
+    border-radius: 5px;
+}
 .signup-bar h3{
     margin-left: 5%;
     position: fixed;
