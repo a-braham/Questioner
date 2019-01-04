@@ -25,6 +25,47 @@
     border-radius: 5px;
     color: #fff;
 }
+.content-bar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 38%;
+    position: fixed;
+    margin-top: 5%;
+    margin-left: 31%;
+    height: 100%;
+    overflow: auto;
+    border-left: 0.5px solid #CFCFCF;
+    border-right: 0.5px solid #CFCFCF;
+    color: #fff;
+}
+.profile-bar{
+    list-style-type: none;
+    background-color: #EDEDED;
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    position: fixed;
+    margin-top: 1%;
+    margin-left: 0.2%;
+    height: 22%;
+    border: 0.5px solid #CFCFCF;
+    border-radius: 5px;
+    color: #fff;
+}
+.profile-list{
+    list-style-type: none;
+    /* background-color: #EDEDED; */
+    margin: 0;
+    padding: 0;
+    width: 22%;
+    position: fixed;
+    margin-top: 1%;
+    margin-left: 12%;
+    height: 50%;
+    /* border: 0.5px solid #CFCFCF;
+    border-radius: 5px; */
+}
 .tags-bar{
     list-style-type: none;
     margin: 0;
@@ -64,12 +105,67 @@
     float: none;
     position: static;
 }
+.profile-img{
+    /* border-bottom: 0.5px solid #CFCFCF; */
+    margin-right: 10%;
+    margin-left: -22%;
+    margin-top: 5%;
+    width: 100%;
+    height: 10%;
+    float: none;
+    position: static;
+    background-color: #fff;
+    padding: 2%;
+    text-align: center;
+    border-radius: 5%;
+}
+.meetup-h5{
+    /* border-bottom: 0.5px solid #CFCFCF; */
+    margin-right: 10%;
+    margin-left: -30%;
+    margin-top: -0.5%;
+    /* margin-top: 90%; */
+    float: none;
+    position: static;
+    background-color: #fff;
+    padding: 2%;
+    text-align: center;
+    border-radius: 5%;
+}
+.profile-h2{
+    /* border-bottom: 0.5px solid #CFCFCF; */
+    margin-right: 10%;
+    margin-left: -15%;
+    margin-top: -0.5%;
+    /* margin-top: 90%; */
+    float: none;
+    position: static;
+    background-color: #fff;
+    padding: 2%;
+    text-align: left;
+    /* border-radius: 5%; */
+}
 .meetup-url{
     font-family:"Bodoni MT", Didot, "Didot LT STD", "Book Antiqua", Garamond, "Times New Roman", serif;
     color: #1C680F;
 }
 .meetup-item{
     margin-bottom: 10px;
+}
+.profile-item{
+    margin-bottom: 10px;
+    margin-right: 10%;
+    margin-left: -15%;
+    margin-top: -2%;
+    /* margin-top: 90%; */
+    float: none;
+    position: static;
+    background-color: #fff;
+    padding: 2%;
+    text-align: left;
+}
+.profile-item a{
+    color: #5e5e5e;
 }
 .logo{
     text-align: left;
