@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Questioner - Learn, share and develop as a community</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../styles/home.css" />
+    <link rel="icon" type="image/png" href="../img/logo.png" />
+    <style>
+        input[type=search] {
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            width: 20%;
+            background: #f1f1f1;
+        }
+        .bt {
+            width: 5%;
+            padding: 8px;
+            background: #2196F3;
+            color: white;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            border-left: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Questioner</a>
+        <a href="#" class="navbar-item">Home</a>
+        <a href="#" class="navbar-item">Meetups</a>
+        <a href="#" class="navbar-item">Tags</a>
+        <input type="search" placeholder="Search Question here" />
+        <button class="bt" type="submit">Search</button>
+        <a class="navbar-item url-link btn-signup" type="submit" href="">A.Grean</a>
+    </nav>
+
+    <div class="meetup-bar">
+        <ul>
+            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Active Meetups</a></h3>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
+            <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
+        </ul>
+    </div>
+
+    <div class="content-bar">
+        <ul>
+            <div class="reset-bar" style="overflow: auto; height: 78%; margin-top: 0%; margin-left: 0%; background-color: #fff">
+                <ul>
+                    <h3 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="#" style="font-family: serif; font-size: 150%; margin-top: -5px;">Create
+                            Meetup</a></h3>
+                </ul>
+                <form style="margin-top: 5%">
+                    <label style="color:#585757" class="form-label">Topic</label><br>
+                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                        required><br>
+                    <label style="color:#585757" class="form-label">Location</label><br>
+                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                        required><br>
+                    <label style="color:#585757" class="form-label">Tags</label><br>
+                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                        required><br>
+                    <label style="color:#585757" class="form-label">Description</label><br>
+                    <textarea style="border: 0.5px solid #BDE5F8; margin-left: 5%; border-radius: 5px;" rows="10" cols="44" name="comment" form="usrform"></textarea>
+                    <input style="width: 20%; margin-left: 40%" class="btn-form btn-margins btn-primary" value="Create"
+                        type="submit"><br>
+                </form>
+            </div>
+        </ul>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="tags-bar">
+        <ul>
+            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Current Tags</a></h3>
+            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Django</a>
+                <a class="btn btn-tags url-link meetup-url" href="#">Python</a>
+                <a class="btn btn-tags url-link meetup-url" href="#">Flask</a>
+            </li>
+            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Javascript</a>
+                <a class="btn btn-tags url-link meetup-url" href="#">Node.js</a>
+                <a class="btn btn-tags url-link meetup-url" href="#">React Native</a>
+            </li>
+            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Html</a></li>
+            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Css</a>
+                <a class="btn btn-tags url-link meetup-url" href="#">Css5</a>
+            </li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2019 Questioner Andela</p>
+    </footer>
+</body>
+
+</html>
