@@ -2,6 +2,7 @@ body{
     overflow-y: auto;
 }
 .navbar{
+    z-index: 10000;
     position: fixed;
     height: 7%;
     font-size: 30px;
