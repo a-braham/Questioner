@@ -2,6 +2,7 @@ body{
     overflow-y: auto;
 }
 .navbar{
+    z-index: 10000;
     position: fixed;
     height: 7%;
     font-size: 30px;
@@ -19,10 +20,10 @@ body{
     margin: 0;
     padding: 0;
     width: 20%;
-    position: fixed;
-    margin-top: 5%;
-    margin-left: 10%;
-    height: 50%;
+    position: absolute;
+    top: 12%;
+    left: 10%;
+    height: max-content;
     overflow: auto;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
@@ -31,13 +32,13 @@ body{
 .content-bar{
     list-style-type: none;
     margin: 0;
+    margin-bottom: 5%;
     padding: 0;
     width: 38%;
-    position: fixed;
-    margin-top: 5%;
-    margin-left: 31%;
-    height: 100%;
-    overflow: auto;
+    position: absolute;
+    top: 12%;
+    left: 31%;
+    height: max-content;
     border-left: 0.5px solid #CFCFCF;
     border-right: 0.5px solid #CFCFCF;
     color: #fff;
@@ -74,10 +75,10 @@ body{
     margin: 0;
     padding: 0;
     width: 20%;
-    position: fixed;
-    margin-top: 5%;
-    margin-left: 70%;
-    height: 30%;
+    position: absolute;
+    top: 12%;
+    left: 70%;
+    height: max-content;
     overflow: auto;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
@@ -96,11 +97,10 @@ body{
 }
 .reset-bar{
     list-style-type: none;
-    width: 30%;
-    position: fixed;
+    width: 90%;
     margin-top: 7%;
     margin-left: 40%;
-    height: 70%;
+    height: 75%;
     border: 0.5px solid #BDE5F8;
     border-radius: 5px;
 }
@@ -362,6 +362,13 @@ h4{
     color: #fff;
     padding: 8px;
     margin-left: 20%;
+}
+.btn-comment{
+    background-color: #428bca;
+    border: none;
+    -webkit-border-radius: 3px;
+    color: #fff;
+    padding: 6px;
 }
 .url-link{
     text-decoration: none;
