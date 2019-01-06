@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Questioner - Learn, share and develop as a community</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles/home.css" />
+    <link rel="icon" type="image/png" href="img/logo.png" />
+    <style>
+        input[type=search] {
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            width: 20%;
+            background: #f1f1f1;
+        }
+        .bt {
+            width: 5%;
+            padding: 8px;
+            background: #2196F3;
+            color: white;
+            font-size: 14px;
+            border: none;
+            -webkit-border-radius: 3px;
+            border-left: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar">
+            <a href="#" class="logo">Questioner</a>
+            <a href="#" class="navbar-item">Home</a>
+            <a href="#" class="navbar-item">Meetups</a>
+            <a href="#" class="navbar-item">Tags</a>
+            <input type="search" placeholder="Search Question here" />
+            <button class="bt" type="submit">Search</button>
+            <a class="navbar-item url-link btn-signup" type="submit" href="">A.Grean</a>
+        </nav>
+
+        <div class="meetup-bar">
+            <ul>
+                <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Active Meetups</a></h3>
+                <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
+                <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
+                <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
+                <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
+            </ul>
+        </div>
+
+        <div class="content-bar">
+            <ul>
+                <div class="reset-bar" style="background-color: #ABABAB; height: 4%; margin-top: 0%; padding: 0%; margin-left: 0%;">
+                    <ul>
+                        <p style="margin-left:0%; margin-top: 0.5%; font-size: 10px;" class="meetup-h3"><a class="url-link meetup-url"
+                                href="#" style="color: #fff; font-family: serif; font-size: 150%; margin-top: -5px;">Home/Meetup_id</a></h3>
+                    </ul>
+                </div>
+            </ul>
+            <ul>
+                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
+                    <div style="margin-top: 3%">
+                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="#" style="font-family: serif; font-size: 120%; margin-top: -5px;">Can
+                                a Tensorflow variable be trained using the Tensorflow keras functional API?</a></h5>
+                        <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #323232">That
+                            87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
+                            some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
+                            would be not as many developers as there are as well as giant IT companies.</a></p>
+                        <ul>
+                            <li class="meetup-item">
+                                <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Asked
+                                    2hrs ago<a href="#" class="url-link"> By Abraham</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <h5 style="margin-left:5%;" class="meetup-h3"><a class="url-link meetup-url" href="#" style="font-family: serif; font-size: 120%; margin-top: -5px;">1 Answer</a></h5>
+                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
+                    <div style="margin-top: 3%">
+                        <p style="margin-left:6%; margin-right:6%; font-family: serif; color: #323232">That
+                            87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
+                            some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
+                            would be no technology</a></p>
+                        <ul>
+                            <li class="meetup-item">
+                                <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Answered
+                                    2hrs ago<a href="#" class="url-link"> By Grean</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="line"></div>
+                <div class="reset-bar" style="height: 65%; margin-top: 3%; margin-left: 0%; background-color: #fff">
+                    <ul>
+                        <h3 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="#" style="font-family: serif; font-size: 150%; margin-top: -5px;">Your
+                                Comment</a></h3>
+                    </ul>
+                    <form style="margin-top: 3%">
+                        <textarea style="border: 0.5px solid #BDE5F8; margin-left: 5%; border-radius: 5px;" rows="10"
+                            cols="44" name="comment" form="usrform"></textarea><br><br>
+                        <input style="width: 20%; margin-left: 40%" class="btn-form btn-margins btn-primary" value="Comment"
+                            type="submit"><br>
+                    </form>
+                </div>
+
+            </div>
+                <div class="tags-bar">
+                    <ul>
+                        <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Current Tags</a></h3>
+                        <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Django</a>
+                            <a class="btn btn-tags url-link meetup-url" href="#">Python</a>
+                            <a class="btn btn-tags url-link meetup-url" href="#">Flask</a>
+                        </li>
+                        <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Javascript</a>
+                            <a class="btn btn-tags url-link meetup-url" href="#">Node.js</a>
+                            <a class="btn btn-tags url-link meetup-url" href="#">React Native</a>
+                        </li>
+                        <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Html</a></li>
+                        <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Css</a>
+                            <a class="btn btn-tags url-link meetup-url" href="#">Css5</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <footer class="footer">
+                    <p>&copy; 2019 Questioner Andela</p>
+                </footer>
+</body>
+
+</html>
