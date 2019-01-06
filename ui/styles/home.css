@@ -350,11 +350,6 @@ h4{
     background-color: #5cb85c;
     border-color: #4cae4c;
     }
-    .btn-danger {
-        color: #fff;
-        background-color: #d9534f;
-        border-color: #d43f3a;
-        }
 .btn-signup{
     background-color: #2196F3;
     border: none;
@@ -369,6 +364,9 @@ h4{
     -webkit-border-radius: 3px;
     color: #fff;
     padding: 6px;
+}
+.btn-danger {
+    background-color: #d9534f;
 }
 .url-link{
     text-decoration: none;
