@@ -23,7 +23,7 @@ body{
     position: absolute;
     top: 12%;
     left: 10%;
-    height: max-content%;
+    height: max-content;
     overflow: auto;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
