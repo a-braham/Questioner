@@ -7,6 +7,7 @@ install:
 
 script:
     - pytest
+    - coverage run --source=api.v1 -m pytest && coverage report
 
 after_success:
     - coveralls
