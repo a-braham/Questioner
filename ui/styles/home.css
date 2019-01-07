@@ -90,6 +90,7 @@ body{
     position: fixed;
     margin-top: 7%;
     background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/bg.jpg");
+    background-color: #212020;
     margin-left: 40%;
     height: 70%;
     border: 0.5px solid #CFCFCF;
