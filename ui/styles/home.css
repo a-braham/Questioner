@@ -48,11 +48,11 @@ body{
     background-color: #EDEDED;
     margin: 0;
     padding: 0;
-    width: 10%;
-    position: fixed;
-    margin-top: 1%;
-    margin-left: 0.2%;
-    height: 22%;
+    width: 25%;
+    position: absolute;
+    top: 1%;
+    left: 2%;
+    height: 20%;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
     color: #fff;
@@ -62,10 +62,10 @@ body{
     /* background-color: #EDEDED; */
     margin: 0;
     padding: 0;
-    width: 22%;
-    position: fixed;
-    margin-top: 1%;
-    margin-left: 12%;
+    width: 70%;
+    position: absolute;
+    top: 1%;
+    left: 33%;
     height: 50%;
     /* border: 0.5px solid #CFCFCF;
     border-radius: 5px; */
@@ -74,12 +74,12 @@ body{
     list-style-type: none;
     margin: 0;
     padding: 0;
+    margin-bottom: 5%;
     width: 20%;
     position: absolute;
     top: 12%;
     left: 70%;
     height: max-content;
-    overflow: auto;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
     color: #fff;
@@ -104,6 +104,15 @@ body{
     border: 0.5px solid #BDE5F8;
     border-radius: 5px;
 }
+.form-bar{
+    list-style-type: none;
+    width: 90%;
+    margin-top: 57%;
+    left: 5%;
+    height: 75%;
+    border: 0.5px solid #BDE5F8;
+    border-radius: 5px;
+}
 .signup-bar h3{
     margin-left: 5%;
     position: fixed;
@@ -123,14 +132,27 @@ body{
     margin-right: 10%;
     margin-left: -22%;
     margin-top: 5%;
-    width: 100%;
-    height: 10%;
+    width: fit-content;
+    height: fit-content;
     float: none;
-    position: static;
+    position: absolute;
     background-color: #fff;
     padding: 2%;
     text-align: center;
     border-radius: 5%;
+}
+.profile-name{
+    /* border-bottom: 0.5px solid #CFCFCF; */
+    margin-right: 10%;
+    top: 65%;
+    left: 20%;
+    /* margin-top: 90%; */
+    float: none;
+    position: absolute;
+    background-color: #fff;
+    padding: 2%;
+    text-align: center;
+    border-radius: 5%;  
 }
 .meetup-h5{
     /* border-bottom: 0.5px solid #CFCFCF; */
