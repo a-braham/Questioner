@@ -48,6 +48,12 @@ class TestMeetup(unittest.TestCase):
         self.assertEqual(restult1["status"], 400)
         self.assertEqual(restult1["message"], "Topic cannot be empty")
 
+    def test_view_meetup(self):
+        """ Tests view posted meetups """
+
+        response = self.client.get("/meetups", content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
     def tearDown(self):
         """ Method to destroy test client """
         app.testing = False
