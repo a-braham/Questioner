@@ -54,3 +54,10 @@ def create_meetup():
                       "location": location,
                       "happeningOn": happeningOn,
                       "tags": tags}]})), 201
+
+@meetup_bp.route('', methods=['GET'])
+def view_meetups():
+    return make_response(jsonify({
+        "status": 200,
+        "data": meetups.view_meetups()
+    })), 200

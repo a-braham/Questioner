@@ -28,3 +28,10 @@ class MeetUpModel(object):
 
         self.meetups.append(meetup)
         return meetup
+
+    def view_meetups(self):
+        if len(self.meetups) == 0:
+            return ({
+                "message": "There are no meetups"
+            })
+        return self.meetups
