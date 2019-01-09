@@ -63,3 +63,16 @@ def view_meetups():
         "status": 200,
         "data": meetups.view_meetups()
     })), 200
+
+@meetup_bp.route('/<int:id>', methods=['GET'])
+def view_one_meetup(id):
+    meetup = meetups.view_one_meetup(id)
+    if not meetup:
+        return make_response(jsonify({
+        "status": 404,
+        "message": "Meetup not found"
+    })), 404
+    return make_response(jsonify({
+        "status": 200,
+        "data": meetup
+    })), 200

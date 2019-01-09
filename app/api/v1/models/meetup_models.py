@@ -35,3 +35,7 @@ class MeetUpModel(object):
                 "message": "There are no meetups"
             })
         return self.meetups
+
+    def view_one_meetup(self, id):
+        """ A method to view one meetup """
+        return [meetup for meetup in MEETUPS if meetup["id"] == id]
