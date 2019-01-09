@@ -51,8 +51,19 @@ class TestMeetup(unittest.TestCase):
     def test_view_meetup(self):
         """ Tests view posted meetups """
 
+        self.client.post("/meetups", data=json.dumps(self.meetup), content_type="application/json")
         response = self.client.get("/meetups", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+        # self.assertEqual(result["data"], [
+        #     {
+        #         "topic": "Python",
+        #         "location": "Nairobi",
+        #         "happeningOn": "Thursday",
+        #         "tags": ["RESTful API", "JSON Data"],
+        #     }
+        # ])
 
     def tearDown(self):
         """ Method to destroy test client """

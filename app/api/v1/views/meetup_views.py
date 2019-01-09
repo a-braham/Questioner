@@ -57,6 +57,8 @@ def create_meetup():
 
 @meetup_bp.route('', methods=['GET'])
 def view_meetups():
+    """ A view to get all meetups posted """
+
     return make_response(jsonify({
         "status": 200,
         "data": meetups.view_meetups()
