@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/a-braham/Questioner.svg?branch=develop)](https://travis-ci.org/a-braham/Questioner) 
 [![Coverage Status](https://coveralls.io/repos/github/a-braham/Questioner/badge.svg?branch=devolop)](https://coveralls.io/github/a-braham/Questioner?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/kburudi/the-Questioner/badge.svg?branch=develop)](https://coveralls.io/github/kburudi/the-Questioner?branch=develop)
 
 # Questioner
 Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.
