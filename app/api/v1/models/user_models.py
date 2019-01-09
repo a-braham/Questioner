@@ -10,9 +10,10 @@ class UserModel(object):
     def __init__(self):
         self.users = USERS
     
-    def signup(self, firstname, lastname, othername, email, phoneNumber, username, registered, isAdmin, password):
+    def signup(self, firstname, lastname, othername, email, phoneNumber, username, isAdmin, password):
         """ Method to manipulate addition of new users """
 
+        registered = datetime.now()
         user = {
             "id": len(self.users) + 1,
             "firstname": firstname,
