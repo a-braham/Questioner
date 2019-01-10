@@ -28,7 +28,7 @@ class TestMeetup(unittest.TestCase):
     def test_create_meetup(self):
         """ Test creation of meetup """
         response = self.client.post(
-            "/meetups", data=json.dumps(self.meetup), content_type="application/json")
+            "/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
         restult = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(restult["status"], 201)
@@ -42,7 +42,7 @@ class TestMeetup(unittest.TestCase):
         ])
 
         response1 = self.client.post(
-            "/meetups", data=json.dumps(self.meetup1), content_type="application/json")
+            "/api/v1/meetups", data=json.dumps(self.meetup1), content_type="application/json")
         restult1 = json.loads(response1.data.decode('utf-8'))
         self.assertEqual(response1.status_code, 400)
         self.assertEqual(restult1["status"], 400)
@@ -51,8 +51,8 @@ class TestMeetup(unittest.TestCase):
     def test_view_meetup(self):
         """ Tests view posted meetups """
 
-        self.client.post("/meetups", data=json.dumps(self.meetup), content_type="application/json")
-        response = self.client.get("/meetups", content_type="application/json")
+        self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
+        response = self.client.get("/api/v1/meetups", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
@@ -67,8 +67,8 @@ class TestMeetup(unittest.TestCase):
     def test_view_one_meetup(self):
         """ Tests view posted meetups """
 
-        self.client.post("/meetups", data=json.dumps(self.meetup), content_type="application/json")
-        response = self.client.get("/meetups/1", content_type="application/json")
+        self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
+        response = self.client.get("/api/v1/meetups/1", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
