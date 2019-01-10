@@ -90,6 +90,10 @@ class TestUser(unittest.TestCase):
              "password": ""
         }
 
+        self.login = {
+             "username": "Kamaa",
+             "password": "ak?,T4.jj12kjn@"
+        }
 
     def test_user_signup(self):
         """ Test signup user """
@@ -157,6 +161,24 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response6.status_code, 400)
         self.assertEqual(result6["status"], 400)
         self.assertEqual(result6["message"], "Password is required")
+
+    def test_user_login(self):
+        """ Test login user """
+
+        register = self.client.post("/api/v1/signup", data=json.dumps(self.user), content_type="application/json")
+        register_data = json.loads(register.data.decode('utf-8'))
+        self.assertEqual(register.status_code, 201)
+        self.assertEqual(register_data["status"], 201)
+
+        response = self.client.post(
+            "/api/v1/login", data=json.dumps(self.login), content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+        self.assertEqual(result["data"], [{
+            "username": "Kamaa"
+        }])
 
     def tearDown(self):
         """ Method to destroy test client """
