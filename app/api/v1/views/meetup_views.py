@@ -4,7 +4,7 @@ from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import meetup_models
 from werkzeug.exceptions import BadRequest
 
-meetup_bp = Blueprint('meetups', __name__, url_prefix='/meetups')
+meetup_bp = Blueprint('meetups', __name__, url_prefix='/api/v1/meetups')
 meetups = meetup_models.MeetUpModel()
 
 
