@@ -99,3 +99,29 @@ def signup():
             "isAdmin": isAdmin,
         }]
     })), 201
+
+@user_bp.route('/login', methods=['POST'])
+def login():
+    """ A view to control users login """
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if len(username) == 0 or len(password) == 0:
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Email or password is missing"
+        })), 400
+    if len(username) == 0 and len(password) == 0:
+        response = {
+            "status": 404,
+            "message": "User does not exist."
+        }
+        return make_response(jsonify(response)), 404
+    else:
+        response = {
+            "status": 200,
+            "message": "Login successful!",
+            "username": username
+        }
+        return make_response(jsonify(response)), 200

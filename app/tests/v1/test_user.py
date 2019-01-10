@@ -94,6 +94,10 @@ class TestUser(unittest.TestCase):
              "username": "Kamaa",
              "password": "ak?,T4.jj12kjn@"
         }
+        self.login1 = {
+             "username": "Kamau",
+             "password": "ak?,T4.jj12kjn@"
+        }
 
     def test_user_signup(self):
         """ Test signup user """
@@ -176,9 +180,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-        self.assertEqual(result["data"], [{
-            "username": "Kamaa"
-        }])
+        self.assertEqual(result["username"], "Kamaa")
 
     def tearDown(self):
         """ Method to destroy test client """
