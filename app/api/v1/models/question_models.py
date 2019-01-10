@@ -14,6 +14,7 @@ class QuestionModel(object):
         """ A method to manipulate creation of questions """
 
         createdOn = datetime.now()
+        votes = 0
         # tags = []
         # images = []
         meetup = {
@@ -28,3 +29,8 @@ class QuestionModel(object):
 
         self.questions.append(meetup)
         return meetup
+
+    def oneQuestion(self, id):
+        """ method to manipulate one question data """
+        
+        return [question for question in self.questions if question["id"] == id]

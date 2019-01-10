@@ -21,9 +21,9 @@ class TestQuestion(unittest.TestCase):
         self.question = {
             "title": "title",
             "body": "body",
-            "meetup": "meetup",
-            "createdby": "createdby",
-            "votes": "votes"
+            "meetup": 1,
+            "createdby": 1,
+            "votes": 0
         }
 
     def test_create_question(self):
@@ -36,11 +36,29 @@ class TestQuestion(unittest.TestCase):
         self.assertEqual(result["status"], 201)
         self.assertEqual(result["data"], [{
             "body": "body",
-            "createdby": "createdby",
-            "meetup": "meetup",
-            "title": "title",
-            "votes": "votes"
+            "user": 1,
+            "meetup": 1,
+            "title": "title"
         }])
+
+    def test_upvote(self):
+        """ Testing upvoting endpoint """
+
+        self.client.post("/api/v1/questions", data=json.dumps(self.question), content_type="application/json")
+        response = self.client.patch("/api/v1/questions/1/upvote", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+
+    def test_downvote(self):
+        """ Testing downvoting endpoint """
+
+        self.client.post("/api/v1/questions", data=json.dumps(self.question), content_type="application/json")
+        response = self.client.patch("/api/v1/questions/1/downvote", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+        
 
     def tearDown(self):
         """ Method to destroy test client """
