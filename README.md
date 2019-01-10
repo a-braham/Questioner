@@ -13,7 +13,7 @@ Crowd-source questions for a meetup. Questioner helps the meetup organizer prior
 1. Clone this repository :
 
 	```
-    $ git clone https://github.com/ssiva13/Questioner.git
+    $ git clone https://github.com/a-braham/Questioner.git
     ```
 
 2. CD into the project folder on your machine
