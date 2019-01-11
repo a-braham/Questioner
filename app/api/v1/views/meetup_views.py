@@ -90,9 +90,9 @@ def rsvps(meetup_id):
     rsvp_data = data.get('rsvp')
     if rsvp_data not in rsvps_data:
         return make_response(jsonify({
-            "status": 404,
+            "status": 400,
             "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
-        })), 404
+        })), 400
     if meetup:
         meetup = meetup[0]
         meetups.create_rsvps(rsvp_data, meetup_id)
