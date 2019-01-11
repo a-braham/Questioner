@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/a-braham/Questioner.svg?branch=develop)](https://travis-ci.org/a-braham/Questioner) 
 [![Coverage Status](https://coveralls.io/repos/github/a-braham/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/a-braham/Questioner?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/00c5f02c0f5071a6e5d7/maintainability)](https://codeclimate.com/github/a-braham/Questioner/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9cd9e5549a4e4d638cb7fb522d698a3c)](https://www.codacy.com/app/a-braham/Questioner?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=a-braham/Questioner&amp;utm_campaign=Badge_Grade)
 
 # Questioner
 Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.
