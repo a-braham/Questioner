@@ -25,6 +25,10 @@ class TestMeetup(unittest.TestCase):
         }
         self.meetup1 = {}
 
+        self.rsvp = {
+            "rsvp": "yes",
+        }
+
     def test_create_meetup(self):
         """ Test creation of meetup """
         response = self.client.post(
@@ -52,7 +56,7 @@ class TestMeetup(unittest.TestCase):
         """ Tests view posted meetups """
 
         self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
-        response = self.client.get("/api/v1/meetups", content_type="application/json")
+        response = self.client.get("/api/v1/meetups/upcoming", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
@@ -72,6 +76,22 @@ class TestMeetup(unittest.TestCase):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
+
+    def test_create_rsvp(self):
+        """ Tests view posted meetups """
+
+        self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
+        response = self.client.post("/api/v1/meetups/1/rsvps", data=json.dumps(self.rsvp), content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["status"], 201)
+        self.assertEqual(result["data"], [
+            {
+                "meetup": 1,
+                "topic": "Python",
+                "status": "yes",
+            }
+        ])
 
 
     def tearDown(self):
