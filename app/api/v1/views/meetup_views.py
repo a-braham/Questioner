@@ -55,7 +55,8 @@ def create_meetup():
                       "happeningOn": happeningOn,
                       "tags": tags}]})), 201
 
-@meetup_bp.route('', methods=['GET'])
+
+@meetup_bp.route('/upcoming', methods=['GET'])
 def view_meetups():
     """ A view to get all meetups posted """
 
@@ -64,15 +65,45 @@ def view_meetups():
         "data": meetups.view_meetups()
     })), 200
 
+
 @meetup_bp.route('/<int:id>', methods=['GET'])
 def view_one_meetup(id):
     meetup = meetups.view_one_meetup(id)
     if not meetup:
         return make_response(jsonify({
-        "status": 404,
-        "message": "Meetup not found"
-    })), 404
+            "status": 404,
+            "message": "Meetup not found"
+        })), 404
     return make_response(jsonify({
         "status": 200,
         "data": meetup
     })), 200
+
+
+@meetup_bp.route('/<int:meetup_id>/rsvps', methods=['POST'])
+def rsvps(meetup_id):
+    """ A method for sending rsvps """
+    rsvps_data = ["yes", "no", "maybe"]
+    meetup = meetups.view_one_meetup(meetup_id)
+
+    data = request.get_json()
+    rsvp_data = data.get('rsvp')
+    if rsvp_data not in rsvps_data:
+        return make_response(jsonify({
+            "status": 404,
+            "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
+        })), 404
+    if meetup:
+        meetup = meetup[0]
+        meetups.create_rsvps(rsvp_data, meetup_id)
+        return make_response(jsonify({
+            "status": 201,
+            "data": [{
+                "meetip": meetup["id"],
+                "topic": meetup["topic"],
+                "status": rsvp_data
+            }]})), 201
+    return make_response(jsonify({
+            "status": 404,
+            "message": "Meetup not found"
+        })), 404

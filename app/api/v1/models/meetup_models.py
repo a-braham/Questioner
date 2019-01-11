@@ -3,12 +3,14 @@
 from datetime import datetime, timedelta
 
 MEETUPS = []
+RSVPS = []
 
 class MeetUpModel(object):
     """ A class to map meetup data and relations """
 
     def __init__(self):
         self.meetups = MEETUPS
+        self.rsvps = RSVPS
 
     def create_meetup(self, topic, location, images, happeningOn, tags):
         """ A method to manipulate creation of meetups """
@@ -39,3 +41,13 @@ class MeetUpModel(object):
     def view_one_meetup(self, id):
         """ A method to view one meetup """
         return [meetup for meetup in MEETUPS if meetup["id"] == id]
+
+    def create_rsvps(self, rsvp, meetup_id):
+        """ A method to create rsvp record """
+        rsvp = {
+            "id": len(self.meetups) + 1,
+            "meetup_id": meetup_id,
+            "rsvp": rsvp
+        }
+        self.rsvps.append(rsvp)
+        return rsvp
