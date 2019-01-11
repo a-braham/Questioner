@@ -47,9 +47,13 @@ class UserModel(object):
         }
 
         self.users.append(user)
-        return user
+        return self.users
 
-    def login(self, username, password):
-        for user in self.users:
-            if (user["username"] == username and user["password"] == password):
-                return user
+    def login(self, username):
+        user = [user for user in self.users if user["username"] == username]
+        if user:
+            return user
+
+    def get_users(self):
+        """ Getting user records """
+        return self.users

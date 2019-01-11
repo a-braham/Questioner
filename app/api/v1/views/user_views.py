@@ -19,7 +19,7 @@ def signup():
             "status": 400,
             "message": "Wrong input"
         })), 400
-    
+
     firstname = data.get('firstname')
     lastname = data.get('lastname')
     othername = data.get('othername')
@@ -87,6 +87,15 @@ def signup():
     password = generate_password_hash(
         password, method='pbkdf2:sha256', salt_length=8)
 
+    # new_user = {}
+
+    # for key in data:
+    #     new_user[key] = data[key]
+
+    # new_user["isAdmin"] = False
+
+    user = users.signup(
+            firstname, lastname, othername, email, phoneNumber, username, isAdmin, password)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -100,6 +109,7 @@ def signup():
         }]
     })), 201
 
+
 @user_bp.route('/login', methods=['POST'])
 def login():
     """ A view to control users login """
@@ -112,16 +122,23 @@ def login():
             "status": 400,
             "message": "Email or password is missing"
         })), 400
-    if len(username) == 0 and len(password) == 0:
-        response = {
-            "status": 404,
-            "message": "User does not exist."
-        }
-        return make_response(jsonify(response)), 404
-    else:
-        response = {
+
+    if users.login(username):
+        return make_response(jsonify({
             "status": 200,
-            "message": "Login successful!",
             "username": username
-        }
-        return make_response(jsonify(response)), 200
+        })), 200
+
+    return make_response(jsonify({
+        "status": 404,
+        "message": "User or password is incorrect"
+    })), 404
+
+@user_bp.route('/get_users', methods=['GET'])
+def get_users():
+    """ A method to get all users posted """
+
+    return make_response(jsonify({
+        "status": 200,
+        "data": users.get_users()
+    }))
