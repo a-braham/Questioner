@@ -99,7 +99,7 @@ def rsvps(meetup_id):
         return make_response(jsonify({
             "status": 201,
             "data": [{
-                "meetip": meetup["id"],
+                "meetup": meetup["id"],
                 "topic": meetup["topic"],
                 "status": rsvp_data
             }]})), 201
