@@ -3,6 +3,7 @@ import os
 class Config(object):
     """ Main configurations class """
     DEBUG = False
+    SECRET_KEY = os.getenv('SECRET_KEY', 'my_secret')
 
 class Development(Config):
     """ Development configurations are put here """

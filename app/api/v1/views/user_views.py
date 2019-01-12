@@ -95,7 +95,7 @@ def signup():
     # new_user["isAdmin"] = False
 
     user = users.signup(
-            firstname, lastname, othername, email, phoneNumber, username, isAdmin, password)
+        firstname, lastname, othername, email, phoneNumber, username, isAdmin, password)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -113,26 +113,44 @@ def signup():
 @user_bp.route('/login', methods=['POST'])
 def login():
     """ A view to control users login """
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Wrong input"
+        })), 400
     username = data.get('username')
     password = data.get('password')
 
-    if len(username) == 0 or len(password) == 0:
+    if not username:
         return make_response(jsonify({
             "status": 400,
-            "message": "Email or password is missing"
+            "message": "Username is required"
         })), 400
-
-    if users.login(username):
+    if not password:
         return make_response(jsonify({
-            "status": 200,
-            "username": username
-        })), 200
-
+            "status": 400,
+            "message": "Password is required"
+        })), 400
+    user = users.login(username)
+    if user:
+        usr = user[0]
+        if check_password_hash(usr["password"], password):
+            auth_token = users.generate_auth_token(username)
+            return make_response(jsonify({
+                "status": 200,
+                "token": auth_token
+            })), 200
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Incorrect password"
+        })), 400
     return make_response(jsonify({
         "status": 404,
-        "message": "User or password is incorrect"
+        "message": "User does not exist"
     })), 404
+
 
 @user_bp.route('/get_users', methods=['GET'])
 def get_users():
@@ -142,3 +160,34 @@ def get_users():
         "status": 200,
         "data": users.get_users()
     }))
+
+
+@user_bp.route('/profile', methods=['GET'])
+def profile():
+    """ Method to get logged in user """
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    else:
+        auth_token = 'Bearer '
+    if auth_token:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            if not user:
+                return make_response(jsonify({
+                    "status": 400,
+                    "message": "Authentication failed"
+                })), 400
+            return make_response(jsonify({
+                "status": 200,
+                "data": user
+            })), 200
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Authentication token failed"
+        })), 400
+    return make_response(jsonify({
+        "status": 404,
+        "data": "Token not found"
+    })), 404
