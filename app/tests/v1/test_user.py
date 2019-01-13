@@ -183,22 +183,6 @@ class TestUser(unittest.TestCase):
         """ Test login user """
 
         response = self.client.post(
-            "/api/v1/signup", data=json.dumps(self.user), content_type="application/json")
-        result = json.loads(response.data.decode('utf-8'))
-
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(result["status"], 201)
-        self.assertEqual(result["data"], [{
-            "email": "eric@gmail.com",
-            "firstname": "Abraham",
-            "isAdmin": "True",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "phoneNumber": "123456789",
-            "username": "Kamaa"
-        }])
-
-        response = self.client.post(
             "/api/v1/login", data=json.dumps(self.login), content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
 

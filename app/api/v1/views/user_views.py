@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, jsonify, request, make_response
 from ..models import user_models
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..utils.validators import UserValidation
+from ..utils.validators import UserValidation, requires_auth
 
 user_bp = Blueprint("auth", __name__, url_prefix='/api/v1')
 users = user_models.UserModel()

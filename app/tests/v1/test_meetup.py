@@ -29,10 +29,44 @@ class TestMeetup(unittest.TestCase):
             "rsvp": "yes",
         }
 
+        self.u_register = {
+             "firstname": "Abraham",
+             "lastname": "Kirumba",
+             "othername": "Kamau",
+             "email": "eric@gmail.com",
+             "phoneNumber": "123456789",
+             "isAdmin": "True",
+             "username": "Kamaa",
+             "password": "ak?,T4.jj12kjn@"
+        }
+
+        self.user = {
+             "username": "Kamaa",
+             "password": "ak?,T4.jj12kjn@"
+        }
+
     def test_create_meetup(self):
         """ Test creation of meetup """
+        register = self.client.post(
+            "/api/v1/signup", data=json.dumps(self.u_register), content_type="application/json")
+        result = json.loads(register.data.decode('utf-8'))
+        self.assertEqual(register.status_code, 201)
+        self.assertEqual(result["status"], 201)
+        self.assertEqual(result["data"], [{
+            "email": "eric@gmail.com",
+            "firstname": "Abraham",
+            "isAdmin": "True",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "phoneNumber": "123456789",
+            "username": "Kamaa"
+        }])
+        user = self.client.post(
+            "/api/v1/login", data=json.dumps(self.user), content_type="application/json")
         response = self.client.post(
-            "/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
+            "/api/v1/meetups", 
+            headers={"Authorization": 'Bearer ' + json.loads(user.data.decode('utf-8'))['token']}, 
+            data=json.dumps(self.meetup), content_type="application/json")
         restult = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(restult["status"], 201)
@@ -46,7 +80,9 @@ class TestMeetup(unittest.TestCase):
         ])
 
         response1 = self.client.post(
-            "/api/v1/meetups", data=json.dumps(self.meetup1), content_type="application/json")
+            "/api/v1/meetups", 
+            headers={"Authorization": 'Bearer ' + json.loads(user.data.decode('utf-8'))['token']}, 
+            data=json.dumps(self.meetup1), content_type="application/json")
         restult1 = json.loads(response1.data.decode('utf-8'))
         self.assertEqual(response1.status_code, 400)
         self.assertEqual(restult1["status"], 400)
