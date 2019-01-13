@@ -10,12 +10,17 @@
     <link rel="icon" type="image/png" href="img/logo.png" />
     <style>
         input[type=search] {
-            padding: 8px;
             font-size: 14px;
-            border: none;
             -webkit-border-radius: 3px;
-            width: 20%;
-            background: #f1f1f1;
+            width: 25%;
+            background: #F8FCF9;
+            background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/search.png");
+            background-position: 10px 10px; 
+            background-repeat: no-repeat;
+            padding: 8px 20px 8px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            border: 1px solid #1C680F;
         }
         .bt {
             width: 5%;
@@ -27,6 +32,7 @@
             -webkit-border-radius: 3px;
             border-left: none;
             cursor: pointer;
+            min-width: fit-content;
         }
     </style>
 </head>
@@ -38,8 +44,8 @@
             <a href="home.html" class="navbar-item">Home</a>
             <a href="meetups.html" class="navbar-item">Meetups</a>
             <a href="tags.html" class="navbar-item">Tags</a>
-            <input type="search" placeholder="Search Question here" />
-            <button class="bt" type="submit">Search</button>
+            <input class="search" type="search" placeholder="Search Question here" />
+            <!-- <button class="bt" type="submit">Search</button> -->
             <a class="navbar-item url-link btn-signup" type="submit" href="signup.html">Signup</a>
         </nav>
 
@@ -55,7 +61,7 @@
 
         <div class="content-bar">
             <ul>
-                <a style="font-size:20px; color: #000000" class="url-link" type="submit" href="">All Questions</a>
+                <h2 style="font-size:20px; margin-top: 10%; color: #000000">All Questions</h2>
                 <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
                     <div style="margin-top: 3%">
                         <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="comment.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">Can
@@ -88,7 +94,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
+                <div class="reset-bar" style="margin-bottom: 10%; margin-top: 3%; margin-left: 0%; background-color: #fff">
                     <div style="margin-top: 3%">
                         <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="comment.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">Can
                                 a Tensorflow variable be trained using the Tensorflow keras functional API?</a></h5>
