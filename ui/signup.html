@@ -10,23 +10,29 @@
     <link rel="icon" type="image/png" href="img/logo.png" />
     <style>
         input[type=search] {
-            padding: 8px;
             font-size: 14px;
-            border: none;
             -webkit-border-radius: 3px;
-            width: 20%;
-            background: #f1f1f1;
+            width: 25%;
+            background: #F8FCF9;
+            background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/search.png");
+            background-position: 10px 10px; 
+            background-repeat: no-repeat;
+            padding: 8px 20px 8px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            border: 1px solid #1C680F;
         }
         .bt {
             width: 5%;
             padding: 8px;
-            background: #2196F3;
+            background: #1C680F;
             color: white;
             font-size: 14px;
             border: none;
             -webkit-border-radius: 3px;
             border-left: none;
             cursor: pointer;
+            min-width: fit-content;
         }
     </style>
 </head>
@@ -37,8 +43,8 @@
         <a href="home.html" class="navbar-item">Home</a>
         <a href="meetups.html" class="navbar-item">Meetups</a>
         <a href="tags.html" class="navbar-item">Tags</a>
-        <input type="search" placeholder="Search Question here" />
-        <button class="bt" type="submit">Search</button>
+        <input class="search" type="search" placeholder="Search Question here" />
+        <!-- <button class="bt" type="submit">Search</button> -->
         <a class="navbar-item url-link btn-signup" type="submit" href="login.html">Signin</a>
     </nav>
 
@@ -59,17 +65,16 @@
             <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">Create account</a></h3>
         </ul>
         <form>
-                <label class="form-label">Enter username</label><br>
-                <input class="form-input" type="text" required><br><br>
-                <label class="form-label">Enter email</label><br>
-                <input class="form-input" type="text" required><br><br>
-                <label class="form-label">Enter password</label><br>
-                <input class="form-input" type="password" required><br><br>
-                <input class="btn-form btn-margins btn-primary" value="Sign up" type="submit"><br>
-                <p class="log-footer">By clicking "Sign up", you acknowledge that you have read our terms of service, privacy policy and cookie policy, and that your continued use of the website is subject to these policies</p>
-            </form>
+            <input class="form-input" type="text" placeholder="Username" required><br><br>
+            <input class="form-input" type="text" placeholder="Email" required><br><br>
+            <input class="form-input" type="password" placeholder="Password" required><br><br>
+            <input class="btn-form btn-margins btn-primary" value="Sign up" type="submit"><br>
+            <p class="log-footer">By clicking "Sign up", you acknowledge that you have read our terms of service,
+                privacy policy and cookie policy, and that your continued use of the website is subject to these
+                policies</p>
+        </form>
     </div>
-    
+
     <footer class="footer">
         <p>&copy; 2019 Questioner Andela</p>
     </footer>

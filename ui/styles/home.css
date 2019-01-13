@@ -1,5 +1,6 @@
 body{
     overflow-y: auto;
+    background-color: #EEF9F1;
 }
 .navbar{
     z-index: 10000;
@@ -28,6 +29,7 @@ body{
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
     color: #fff;
+    background-color: #fff;
 }
 .content-bar{
     list-style-type: none;
@@ -75,6 +77,7 @@ body{
     margin: 0;
     padding: 0;
     margin-bottom: 5%;
+    background-color: #fff;
     width: 20%;
     position: absolute;
     top: 12%;
@@ -86,13 +89,12 @@ body{
 }
 .signup-bar{
     list-style-type: none;
+    background-color: #fff;
     width: 30%;
     position: fixed;
     margin-top: 7%;
-    background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/bg.jpg");
-    background-color: #212020;
-    margin-left: 40%;
-    height: 70%;
+    margin-left: 35%;
+    height: max-content;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
 }
@@ -100,6 +102,7 @@ body{
     list-style-type: none;
     width: 90%;
     margin-top: 7%;
+    margin-top: 5%;
     margin-left: 40%;
     height: 75%;
     border: 0.5px solid #BDE5F8;
@@ -233,19 +236,7 @@ body{
     font-family: sans-serif;
     font-size: small;
     font-weight: bold;
-    color: #fff;
-}
-.form-input{
-    display: inline-block;
-    padding: 5px 2px;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 5px;
-    margin-bottom: 4px;
-    border-radius: 5px;
-    width: 90%;
-    height: 20px;
-    border: none;
+    color: #1C680F;
 }
 .img{
     padding-top: 5px;
@@ -295,12 +286,10 @@ body{
     padding: 5px 2px;
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 5px;
-    margin-bottom: 4px;
-    border-radius: 5px;
-    width: 90%;
+    width: 88%;
     height: 20px;
     border: none;
+    border-bottom: 1px solid #1C680F;
 }
 .btn{
     display: inline-block;
@@ -359,8 +348,8 @@ h4{
 }
 .btn-primary{
     color: #fff;
-    background-color: #428bca;
-    border-color: #357ebd
+    background-color: #1C680F;
+    border-color: #1C680F;
 }
 .btn-tags{
     padding: 2px;
@@ -374,7 +363,7 @@ h4{
     border-color: #4cae4c;
     }
 .btn-signup{
-    background-color: #2196F3;
+    background-color: #1C680F;
     border: none;
     -webkit-border-radius: 3px;
     color: #fff;
@@ -481,4 +470,68 @@ hr {
     margin-left: auto;
     margin-right: auto;
     color: #5e5e5e;
+  }
+
+  @media screen and (max-width: 600px) {
+    .navbar{
+        z-index: 10000;
+        height: fit-content;
+        font-size: 15px;
+        left: 0;
+        top: 0;
+        margin-bottom: 10%;
+        width: 100%;
+        background-color: #fff ;
+        padding-left: 6%;
+        overflow: hidden;
+        border-bottom: 0.5px solid #CFCFCF;
+    }
+    .navbar a {
+        left: 0;
+        top: 0;
+        float: none;
+        width: 100%;
+    }
+    .meetup-bar{
+        display: none;
+    }
+    .content-bar{
+        margin: 0;
+        margin-bottom: 5%;
+        padding: 0;
+        width: 100%;
+        position: inherit;
+        height: max-content;
+        border-left: none;
+        border-right: none;
+        color: #fff;
+    }
+    .tags-bar{
+        display: none;
+    }
+    .signup-bar{
+        list-style-type: none;
+        width: 100%;
+        position: inherit;
+        margin-top: 7%;
+        margin-left: 0%;
+        height: max-content;
+        border: 0.5px solid #CFCFCF;
+        border-radius: 5px;
+    }
+    .btn-signup{
+        /* display: none; */
+        background-color: #1C680F;
+        border: none;
+        -webkit-border-radius: 3px;
+        color: #fff;
+        padding: 2px;
+        margin-left: 5%;
+    }
+    .bt{
+        display: none;
+    }
+    .search{
+        display: none;
+    }
   }

@@ -1,5 +1,6 @@
 body{
     overflow-y: auto;
+    background-color: #EEF9F1;
 }
 .navbar{
     z-index: 10000;
@@ -28,6 +29,7 @@ body{
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
     color: #428bca;
+    background-color: #fff;
 }
 .content-bar{
     list-style-type: none;
@@ -79,6 +81,7 @@ body{
     /* position: fixed; */
     /* margin-top: -60%; */
     /* margin-left: 70%; */
+    background-color: #fff;
     position: absolute;
     top: 12%;
     left: 70%;
@@ -397,7 +400,7 @@ h4{
     margin-left: 43%;
 }
 .btn-comment{
-    background-color: #428bca;
+    background-color: #1C680F;
     border: none;
     -webkit-border-radius: 3px;
     color: #fff;
@@ -493,4 +496,67 @@ hr {
     margin-left: auto;
     margin-right: auto;
     color: #5e5e5e;
+  }
+  @media screen and (max-width: 600px) {
+    .navbar{
+        z-index: 10000;
+        height: fit-content;
+        font-size: 15px;
+        left: 0;
+        top: 0;
+        margin-bottom: 10%;
+        width: 100%;
+        background-color: #fff ;
+        padding-left: 6%;
+        overflow: hidden;
+        border-bottom: 0.5px solid #CFCFCF;
+    }
+    .navbar a {
+        left: 0;
+        top: 0;
+        float: none;
+        width: 100%;
+    }
+    .meetup-bar{
+        display: none;
+    }
+    .content-bar{
+        margin: 0;
+        margin-bottom: 5%;
+        padding: 0;
+        width: 100%;
+        position: inherit;
+        height: max-content;
+        border-left: none;
+        border-right: none;
+        color: #fff;
+    }
+    .tags-bar{
+        display: none;
+    }
+    .signup-bar{
+        list-style-type: none;
+        width: 100%;
+        position: inherit;
+        margin-top: 7%;
+        margin-left: 0%;
+        height: max-content;
+        border: 0.5px solid #CFCFCF;
+        border-radius: 5px;
+    }
+    .btn-signup{
+        /* display: none; */
+        background-color: #1C680F;
+        border: none;
+        -webkit-border-radius: 3px;
+        color: #fff;
+        padding: 2px;
+        margin-left: 5%;
+    }
+    .bt{
+        display: none;
+    }
+    .search{
+        display: none;
+    }
   }

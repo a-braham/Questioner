@@ -10,12 +10,17 @@
     <link rel="icon" type="image/png" href="img/logo.png" />
     <style>
         input[type=search] {
-            padding: 8px;
             font-size: 14px;
-            border: none;
             -webkit-border-radius: 3px;
-            width: 20%;
-            background: #f1f1f1;
+            width: 25%;
+            background: #F8FCF9;
+            background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/search.png");
+            background-position: 10px 10px; 
+            background-repeat: no-repeat;
+            padding: 8px 20px 8px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            border: 1px solid #1C680F;
         }
         .bt {
             width: 5%;
@@ -38,8 +43,8 @@
             <a href="home.html" class="navbar-item">Home</a>
             <a href="meetups.html" class="navbar-item">Meetups</a>
             <a href="tags.html" class="navbar-item">Tags</a>
-            <input type="search" placeholder="Search Question here" />
-            <button class="bt" type="submit">Search</button>
+            <input class="search" type="search" placeholder="Search Question here" />
+            <!-- <button class="bt" type="submit">Search</button> -->
             <a class="navbar-item url-link btn-signup" type="submit" href="">Admin</a>
         </nav>
 
