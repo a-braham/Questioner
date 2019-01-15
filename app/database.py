@@ -20,12 +20,12 @@ def connection(url):
     conn = psycopg2.connect(url)
     return conn
 
-def test_init_db():
+def init_test_db():
     """ Initialize database for test """
     conn = connection(os.getenv('DATABASE_TEST_URL'))
     destroy_db()
     cursor = conn.cursor()
-    sql_file = current_app.open_resource('question.sql', mode='r')
+    sql_file = current_app.open_resource('questioner.sql', mode='r')
     cursor.execute(sql_file.read())
     conn.commit()
     return conn
