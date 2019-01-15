@@ -8,7 +8,6 @@ app = create_app("config")
 
 def init_db():
     """ Method to initialize the database """
-    
     url_db = current_app.config['DATABASE_URL']
     conn = psycopg2.connect(url_db)
     cursor = conn.cursor()
