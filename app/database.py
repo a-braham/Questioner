@@ -41,5 +41,5 @@ def destroy_db():
         for table in tables:
             cursor.execute(table)
         conn.commit()
-    except:
-        print("Destry failed")
+    except Exception as e:
+        print("Database exception: %s" % e)
