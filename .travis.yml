@@ -1,18 +1,12 @@
 language: python
 python:
     - "3.6"
-env:
-  DATABASE_URL="dbname='Questioner' host='127.0.0.1' port='5432' user='postgres' password=''"
-  DATABASE_TEST_URL="dbname='Questioner_Test' host='127.0.0.1' port='5432' user='postgres' password=''"
-  APP_SETTINGS="testing"
 
 install:
     - pip install -r requirements.txt
 
 services:
     - postgresql
-addons:
-  postgresql: "10.6"
 
 script:
     - pytest
