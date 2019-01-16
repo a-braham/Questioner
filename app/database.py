@@ -1,20 +1,22 @@
 """ This sets up the database """
 
 import psycopg2, os
-from flask import current_app
-from app import create_app
+from flask import current_app, Flask
+from instance.config import Config
 
-app = create_app("config")
+app = Flask(__name__)
 
 def init_db():
     """ Method to initialize the database """
-    url_db = current_app.config['DATABASE_URL']
-    conn = psycopg2.connect(url_db)
-    cursor = conn.cursor()
-    sql_file = current_app.open_resource('question.sql', mode='r')
-    cursor.execute(sql_file.read())
-    conn.commit()
-    return conn
+    with app.app_context():
+        # conn = psycopg2.connect(dbname='Questioner', user='postgres', host='localhost', password='')
+        url_db = Config.DATABASE_URL
+        conn = psycopg2.connect(url_db)
+        cursor = conn.cursor()
+        sql = current_app.open_resource('questioner.sql', mode='r')
+        cursor.execute(sql.read())
+        conn.commit()
+        return conn
 
 def connection(url):
     conn = psycopg2.connect(url)
