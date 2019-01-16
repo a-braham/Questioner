@@ -1,9 +1,4 @@
 language: python
-env:
-    export FLASK_ENV="testing"
-    export DATABASE_URL=postgres://postgres:@localhost:5432/Questioner
-    export DATABASE_TEST_URL=postgres://postgres:@localhost:5432/Questioner_Test
-    export SECRET_KEY="abraham"
 python:
     - "3.6"
 
@@ -13,7 +8,11 @@ install:
 services:
     - postgresql
 before_script:
-  - psql -c "CREATE DATABASE Questioner;" -U postgres
+    - export FLASK_ENV="testing"
+    - export DATABASE_URL=postgres://postgres:@localhost:5432/Questioner
+    - export DATABASE_TEST_URL=postgres://postgres:@localhost:5432/Questioner_Test
+    - export SECRET_KEY="abraham"
+    - psql -c "CREATE DATABASE Questioner;" -U postgres
 
 script:
     - pytest
