@@ -1,4 +1,6 @@
 language: python
+env:
+  export FLASK_ENV="testing"
 python:
     - "3.6"
 
