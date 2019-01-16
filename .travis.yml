@@ -10,9 +10,6 @@ services:
 addons:
   postgresql: "10.6"
 
-before_script:
-    - sudo -u postgres psql -c 'create database Questioner;'
-
 script:
     - pytest
     - coverage run --source=app -m pytest && coverage report
