@@ -11,7 +11,7 @@ addons:
   postgresql: "10.6"
 
 before_script:
-    - sudo -u postgres psql -c 'create database test;'
+    - sudo -u postgres psql -c 'create database Questioner;'
 
 script:
     - pytest
