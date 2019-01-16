@@ -9,7 +9,7 @@ services:
     - postgresql
 
 before_script:
-    - export APP_SETTINGS="development"
+    - source .travis.sh
     - psql -c "CREATE DATABASE Questioner;" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
 
