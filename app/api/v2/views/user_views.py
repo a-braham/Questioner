@@ -135,8 +135,7 @@ def login():
         })), 400
     user = users.login(username)
     if user:
-        usr = user[0]
-        if check_password_hash(usr["password"], password):
+        if check_password_hash(user[1], password):
             auth_token = users.generate_auth_token(username)
             return make_response(jsonify({
                 "status": 200,

@@ -57,10 +57,15 @@ class UserModel(object):
         return user
 
     def login(self, username):
-        user = [user for user in self.users if user["username"] == username]
-        if user:
-            return user
-
+        """ Get user by using username """
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT username, password FROM users WHERE username = '%s'""" % (username)
+        )
+        user = cursor.fetchone()
+        cursor.close()
+        return user
+        
     def get_users(self):
         """ Getting user records """
         return self.users
