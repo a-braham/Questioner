@@ -14,6 +14,7 @@ class Testing(Config):
     """ The configurations for testing """
     DEBUG = True
     TESTING = True
+    DATABASE_TEST_URL = os.getenv('DATABASE_TEST_URL')
 
 class Production(Config):
     """ The configurations for production """

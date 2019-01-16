@@ -3,10 +3,8 @@
 import unittest
 import json
 import instance
-from app.api.v2.views import user_views
-from app.api.v2.models import user_models
 from app import create_app
-from app.database import init_test_db, destroy_db
+from app.database import _init_db, destroy_db
 
 app = create_app("testing")
 
@@ -19,7 +17,6 @@ class TestUser(unittest.TestCase):
 
         app.config.from_object(instance.config.Testing)
         self.client = app.test_client()
-
 
         self.user = {
              "firstname": "Abraham",
@@ -113,20 +110,10 @@ class TestUser(unittest.TestCase):
              "password": "hfkhkblllbkjvhcc"
         }
         # Initialize test db and create tables
-        with app.app_context():
-            self.test_db = init_test_db()
+        self.test_db = _init_db()
 
     def test_user_signup(self):
         """ Test signup user """
-        response = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user), content_type="application/json")
-        result = json.loads(response.data.decode('utf-8'))
-
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(result["status"], 400)
-        self.assertEqual(result["message"], "Username exists")
-
-
         response1 = self.client.post(
             "/api/v2/signup", data=json.dumps(self.user1), content_type="application/json")
         result1 = json.loads(response1.data.decode('utf-8'))
@@ -186,6 +173,22 @@ class TestUser(unittest.TestCase):
     
     def test_user_login(self):
         """ Test login user """
+        response = self.client.post(
+            "/api/v2/signup", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["status"], 201)
+        # self.assertEqual(result["message"], "Username exists")
+        self.assertEqual(result["data"], [{
+            "email": "eric@gmail.com",
+            "firstname": "Abraham",
+            "isAdmin": "True",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "phoneNumber": "123456789",
+            "username": "Kamaa"
+        }])
 
         response = self.client.post(
             "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
@@ -237,9 +240,8 @@ class TestUser(unittest.TestCase):
     def tearDown(self):
         """ Method to destroy test client """
         app.testing = False
-        with app.app_context():
-            destroy_db()
-            self.test_db.close()
+        destroy_db()
+        self.test_db.close()
 
 if __name__ == "__main__":
     unittest.main()
