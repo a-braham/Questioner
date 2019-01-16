@@ -23,9 +23,9 @@ class TestUser(unittest.TestCase):
              "lastname": "Kirumba",
              "othername": "Kamau",
              "email": "eric@gmail.com",
-             "phoneNumber": "123456789",
              "isAdmin": "True",
              "username": "Kamaa",
+             "phoneNumber": "123456789",
              "password": "ak?,T4.jj12kjn@"
         }
         self.user1 = {
@@ -111,7 +111,7 @@ class TestUser(unittest.TestCase):
         }
         # Initialize test db and create tables
         self.test_db = _init_db()
-
+    
     def test_user_signup(self):
         """ Test signup user """
         response1 = self.client.post(
@@ -162,24 +162,14 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result6["status"], 400)
         self.assertEqual(result6["message"], "Password is required")
 
-        return self
     def test_get_users(self):
         """ Tests view posted meetups """
-
-        response = self.client.get("/api/v2/get_users", content_type="application/json")
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(result["status"], 200)
-    
-    def test_user_login(self):
-        """ Test login user """
         response = self.client.post(
             "/api/v2/signup", data=json.dumps(self.user), content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
-        # self.assertEqual(result["message"], "Username exists")
         self.assertEqual(result["data"], [{
             "email": "eric@gmail.com",
             "firstname": "Abraham",
@@ -189,7 +179,13 @@ class TestUser(unittest.TestCase):
             "phoneNumber": "123456789",
             "username": "Kamaa"
         }])
-
+        response = self.client.get("/api/v2/get_users", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+    
+    def test_user_login(self):
+        """ Test login user """
         response = self.client.post(
             "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
@@ -234,8 +230,7 @@ class TestUser(unittest.TestCase):
         response = self.client.get("/api/v2/profile", headers={"Authorization": 'Bearer ' + json.loads(response.data.decode('utf-8'))['token']})
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(result["status"], 200)
-        
+        self.assertEqual(result["status"], 200)    
 
     def tearDown(self):
         """ Method to destroy test client """

@@ -1,6 +1,7 @@
 import re, jwt
 from werkzeug.security import check_password_hash
 from ..models.user_models import USERS
+from app.database import init_db
 from ..models import user_models
 from functools import wraps
 from flask import request, jsonify, make_response
@@ -11,7 +12,7 @@ SECRET_KEY = Config.SECRET_KEY
 
 class UserValidation():
     def __init__(self):
-        self.users = USERS
+        self.users = init_db()
 
     def validate_password(self, password):
         exp = "^[a-zA-Z0-9@_+-.]{3,}$"
@@ -22,7 +23,11 @@ class UserValidation():
         return re.match(exp, email)
 
     def username_exists(self, username):
-        usr = [user for user in self.users if user['username'] == username]
+        cursor = self.users.cursor()
+        cursor.execute(
+            """SELECT username FROM users WHERE username = '%s'""" % (username)
+        )
+        usr = cursor.fetchone()
         if usr:
             return True
         else:
@@ -38,7 +43,11 @@ class UserValidation():
                 return False
 
     def email_exists(self, email):
-        usr = [user for user in self.users if user['email'] == email]
+        cursor = self.users.cursor()
+        cursor.execute(
+            """SELECT email FROM users WHERE email = '%s'""" % (email)
+        )
+        usr = cursor.fetchone()
         if usr:
             return True
         else:

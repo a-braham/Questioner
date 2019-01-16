@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import os, jwt
 from instance.config import Config
 from app.database import init_db
+from flask import make_response, jsonify
 
 USERS = []
 SECRET_KEY = Config.SECRET_KEY
@@ -34,7 +35,7 @@ class UserModel(object):
         except jwt.InvalidTokenError:
             return 'Invalid token, login'
     
-    def signup(self, firstname, lastname, othername, email, phoneNumber, username, isAdmin, password):
+    def signup(self, firstname, lastname, othername, email, phone, username, isAdmin, password):
         """ Method to manipulate addition of new users into the database"""
 
         user = {
@@ -43,13 +44,13 @@ class UserModel(object):
             "othername": othername,
             "username": username,
             "email": email,
-            "phoneNumber": phoneNumber,
+            "phone": phone,
             "isAdmin": isAdmin,
             "password": password
         }
 
         cursor = self.DB.cursor()
-        query = """INSERT INTO users (firstname, lastname, othername, username, email, phone, isAdmin, password) VALUES (%(firstname)s, %(lastname)s, %(lastname)s, %(username)s, %(email)s, %(phoneNumber)s, %(isAdmin)s, %(password)s) RETURNING u_id"""
+        query = """INSERT INTO users (firstname, lastname, othername, username, email, phone, isAdmin, password) VALUES (%(firstname)s, %(lastname)s, %(lastname)s, %(username)s, %(email)s, %(phone)s, %(isAdmin)s, %(password)s) RETURNING u_id"""
         cursor.execute(query, user)
         user = cursor.fetchone()[0]
         self.DB.commit()
@@ -68,4 +69,9 @@ class UserModel(object):
         
     def get_users(self):
         """ Getting user records """
-        return self.users
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM users"""
+        )
+        users = cursor.fetchall()
+        return users
