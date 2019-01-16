@@ -11,6 +11,7 @@ services:
 before_script:
     - export APP_SETTINGS="development"
     - psql -c "CREATE DATABASE Questioner;" -U postgres
+    - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
 
 script:
     - pytest
