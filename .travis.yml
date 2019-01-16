@@ -7,12 +7,9 @@ install:
 
 services:
     - postgresql
-postgresql:
-    - database: Questioner
-    - user: postgres
-    - host: localhost
-    
+
 before_script:
+    - export APP_SETTINGS="development"
     - psql -c "CREATE DATABASE Questioner;" -U postgres
 
 script:
