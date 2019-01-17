@@ -49,10 +49,16 @@ class MeetUpModel(object):
 
     def create_rsvps(self, rsvp, meetup_id):
         """ A method to create rsvp record """
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         rsvp = {
-            "id": len(self.meetups) + 1,
             "meetup_id": meetup_id,
-            "rsvp": rsvp
+            "rsvp": rsvp,
+            "created_at": created_at
         }
-        self.rsvps.append(rsvp)
-        return rsvp
+        cursor = self.MEETUPS.cursor()
+        query = """INSERT INTO rsvp (meetup_id, rsvp, created_at) VALUES (%(meetup_id)s, %(rsvp)s, %(created_at)s) RETURNING r_id"""
+        cursor.execute(query, rsvp)
+        rs = cursor.fetchone()
+        self.MEETUPS.commit()
+        cursor.close()
+        return rs
