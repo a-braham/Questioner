@@ -95,6 +95,15 @@ def upvote(question_id):
         return make_response(jsonify({
             "status": 200,
             "data": votes
+
+    question = questions.oneQuestion(question_id)
+    if question:
+        quiz = question[0]
+        quiz["votes"] = quiz["votes"] + 1
+        return make_response(jsonify({
+            "status": 200,
+            "data": quiz
+
         })), 200
     return make_response(jsonify({
         "status": 404,
@@ -135,3 +144,48 @@ def downvote(question_id):
         "status": 404,
         "message": "Question not found"
     })), 404
+
+    question = questions.oneQuestion(question_id)
+    if question:
+        quiz = question[0]
+        quiz["votes"] = quiz["votes"] - 1
+        return make_response(jsonify({
+            "status": 200,
+            "data": quiz
+        })), 200
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Question not found"
+    })), 404
+
+
+@question_bpv2.route('/<int:question_id>/comment', methods=['POST'])
+def comments(question_id):
+    """A method to enable posting of comments based on user question """
+    question = questions.oneQuestion(question_id)
+    if question:
+        try:
+            data = request.get_json()
+        except Exception as e:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Invalid or no data sent" + e
+            }))
+        comment = data.get("comment")
+        if not comment:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Comment posted is empty"
+            }))
+        questions.create_comment(question_id, comment)
+        return make_response(jsonify({
+            "status": 201,
+            "data": [{
+                "question": question_id,
+                "comment": comment
+            }]
+        })), 201
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Question not found"
+    }))

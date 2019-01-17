@@ -63,3 +63,19 @@ class QuestionModel(object):
         self.DB.commit()
         cursor.close()
         return data
+      
+    def create_comment(self, question_id, comment):
+        """ A model method to enable saving of comment data """
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        comments = {
+            "question_id": question_id,
+            "comment": comment,
+            "created_at": created_at
+        }
+        cursor = self.DB.cursor()
+        query = """INSERT INTO comments (question_id, comment, created_at) VALUES (%(question_id)s, %(comment)s, %(created_at)s) RETURNING c_id"""
+        cursor.execute(query, comments)
+        comm = cursor.fetchone()
+        self.DB.commit()
+        cursor.close()
+        return comm
