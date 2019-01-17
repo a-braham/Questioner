@@ -2,11 +2,11 @@ import unittest
 import json
 import instance
 from app.api.v1.views import meetup_views
-from app.api.v1.models import meetup_models
+from app.api.v1.models import meetup_models, user_models
 from app import create_app
 
 app = create_app("testing")
-
+users = user_models.UserModel()
 
 class TestMeetup(unittest.TestCase):
     """Test class for meetup views """
@@ -47,20 +47,11 @@ class TestMeetup(unittest.TestCase):
 
     def test_create_meetup(self):
         """ Test creation of meetup """
-        register = self.client.post(
-            "/api/v1/signup", data=json.dumps(self.u_register), content_type="application/json")
-        result = json.loads(register.data.decode('utf-8'))
-        self.assertEqual(register.status_code, 201)
-        self.assertEqual(result["status"], 201)
-        self.assertEqual(result["data"], [{
-            "email": "eric@gmail.com",
-            "firstname": "Abraham",
-            "isAdmin": "True",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "phoneNumber": "123456789",
-            "username": "Kamaa"
-        }])
+        user = users.login(self.user["username"])
+        if not user:
+            response = self.client.post(
+                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            )
         user = self.client.post(
             "/api/v1/login", data=json.dumps(self.user), content_type="application/json")
         response = self.client.post(
