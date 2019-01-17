@@ -14,7 +14,6 @@ before_script:
     - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
 
 script:
-    - pytest
     - coverage run --source=app -m pytest && coverage report
 
 after_success:
