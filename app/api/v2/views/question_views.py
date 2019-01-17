@@ -4,7 +4,8 @@ from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import question_models
 from werkzeug.exceptions import BadRequest
 
-question_bpv2 = Blueprint('questionsv2', __name__, url_prefix='/api/v2/questions')
+question_bpv2 = Blueprint('questionsv2', __name__,
+                          url_prefix='/api/v2/questions')
 questions = question_models.QuestionModel()
 
 
@@ -38,7 +39,7 @@ def create_question():
             "message": "Body cannot be empty"
         })), 400
     questions.create_question(
-            title, body, meetup, createdby, votes)
+        title, body, meetup, createdby, votes)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -49,37 +50,88 @@ def create_question():
         }]})), 201
 
 
+@question_bpv2.route('/<int:question_id>', methods=['GET'])
+def question(question_id):
+    """ Manipulates upvoting question """
+
+    questionz = questions.oneQuestion(question_id)
+    if questionz:
+        quiz = [question for question in questionz]
+        return make_response(jsonify({
+            "status": 200,
+            "data": quiz
+        })), 200
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Question not found"
+    })), 404
+
+
 @question_bpv2.route('/<int:question_id>/upvote', methods=['PATCH'])
 def upvote(question_id):
     """ Manipulates upvoting question """
 
-    question = questions.oneQuestion(question_id)
-    if question:
-        quiz=question[0]
-        quiz["votes"] = quiz["votes"] + 1
+    questionz = questions.oneQuestion(question_id)
+    if questionz:
+        try:
+            data = request.get_json()
+        except:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Wrong input"
+            })), 400
+        vote = int(data.get('votes'))
+        if vote not in [1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Vote not allowed"
+            })), 400
+        if [question for question in questionz][6] not in [0, -1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Already voted"
+            })), 400
+        votes = questions.upVote(question_id, vote)
         return make_response(jsonify({
             "status": 200,
-            "data": quiz
-            })), 200
+            "data": votes
+        })), 200
     return make_response(jsonify({
-            "status": 404,
-            "message": "Question not found"
-            })), 404
+        "status": 404,
+        "message": "Question not found"
+    })), 404
 
 
 @question_bpv2.route('/<int:question_id>/downvote', methods=['PATCH'])
 def downvote(question_id):
     """ Manipulates upvoting question """
 
-    question = questions.oneQuestion(question_id)
-    if question:
-        quiz=question[0]
-        quiz["votes"] = quiz["votes"] - 1
+    questionz = questions.oneQuestion(question_id)
+    if questionz:
+        try:
+            data = request.get_json()
+        except:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Wrong input"
+            })), 400
+        vote = int(data.get('votes'))
+        if vote not in [1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Vote not allowed"
+            })), 400
+        if [question for question in questionz][6] not in [0, 1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Already voted"
+            })), 400
+        votes = questions.downVote(question_id, vote)
         return make_response(jsonify({
             "status": 200,
-            "data": quiz 
-            })), 200
+            "data": votes
+        })), 200
     return make_response(jsonify({
-            "status": 404,
-            "message": "Question not found"
-            })), 404
+        "status": 404,
+        "message": "Question not found"
+    })), 404
