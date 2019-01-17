@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 import os, jwt
 from instance.config import Config
 from app.database import init_db
-from flask import make_response, jsonify
 
 USERS = []
 SECRET_KEY = Config.SECRET_KEY
