@@ -7,6 +7,7 @@
     <title>Questioner - Learn, share and develop as a community</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/question.css" />
+    <link rel="stylesheet" type="text/css" href="styles/modal.css" />
     <link rel="icon" type="image/png" href="img/logo.png" />
     <style>
         input[type=search] {
@@ -65,15 +66,40 @@
                     Question</a> -->
                 <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
                     <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">Team work</a></h5>
+                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
+                                style="font-family: serif; font-size: 120%; margin-top: -5px;">Team work</a></h5>
                         <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
                             87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
                             some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
                             would be n...<a class="url-link" href="question.html">(more)</a></p>
                         <ul>
                             <li class="meetup-item">
-                                <a class="url-link btn-comment" type="submit" href="question.html">Ask Question</a>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete Meetup</a>
+                                <a id="myBtn" class="url-link btn-comment" type="submit" href="#">Ask Question</a>
+                                <div id="myModal" class="modal">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <span class="close">&times;</span>
+                                            <h2>Post Question</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form style="margin-top: 3%; margin-bottom: 5%;">
+                                                <label style="color:#585757" class="form-label">Title</label><br>
+                                                <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                                                    required><br>
+                                                <label style="color:#585757" class="form-label">Description</label><br>
+                                                <textarea style="border: 0.5px solid #BDE5F8; margin-left: 5%; border-radius: 5px;"
+                                                    rows="10" cols="70" name="comment" form="usrform"></textarea><br><br>
+                                                <input style="width: 20%; margin-left: 40%" class="btn-form btn-margins btn-primary"
+                                                    value="Post" type="submit"><br>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
+                                    Meetup</a>
                                 <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
                                     2hrs ago<a href="#" class="url-link"> By Admin</a></p>
                             </li>
@@ -82,7 +108,8 @@
                 </div>
                 <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
                     <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">Python</a></h5>
+                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
+                                style="font-family: serif; font-size: 120%; margin-top: -5px;">Python</a></h5>
                         <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
                             87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
                             some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
@@ -90,7 +117,8 @@
                         <ul>
                             <li class="meetup-item">
                                 <a class="url-link btn-comment" type="submit" href="question.html">Ask Question</a>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete Meetup</a>
+                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
+                                    Meetup</a>
                                 <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
                                     2hrs ago<a href="#" class="url-link"> By Admin</a></p>
                             </li>
@@ -99,7 +127,8 @@
                 </div>
                 <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
                     <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">UI/UX</a></h5>
+                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
+                                style="font-family: serif; font-size: 120%; margin-top: -5px;">UI/UX</a></h5>
                         <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
                             87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
                             some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
@@ -107,7 +136,8 @@
                         <ul>
                             <li class="meetup-item">
                                 <a class="url-link btn-comment" type="submit" href="question.html">Ask Question</a>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete Meetup</a>
+                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
+                                    Meetup</a>
                                 <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
                                     2hrs ago<a href="#" class="url-link"> By Admin</a></p>
                             </li>
@@ -136,6 +166,22 @@
                 </li>
             </ul>
         </div>
+        <script>
+            var modal = document.getElementById('myModal');
+            var btn = document.getElementById("myBtn");
+            var span = document.getElementsByClassName("close")[0];
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
 
         <footer class="footer">
             <p>&copy; 2019 Questioner Andela</p>
