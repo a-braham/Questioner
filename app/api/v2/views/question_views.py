@@ -95,16 +95,7 @@ def upvote(question_id):
         return make_response(jsonify({
             "status": 200,
             "data": votes
-
-    question = questions.oneQuestion(question_id)
-    if question:
-        quiz = question[0]
-        quiz["votes"] = quiz["votes"] + 1
-        return make_response(jsonify({
-            "status": 200,
-            "data": quiz
-
-        })), 200
+            }))
     return make_response(jsonify({
         "status": 404,
         "message": "Question not found"
@@ -139,19 +130,6 @@ def downvote(question_id):
         return make_response(jsonify({
             "status": 200,
             "data": votes
-        })), 200
-    return make_response(jsonify({
-        "status": 404,
-        "message": "Question not found"
-    })), 404
-
-    question = questions.oneQuestion(question_id)
-    if question:
-        quiz = question[0]
-        quiz["votes"] = quiz["votes"] - 1
-        return make_response(jsonify({
-            "status": 200,
-            "data": quiz
         })), 200
     return make_response(jsonify({
         "status": 404,

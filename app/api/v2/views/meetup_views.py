@@ -95,14 +95,11 @@ def rsvps(meetup_id):
             "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
         })), 400
     if meetup:
-        meetups.create_rsvps(rsvp_data, meetup_id)
+        rsvp=meetups.create_rsvps(rsvp_data, meetup_id)
         return make_response(jsonify({
             "status": 201,
-            "data": [{
-                "meetup": meetup["id"],
-                "topic": meetup["topic"],
-                "status": rsvp_data
-            }]})), 201
+            "data": rsvp
+            })), 201
     return make_response(jsonify({
         "status": 404,
         "message": "Meetup not found"
