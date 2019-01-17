@@ -92,8 +92,8 @@ class TestMeetup(unittest.TestCase):
     def test_view_one_meetup(self):
         """ Tests view posted meetups """
 
-        self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
-        response = self.client.get("/api/v1/meetups/1", content_type="application/json")
+        self.client.post("/api/v2/meetups", data=json.dumps(self.meetup), content_type="application/json")
+        response = self.client.get("/api/v2/meetups/1", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
