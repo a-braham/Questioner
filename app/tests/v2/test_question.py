@@ -26,6 +26,9 @@ class TestQuestion(unittest.TestCase):
             "createdby": 1,
             "votes": 0
         }
+        self.comment = {
+            "comment": "This is a comment"
+        }
         self.test_DB = _init_db()
 
     def test_create_question(self):
@@ -60,6 +63,15 @@ class TestQuestion(unittest.TestCase):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
+
+    def test_comments(self):
+        """ Test run to test comments endpoints """
+
+        self.client.post("api/v2/questions", data=json.dumps(self.question), content_type="application/json")
+        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["status"], 201)
         
 
     def tearDown(self):
