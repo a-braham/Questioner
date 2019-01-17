@@ -4,7 +4,8 @@ from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import question_models
 from werkzeug.exceptions import BadRequest
 
-question_bpv2 = Blueprint('questionsv2', __name__, url_prefix='/api/v2/questions')
+question_bpv2 = Blueprint('questionsv2', __name__,
+                          url_prefix='/api/v2/questions')
 questions = question_models.QuestionModel()
 
 
@@ -38,7 +39,7 @@ def create_question():
             "message": "Body cannot be empty"
         })), 400
     questions.create_question(
-            title, body, meetup, createdby, votes)
+        title, body, meetup, createdby, votes)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -55,16 +56,16 @@ def upvote(question_id):
 
     question = questions.oneQuestion(question_id)
     if question:
-        quiz=question[0]
+        quiz = question[0]
         quiz["votes"] = quiz["votes"] + 1
         return make_response(jsonify({
             "status": 200,
             "data": quiz
-            })), 200
+        })), 200
     return make_response(jsonify({
-            "status": 404,
-            "message": "Question not found"
-            })), 404
+        "status": 404,
+        "message": "Question not found"
+    })), 404
 
 
 @question_bpv2.route('/<int:question_id>/downvote', methods=['PATCH'])
@@ -73,13 +74,45 @@ def downvote(question_id):
 
     question = questions.oneQuestion(question_id)
     if question:
-        quiz=question[0]
+        quiz = question[0]
         quiz["votes"] = quiz["votes"] - 1
         return make_response(jsonify({
             "status": 200,
-            "data": quiz 
-            })), 200
+            "data": quiz
+        })), 200
     return make_response(jsonify({
-            "status": 404,
-            "message": "Question not found"
-            })), 404
+        "status": 404,
+        "message": "Question not found"
+    })), 404
+
+
+@question_bpv2.route('/<int:question_id>/comment', methods=['POST'])
+def comments(question_id):
+    """A method to enable posting of comments based on user question """
+    question = questions.oneQuestion(question_id)
+    if question:
+        try:
+            data = request.get_json()
+        except Exception as e:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Invalid or no data sent" + e
+            }))
+        comment = data.get("comment")
+        if not comment:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Comment posted is empty"
+            }))
+        questions.create_comment(question_id, comment)
+        return make_response(jsonify({
+            "status": 201,
+            "data": [{
+                "question": question_id,
+                "comment": comment
+            }]
+        })), 201
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Question not found"
+    }))
