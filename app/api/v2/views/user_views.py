@@ -24,7 +24,7 @@ def signup():
     lastname = data.get('lastname')
     othername = data.get('othername')
     email = data.get('email')
-    phoneNumber = data.get('phoneNumber')
+    phone = data.get('phoneNumber')
     username = data.get('username')
     isAdmin = data.get('isAdmin')
     password = data.get('password')
@@ -44,7 +44,7 @@ def signup():
             "status": 400,
             "message": "email is required"
         })), 400
-    if not phoneNumber:
+    if not phone:
         return make_response(jsonify({
             "status": 400,
             "message": "Phonenumber is required"
@@ -95,7 +95,7 @@ def signup():
     # new_user["isAdmin"] = False
 
     user = users.signup(
-        firstname, lastname, othername, email, phoneNumber, username, isAdmin, password)
+        firstname, lastname, othername, email, phone, username, isAdmin, password)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -103,7 +103,7 @@ def signup():
             "lastname": lastname,
             "othername": othername,
             "email": email,
-            "phoneNumber": phoneNumber,
+            "phoneNumber": phone,
             "username": username,
             "isAdmin": isAdmin,
         }]
@@ -154,11 +154,23 @@ def login():
 @user_bpv2.route('/get_users', methods=['GET'])
 def get_users():
     """ A method to get all users posted """
-
+    usrs = users.get_users()
+    if usrs:
+        return make_response(jsonify({
+            "status": 200,
+            "data": [{
+                "firstname": [usr[1] for usr in usrs],
+                "lastname": [usr[2] for usr in usrs],
+                "othername": [usr[3] for usr in usrs],
+                "username": [usr[4] for usr in usrs],
+                "phoneNumber": [usr[6] for usr in usrs],
+                "email": [usr[5] for usr in usrs],
+                "isAdmin": [usr[7] for usr in usrs],
+            }]}))
     return make_response(jsonify({
-        "status": 200,
-        "data": users.get_users()
-    }))
+        "status": 404,
+        "message": "There are no users"
+    })), 404
 
 
 @user_bpv2.route('/profile', methods=['GET'])

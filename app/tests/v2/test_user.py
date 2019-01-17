@@ -5,8 +5,10 @@ import json
 import instance
 from app import create_app
 from app.database import _init_db, destroy_db
+from app.api.v2.models import user_models
 
 app = create_app("testing")
+users = user_models.UserModel()
 
 
 class TestUser(unittest.TestCase):
@@ -19,95 +21,95 @@ class TestUser(unittest.TestCase):
         self.client = app.test_client()
 
         self.user = {
-             "firstname": "Abraham",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "eric@gmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "eric@gmail.com",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "phoneNumber": "123456789",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.user1 = {
-             "firstname": "Abraham",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "eric@gmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "qwerty"
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "eric@gmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "qwerty"
         }
         self.user2 = {
-             "firstname": "Abraham",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "ericgmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "ericgmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.user3 = {
-             "firstname": "",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "ericgmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "firstname": "",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "ericgmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.user4 = {
-             "firstname": "Abraham",
-             "lastname": "",
-             "othername": "Kamau",
-             "email": "ericgmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "firstname": "Abraham",
+            "lastname": "",
+            "othername": "Kamau",
+            "email": "ericgmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.user5 = {
-             "firstname": "Abraham",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.user6 = {
-             "firstname": "Abraham",
-             "lastname": "Kirumba",
-             "othername": "Kamau",
-             "email": "ericgmail.com",
-             "phoneNumber": "123456789",
-             "isAdmin": "True",
-             "username": "Kamaa",
-             "password": ""
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "ericgmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": ""
         }
 
         self.login = {
-             "username": "Kamaa",
-             "password": "ak?,T4.jj12kjn@"
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.login1 = {
-             "username": "Kama",
-             "password": "ak?,T4.jj12kjn@"
+            "username": "Kama",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.login2 = {
-             "username": "",
-             "password": "ak?,T4.jj12kjn@"
+            "username": "",
+            "password": "ak?,T4.jj12kjn@"
         }
         self.login3 = {
-             "username": "Kamaa",
-             "password": ""
+            "username": "Kamaa",
+            "password": ""
         }
         self.login4 = {
-             "username": "Kamaa",
-             "password": "hfkhkblllbkjvhcc"
+            "username": "Kamaa",
+            "password": "hfkhkblllbkjvhcc"
         }
         # Initialize test db and create tables
         self.test_db = _init_db()
@@ -162,34 +164,43 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result6["status"], 400)
         self.assertEqual(result6["message"], "Password is required")
 
-        return self
     def test_get_users(self):
         """ Tests view posted meetups """
 
-        response = self.client.get("/api/v2/get_users", content_type="application/json")
+        user = users.login(self.user["username"])
+        if not user:
+            response = self.client.post(
+                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            )
+            result = json.loads(response.data.decode('utf-8'))
+
+            self.assertEqual(response.status_code, 201)
+            self.assertEqual(result["status"], 201)
+            self.assertEqual(result["data"], [{
+                "email": "eric@gmail.com",
+                "firstname": "Abraham",
+                "isAdmin": "True",
+                "lastname": "Kirumba",
+                "othername": "Kamau",
+                "phoneNumber": "123456789",
+                "username": "Kamaa"
+            }])
+        else:
+            response = self.client.post(
+                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            )
+            result = json.loads(response.data.decode('utf-8'))
+            self.assertEqual(response.status_code, 400)
+            self.assertEqual(result["status"], 400)
+
+        response = self.client.get(
+            "/api/v2/get_users", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-    
+
     def test_user_login(self):
         """ Test login user """
-        response = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user), content_type="application/json")
-        result = json.loads(response.data.decode('utf-8'))
-
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(result["status"], 201)
-        # self.assertEqual(result["message"], "Username exists")
-        self.assertEqual(result["data"], [{
-            "email": "eric@gmail.com",
-            "firstname": "Abraham",
-            "isAdmin": "True",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "phoneNumber": "123456789",
-            "username": "Kamaa"
-        }])
-
         response = self.client.post(
             "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
@@ -230,18 +241,19 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result4["status"], 400)
         self.assertEqual(result4["message"], "Incorrect password")
 
-        #Test User Profile
-        response = self.client.get("/api/v2/profile", headers={"Authorization": 'Bearer ' + json.loads(response.data.decode('utf-8'))['token']})
+        # Test User Profile
+        response = self.client.get("/api/v2/profile", headers={
+                                   "Authorization": 'Bearer ' + json.loads(response.data.decode('utf-8'))['token']})
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-        
 
     def tearDown(self):
         """ Method to destroy test client """
         app.testing = False
         destroy_db()
         self.test_db.close()
+
 
 if __name__ == "__main__":
     unittest.main()
