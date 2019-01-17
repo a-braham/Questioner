@@ -37,9 +37,10 @@ def create_app(config_name):
     app.register_blueprint(question_views.question_bp)
     
     # Version 2 blueprints
-    from .api.v2.views import user_views, meetup_views
+    from .api.v2.views import user_views, meetup_views, question_views
     app.register_blueprint(user_views.user_bpv2)
     app.register_blueprint(meetup_views.meetup_bpv2)
+    app.register_blueprint(question_views.question_bpv2)
 
     @app.errorhandler(404)
     def resource_not_found(message):
