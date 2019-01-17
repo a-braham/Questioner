@@ -106,14 +106,6 @@ class TestMeetup(unittest.TestCase):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
-        self.assertEqual(result["data"], [
-            {
-                "meetup": 1,
-                "topic": "Python",
-                "status": "yes",
-            }
-        ])
-
 
     def tearDown(self):
         """ Method to destroy test client """
