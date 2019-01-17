@@ -19,8 +19,7 @@ class TestMeetup(unittest.TestCase):
         self.meetup = {
             "topic": "Python",
             "location": "Nairobi",
-            "images": ["image1.png", "image2.png"],
-            "happeningOn": "Thursday",
+            "happeningOn": "2019-01-17 04:37:40",
             "tags": ["RESTful API", "JSON Data"]
         }
         self.meetup1 = {}
@@ -53,9 +52,9 @@ class TestMeetup(unittest.TestCase):
                 "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
             )
         user = self.client.post(
-            "/api/v1/login", data=json.dumps(self.user), content_type="application/json")
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
         response = self.client.post(
-            "/api/v1/meetups", 
+            "/api/v2/meetups", 
             headers={"Authorization": 'Bearer ' + json.loads(user.data.decode('utf-8'))['token']}, 
             data=json.dumps(self.meetup), content_type="application/json")
         restult = json.loads(response.data.decode('utf-8'))
@@ -65,13 +64,13 @@ class TestMeetup(unittest.TestCase):
             {
                 "topic": "Python",
                 "location": "Nairobi",
-                "happeningOn": "Thursday",
+                "happeningOn": "2019-01-17 04:37:40",
                 "tags": ["RESTful API", "JSON Data"],
             }
         ])
 
         response1 = self.client.post(
-            "/api/v1/meetups", 
+            "/api/v2/meetups", 
             headers={"Authorization": 'Bearer ' + json.loads(user.data.decode('utf-8'))['token']}, 
             data=json.dumps(self.meetup1), content_type="application/json")
         restult1 = json.loads(response1.data.decode('utf-8'))
