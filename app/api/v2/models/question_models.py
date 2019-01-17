@@ -5,18 +5,20 @@ from app.database import init_db
 
 QUESTIONS = []
 
+
 class QuestionModel(object):
     """ A class to map questions data and relations """
 
     def __init__(self):
         self.questions = QUESTIONS
         self.DB = init_db()
+
     def create_question(self, title, body, meetup, createdby, votes):
         """ A method to manipulate creation of questions """
 
         createdon = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         votes = 0
-        
+
         question = {
             "title": title,
             "body": body,
@@ -44,6 +46,24 @@ class QuestionModel(object):
         cursor.close()
         return question
 
+    def upVote(self, qid, vote):
+        """ method to manipulate one question voting """
+        cursor = self.DB.cursor()
+        cursor.execute("""UPDATE questions SET votes = votes + %d WHERE q_id = %d RETURNING votes;""" % (vote, int(qid)))
+        data = cursor.fetchone()[0]
+        self.DB.commit()
+        cursor.close()
+        return data
+
+    def downVote(self, qid, vote):
+        """ method to manipulate one question voting """
+        cursor = self.DB.cursor()
+        cursor.execute("""UPDATE questions SET votes = votes - %d WHERE q_id = %d RETURNING votes;""" % (vote, int(qid)))
+        data = cursor.fetchone()[0]
+        self.DB.commit()
+        cursor.close()
+        return data
+      
     def create_comment(self, question_id, comment):
         """ A model method to enable saving of comment data """
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
