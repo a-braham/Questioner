@@ -67,9 +67,9 @@ def view_meetups():
     })), 200
 
 
-@meetup_bpv2.route('/<int:id>', methods=['GET'])
-def view_one_meetup(id):
-    meetup = meetups.view_one_meetup(id)
+@meetup_bpv2.route('/<int:mid>', methods=['GET'])
+def view_one_meetup(mid):
+    meetup = meetups.view_one_meetup(mid)
     if not meetup:
         return make_response(jsonify({
             "status": 404,
@@ -95,7 +95,6 @@ def rsvps(meetup_id):
             "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
         })), 400
     if meetup:
-        meetup = meetup[0]
         meetups.create_rsvps(rsvp_data, meetup_id)
         return make_response(jsonify({
             "status": 201,
