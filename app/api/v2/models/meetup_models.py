@@ -37,11 +37,17 @@ class MeetUpModel(object):
         return meetup
 
     def view_meetups(self):
-        if len(self.meetups) == 0:
-            return ({
-                "message": "There are no meetups"
-            })
-        return self.meetups
+        """ A method to view all upoming meetups """
+        date = datetime.now()
+        cursor = self.MEETUPS.cursor()
+        cursor.execute(
+            """SELECT * FROM meetups WHERE happening_on >= '%s'""" % (date)
+        )
+        meetups = cursor.fetchall()
+        cursor.close()
+        if not meetups:
+            return "There are no meetups"
+        return meetups
 
     def view_one_meetup(self, id):
         """ A method to view one meetup """

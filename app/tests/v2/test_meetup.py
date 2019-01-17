@@ -4,6 +4,7 @@ import instance
 from app.api.v1.views import meetup_views
 from app.api.v1.models import meetup_models, user_models
 from app import create_app
+from app.database import _init_db, destroy_db
 
 app = create_app("testing")
 users = user_models.UserModel()
@@ -43,6 +44,7 @@ class TestMeetup(unittest.TestCase):
              "username": "Kamaa",
              "password": "ak?,T4.jj12kjn@"
         }
+        self.test_DB = _init_db()
 
     def test_create_meetup(self):
         """ Test creation of meetup """
@@ -81,19 +83,12 @@ class TestMeetup(unittest.TestCase):
     def test_view_meetup(self):
         """ Tests view posted meetups """
 
-        self.client.post("/api/v1/meetups", data=json.dumps(self.meetup), content_type="application/json")
-        response = self.client.get("/api/v1/meetups/upcoming", content_type="application/json")
+        self.client.post("/api/v2/meetups", data=json.dumps(self.meetup), content_type="application/json")
+        response = self.client.get("/api/v2/meetups/upcoming", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-        # self.assertEqual(result["data"], [
-        #     {
-        #         "topic": "Python",
-        #         "location": "Nairobi",
-        #         "happeningOn": "Thursday",
-        #         "tags": ["RESTful API", "JSON Data"],
-        #     }
-        # ])
+        
     def test_view_one_meetup(self):
         """ Tests view posted meetups """
 
@@ -123,6 +118,8 @@ class TestMeetup(unittest.TestCase):
     def tearDown(self):
         """ Method to destroy test client """
         app.testing = False
+        destroy_db()
+        self.test_DB.close()
 
 
 if __name__ == "__main__":
