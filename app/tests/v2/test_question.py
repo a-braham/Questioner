@@ -26,7 +26,21 @@ class TestQuestion(unittest.TestCase):
             "createdby": 1,
             "votes": 0
         }
-        
+        self.u_register = {
+            "firstname": "Abraham",
+            "lastname": "Kirumba",
+            "othername": "Kamau",
+            "email": "eric@gmail.com",
+            "phoneNumber": "123456789",
+            "isAdmin": "True",
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
+        }
+
+        self.user = {
+            "username": "Kamaa",
+            "password": "ak?,T4.jj12kjn@"
+        }
         self.vote = {
             "votes": 1
         }
@@ -37,9 +51,16 @@ class TestQuestion(unittest.TestCase):
 
     def test_create_question(self):
         """ Method to test creating question """
-
+        self.client.post(
+            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
+        )
+        user_resp = self.client.post(
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
         response = self.client.post(
-            "api/v2/questions", data=json.dumps(self.question), content_type="application/json")
+            "api/v2/questions", data=json.dumps(self.question), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
@@ -52,18 +73,32 @@ class TestQuestion(unittest.TestCase):
 
     def test_upvote(self):
         """ Testing upvoting endpoint """
-
+        self.client.post(
+            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
+        )
+        user_resp = self.client.post(
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
         self.client.post("/api/v2/questions", data=json.dumps(self.question), content_type="application/json")
-        response = self.client.patch("/api/v2/questions/1/upvote", data=json.dumps(self.vote), content_type="application/json")
+        response = self.client.patch("/api/v2/questions/1/upvote", data=json.dumps(self.vote), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
 
     def test_downvote(self):
         """ Testing downvoting endpoint """
-
+        self.client.post(
+            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
+        )
+        user_resp = self.client.post(
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
         self.client.post("/api/v2/questions", data=json.dumps(self.question), content_type="application/json")
-        response = self.client.patch("/api/v2/questions/1/downvote", data=json.dumps(self.vote), content_type="application/json")
+        response = self.client.patch("/api/v2/questions/1/downvote", data=json.dumps(self.vote), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)

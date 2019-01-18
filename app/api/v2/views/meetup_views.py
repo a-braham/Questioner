@@ -2,12 +2,13 @@
 
 from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import meetup_models
+from ..models import user_models
 from werkzeug.exceptions import BadRequest
-from ..utils.validators import requires_auth, requires_admin
+from ..utils.validators import requires_auth
 
 meetup_bpv2 = Blueprint('meetupsv2', __name__, url_prefix='/api/v2/meetups')
 meetups = meetup_models.MeetUpModel()
-
+users = user_models.UserModel()
 
 @meetup_bpv2.route('', methods=['POST'])
 @requires_auth
@@ -84,23 +85,83 @@ def view_one_meetup(mid):
 @meetup_bpv2.route('/<int:meetup_id>/rsvps', methods=['POST'])
 def rsvps(meetup_id):
     """ A method for sending rsvps """
-    rsvps_data = ["yes", "no", "maybe"]
-    meetup = meetups.view_one_meetup(meetup_id)
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    else:
+        auth_token = 'Bearer '
+    if auth_token:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            if not user:
+                return make_response(jsonify({
+                    "status": 400,
+                    "message": "Authentication failed"
+                })), 400
+            rsvps_data = ["yes", "no", "maybe"]
+            meetup = meetups.view_one_meetup(meetup_id)
 
-    data = request.get_json()
-    rsvp_data = data.get('rsvp')
-    if rsvp_data not in rsvps_data:
+            data = request.get_json()
+            rsvp_data = data.get('rsvp')
+            if rsvp_data not in rsvps_data:
+                return make_response(jsonify({
+                    "status": 400,
+                    "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
+                })), 400
+            if meetup:
+                rsvp=meetups.create_rsvps(rsvp_data, meetup_id)
+                return make_response(jsonify({
+                    "status": 201,
+                    "data": rsvp
+                    })), 201
+            return make_response(jsonify({
+                "status": 404,
+                "message": "Meetup not found"
+            })), 404
         return make_response(jsonify({
             "status": 400,
-            "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
+            "message": "Authentication token failed"
         })), 400
-    if meetup:
-        rsvp=meetups.create_rsvps(rsvp_data, meetup_id)
-        return make_response(jsonify({
-            "status": 201,
-            "data": rsvp
-            })), 201
     return make_response(jsonify({
         "status": 404,
-        "message": "Meetup not found"
+        "data": "Token not found"
+    })), 404
+
+
+@meetup_bpv2.route('/<int:meetup_id>/delete', methods=['DELETE'])
+def meetup_delete(meetup_id):
+    """ A method for sending rsvps """
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    else:
+        auth_token = 'Bearer '
+    if auth_token:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            if not user:
+                return make_response(jsonify({
+                    "status": 400,
+                    "message": "Authentication failed"
+                })), 400
+            meetup = meetups.view_one_meetup(meetup_id)
+            if meetup:
+                meetups.delete_meetup(meetup_id)
+                return make_response(jsonify({
+                    "status": 201,
+                    "message": "Meetup deleted!!:"
+                    })), 201
+            return make_response(jsonify({
+                "status": 404,
+                "message": "Meetup not found"
+            })), 404
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Authentication token failed"
+        })), 400
+    return make_response(jsonify({
+        "status": 404,
+        "data": "Token not found"
     })), 404
