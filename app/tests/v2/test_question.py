@@ -105,7 +105,14 @@ class TestQuestion(unittest.TestCase):
 
     def test_comments(self):
         """ Test run to test comments endpoints """
-
+        self.client.post(
+            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
+        )
+        user_resp = self.client.post(
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
         self.client.post("api/v2/questions", data=json.dumps(self.question), content_type="application/json")
         response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
