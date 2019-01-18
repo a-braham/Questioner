@@ -29,6 +29,7 @@ def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_object(app_config)
+    app.url_map.strict_slashes = False
     
     # Version 1 blueprints
     from .api.v1.views import meetup_views, user_views, question_views
