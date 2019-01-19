@@ -34,9 +34,10 @@ class UserModel(object):
         except jwt.InvalidTokenError:
             return 'Invalid token, login'
     
-    def signup(self, firstname, lastname, othername, email, phone, username, isAdmin, password):
+    def signup(self, firstname, lastname, othername, email, phone, username, password):
         """ Method to manipulate addition of new users into the database"""
-
+        isAdmin = 0
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         user = {
             "firstname": firstname,
             "lastname": lastname,
@@ -45,11 +46,12 @@ class UserModel(object):
             "email": email,
             "phone": phone,
             "isAdmin": isAdmin,
-            "password": password
+            "password": password,
+            "created_at": created_at
         }
 
         cursor = self.DB.cursor()
-        query = """INSERT INTO users (firstname, lastname, othername, username, email, phone, isAdmin, password) VALUES (%(firstname)s, %(lastname)s, %(lastname)s, %(username)s, %(email)s, %(phone)s, %(isAdmin)s, %(password)s) RETURNING u_id"""
+        query = """INSERT INTO users (firstname, lastname, othername, username, email, phone, isAdmin, password, created_at) VALUES (%(firstname)s, %(lastname)s, %(lastname)s, %(username)s, %(email)s, %(phone)s, %(isAdmin)s, %(password)s, %(created_at)s) RETURNING u_id"""
         cursor.execute(query, user)
         user = cursor.fetchone()[0]
         self.DB.commit()

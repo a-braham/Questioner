@@ -12,6 +12,8 @@ before_script:
     - psql -c "CREATE DATABASE Questioner;" -U postgres
     - psql -c "CREATE DATABASE Questioner_Test;" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
+    - export DATABASE_URL="dbname='questioner' user='postgres' host='localhost' password=''"
+    - export DATABASE_TEST_URL="dbname='questioner_test' user='postgres' host='localhost' password=''"
 
 script:
     - coverage run --source=app -m pytest && coverage report

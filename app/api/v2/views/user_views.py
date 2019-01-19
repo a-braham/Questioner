@@ -26,7 +26,6 @@ def signup():
     email = data.get('email')
     phone = data.get('phoneNumber')
     username = data.get('username')
-    isAdmin = data.get('isAdmin')
     password = data.get('password')
 
     if not firstname:
@@ -95,7 +94,7 @@ def signup():
     # new_user["isAdmin"] = False
 
     user = users.signup(
-        firstname, lastname, othername, email, phone, username, isAdmin, password)
+        firstname, lastname, othername, email, phone, username, password)
     return make_response(jsonify({
         "status": 201,
         "data": [{
@@ -105,7 +104,6 @@ def signup():
             "email": email,
             "phoneNumber": phone,
             "username": username,
-            "isAdmin": isAdmin,
         }]
     })), 201
 

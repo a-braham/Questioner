@@ -105,9 +105,16 @@ class TestMeetup(unittest.TestCase):
 
     def test_create_rsvp(self):
         """ Tests view posted meetups """
-
+        self.client.post(
+            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
+        )
+        user_resp = self.client.post(
+            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
         response = self.client.post(
-            "/api/v2/meetups/1/rsvps", data=json.dumps(self.rsvp), content_type="application/json")
+            "/api/v2/meetups/1/rsvps", data=json.dumps(self.rsvp), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)

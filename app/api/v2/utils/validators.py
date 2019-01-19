@@ -64,11 +64,6 @@ def requires_auth(func):
         auth_header = request.headers.get('Authorization')
         if auth_header:
             auth_token = auth_header.split("Bearer ")[1]
-        # else:
-        #     return make_response(jsonify({
-        #         "status": 401,
-        #         "message": "Authentication header missing"
-        #     }))
         if not auth_token:
             return make_response(jsonify({
                 "status": 401,
@@ -82,48 +77,6 @@ def requires_auth(func):
                     return make_response(jsonify({
                         "status": 400,
                         "message": "Authentication failed: Wrong username"
-                    })), 400
-        except:
-            return make_response(jsonify({
-                "status": 400,
-                "message": "Authentication failed: Invalid token"
-            })), 400
-        return func(user, *args, *kwargs)
-    return decorator_func
-
-
-def requires_admin(func):
-    """ validation decorator. Validates if user is logged in before performing a task """
-    @wraps(func)
-    def decorator_func(*args, **kwargs):
-        auth_token = None
-        auth_header = request.headers.get('Authorization')
-        if auth_header:
-            auth_token = auth_header.split("Bearer ")[1]
-        # else:
-        #     return make_response(jsonify({
-        #         "status": 401,
-        #         "message": "Authentication header missing"
-        #     }))
-        if not auth_token:
-            return make_response(jsonify({
-                "status": 401,
-                "data": "Unauthorized! Token required"
-            })), 401
-        try:
-            response = users.verify_auth_token(auth_token)
-            if isinstance(response, str):
-                user = users.login(username=response)
-                if not user:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Authentication failed: Wrong username"
-                    })), 400
-                is_admin = user[7]
-                if is_admin != "True":
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Authentication failed: Not Admin"
                     })), 400
         except:
             return make_response(jsonify({
