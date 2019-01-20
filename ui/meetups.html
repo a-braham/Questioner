@@ -1,172 +1,106 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Questioner - Learn, share and develop as a community</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/question.css" />
-    <link rel="stylesheet" type="text/css" href="styles/modal.css" />
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <style>
-        input[type=search] {
-            font-size: 14px;
-            -webkit-border-radius: 3px;
-            width: 25%;
-            background: #F8FCF9;
-            background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/search.png");
-            background-position: 10px 10px; 
-            background-repeat: no-repeat;
-            padding: 8px 20px 8px 40px;
-            -webkit-transition: width 0.4s ease-in-out;
-            transition: width 0.4s ease-in-out;
-            border: 1px solid #1C680F;
-        }
-        .bt {
-            width: 5%;
-            padding: 8px;
-            background: #2196F3;
-            color: white;
-            font-size: 14px;
-            border: none;
-            -webkit-border-radius: 3px;
-            border-left: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <div>
-        <nav class="navbar">
-            <a href="home.html" class="logo">Questioner</a>
-            <a href="home.html" class="navbar-item">Home</a>
-            <a href="meetups.html" class="navbar-item">Meetups</a>
-            <a href="tags.html" class="navbar-item">Tags</a>
-            <input class="search" type="search" placeholder="Search Question here" />
-            <!-- <button class="bt" type="submit">Search</button> -->
-            <a class="navbar-item url-link btn-signup" type="submit" href="profile.html">Admin</a>
-        </nav>
-
-        <div class="meetup-bar">
-            <ul>
-                <h3 class="meetup-h3"><a class="url-link meetup-url" href="meetups.html">Active Meetups</a></h3>
-                <li class="meetup-item"><a class="url-link meetup-url" href="">UI/UX</a></li>
-                <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
-                <li class="meetup-item"><a class="url-link meetup-url" href="meetup.html">Team work</a></li>
-                <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
-            </ul>
-        </div>
-
-        <div class="content-bar">
-            <ul>
-                <a style="font-size:20px; color: #000000" class="url-link" type="submit" href="">All Meetups</a>
-                <!-- <a style="margin-left: 47%;" class="url-link btn-question" type="submit" href="question.html">Ask
-                    Question</a> -->
-                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
-                    <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
-                                style="font-family: serif; font-size: 120%; margin-top: -5px;">Team work</a></h5>
-                        <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
-                            87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
-                            some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
-                            would be n...<a class="url-link" href="question.html">(more)</a></p>
-                        <ul>
-                            <li class="meetup-item">
-                                <a id="myBtn" class="url-link btn-comment" type="submit" href="#">Ask Question</a>
-                                <div id="myModal" class="modal">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <span class="close">&times;</span>
-                                            <h2>Post Question</h2>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form style="margin-top: 3%; margin-bottom: 5%;">
-                                                <label style="color:#585757" class="form-label">Title</label><br>
-                                                <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
-                                                    required><br>
-                                                <label style="color:#585757" class="form-label">Description</label><br>
-                                                <textarea style="border: 0.5px solid #BDE5F8; margin-left: 5%; border-radius: 5px;"
-                                                    rows="10" cols="70" name="comment" form="usrform"></textarea><br><br>
-                                                <input style="width: 20%; margin-left: 40%" class="btn-form btn-margins btn-primary"
-                                                    value="Post" type="submit"><br>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <p></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
-                                    Meetup</a>
-                                <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
-                                    2hrs ago<a href="#" class="url-link"> By Admin</a></p>
-                            </li>
-                        </ul>
+	<head>
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <title>Questioner - Learn, share and develop as a community</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+	    <link rel="stylesheet" type="text/css" href="styles/container.css" />
+	    <link rel="stylesheet" type="text/css" href="styles/modal.css" />
+	    <link rel="icon" type="image/png" href="img/logo.png" />
+	    <script type="text/javascript" src="js/modal.js"></script>
+	</head>
+	<body>
+		<div class="navbar">
+			<a href="#" id="logo">Questioner</a>
+	        <a href="index.html" id="navbar-item">Home</a>
+	        <a href="meetups.html" id="navbar-item">Meetups</a>
+	        <a href="tags.html" id="navbar-item">Tags</a>
+	        <input id="search" type="search" placeholder="Search Question here" />
+	        <button id="signup">Abraham</button>
+		</div>
+		<div class="container">
+		  <div class="sub" id="left">
+		    <h2>Upcoming Meetups</h2>
+		    <ul class="ul-item">
+		    	<li><p>How to see if a sub value is in masked value</p></li>
+		    	<li><p>How do I get vectors out of nominal data from a database table for use in cosine similarity?</p></li>
+		    	<li><p>Mac OS X 10.9 - setting permanent environment variables</p></li>
+		    	<li><p>Why are absolute units with media queries the CSS industry standard?</p></li>
+		    </ul>
+			</div>
+  
+		  <div class="sub" id="mid">
+		    <h2>All Meetups</h2>
+		    <div class="item">
+		    	<h4 class="q-h4">How do I add a name to several columns?</h4>
+		    	<p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element</p>
+		    	<div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="close">&times;</span>
+                            <h2>Post Question</h2>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <label class="form-label">Title</label><br>
+                                <input class="form-input" type="text"
+                                    required><br>
+                                <label class="form-label">Description</label><br>
+                                <textarea class="textarea" 
+                                    rows="10" cols="70" name="comment" form="usrform"></textarea><br><br>
+                                <button class="form-btn">Post</button><br>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <p></p>
+                        </div>
                     </div>
                 </div>
-                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
-                    <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
-                                style="font-family: serif; font-size: 120%; margin-top: -5px;">Python</a></h5>
-                        <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
-                            87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
-                            some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
-                            would be n...<a class="url-link" href="question.html">(more)</a></p>
-                        <ul>
-                            <li class="meetup-item">
-                                <a class="url-link btn-comment" type="submit" href="question.html">Ask Question</a>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
-                                    Meetup</a>
-                                <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
-                                    2hrs ago<a href="#" class="url-link"> By Admin</a></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="reset-bar" style="margin-top: 3%; margin-left: 0%; background-color: #fff">
-                    <div style="margin-top: 3%">
-                        <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="question.html"
-                                style="font-family: serif; font-size: 120%; margin-top: -5px;">UI/UX</a></h5>
-                        <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB">That
-                            87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
-                            some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
-                            would be n...<a class="url-link" href="question.html">(more)</a></p>
-                        <ul>
-                            <li class="meetup-item">
-                                <a class="url-link btn-comment" type="submit" href="question.html">Ask Question</a>
-                                <a style="background-color:#d9534f" class="url-link btn-comment" type="submit" href="">Delete
-                                    Meetup</a>
-                                <p style="margin-right:6%; font-size: 80%; font-family: serif; color: #ABABAB; float: right;">Posted
-                                    2hrs ago<a href="#" class="url-link"> By Admin</a></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </ul>
-        </div>
-
-        <div class="line"></div>
-
-        <div class="tags-bar">
-            <ul>
-                <h3 class="meetup-h3"><a class="url-link meetup-url" href="tags.html">Current Tags</a></h3>
-                <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Django</a>
-                    <a class="btn btn-tags url-link meetup-url" href="#">Python</a>
-                    <a class="btn btn-tags url-link meetup-url" href="#">Flask</a>
-                </li>
-                <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Javascript</a>
-                    <a class="btn btn-tags url-link meetup-url" href="#">Node.js</a>
-                    <a class="btn btn-tags url-link meetup-url" href="#">React Native</a>
-                </li>
-                <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Html</a></li>
-                <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Css</a>
-                    <a class="btn btn-tags url-link meetup-url" href="#">Css5</a>
-                </li>
-            </ul>
-        </div>
-        <script>
+		    	<ul>
+	                <li class="user-item">
+	                	<a id="myBtn" class="url-link form-btn" type="submit" href="#">Ask Question</a>
+	                    <p class="user">Posted
+	                        2hrs ago<a href="#" class="url-link link"> By Admin</a></p>
+	                </li>
+	            </ul>
+		    </div>
+		    <div class="item">
+		    	<h4 class="q-h4">How do I add a name to several columns?</h4>
+		    	<p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element</p>
+		    	<ul>
+	                <li class="user-item">
+	                	<a id="myBtn" class="url-link form-btn" type="submit" href="#">Ask Question</a>
+	                    <p class="user">Posted
+	                        2hrs ago<a href="#" class="url-link link"> By Admin</a></p>
+	                </li>
+	            </ul>
+		    </div>
+		    <div class="item">
+		    	<h4 class="q-h4">How do I add a name to several columns?</h4>
+		    	<p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element</p>
+		    	<ul>
+	                <li class="user-item">
+	                	<a id="myBtn" class="url-link form-btn" type="submit" href="#">Ask Question</a>
+	                    <p class="user">Posted
+	                        2hrs ago<a href="#" class="url-link link"> By Admin</a></p>
+	                </li>
+	            </ul>
+		    </div>
+		  </div>
+  
+		  <div class="sub" id="right">
+		    <h2>Featured Tags</h2>
+		    <ul>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    </ul>
+		  </div>
+		</div>
+		<script>
             var modal = document.getElementById('myModal');
             var btn = document.getElementById("myBtn");
             var span = document.getElementsByClassName("close")[0];
@@ -182,10 +116,8 @@
                 }
             }
         </script>
-
-        <footer class="footer">
+		<footer class="footer">
             <p>&copy; 2019 Questioner Andela</p>
         </footer>
-</body>
-
+	</body>
 </html>
