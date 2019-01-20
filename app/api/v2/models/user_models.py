@@ -76,3 +76,14 @@ class UserModel(object):
         )
         users = cursor.fetchall()
         return users
+
+    def selectAdmin(self, username):
+        """A method that helps search is user is admin"""
+        isadmin = 1
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM users WHERE username = '%s' AND isadmin = %d""" %(username, isadmin)
+        )
+        user = cursor.fetchone()
+        cursor.close()
+        return user

@@ -85,3 +85,33 @@ def requires_auth(func):
             })), 400
         return func(user, *args, *kwargs)
     return decorator_func
+
+def requires_admin(func):
+    """ validation decorator. Validates if user is logged and is admin in before performing a task """
+    @wraps(func)
+    def decorator_func(*args, **kwargs):
+        auth_token = None
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split("Bearer ")[1]
+        if not auth_token:
+            return make_response(jsonify({
+                "status": 401,
+                "data": "Unauthorized! Token required"
+            })), 401
+        try:
+            response = users.verify_auth_token(auth_token)
+            if isinstance(response, str):
+                user = users.selectAdmin(username=response)
+                if not user:
+                    return make_response(jsonify({
+                        "status": 400,
+                        "message": "Authentication failed: User is not admin"
+                    })), 400
+        except:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Authentication failed: Invalid token"
+            })), 400
+        return func(user, *args, *kwargs)
+    return decorator_func
