@@ -25,7 +25,7 @@ class TestUser(unittest.TestCase):
             "lastname": "Kirumba",
             "othername": "Kamau",
             "email": "eric@gmail.com",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "phoneNumber": "123456789",
             "password": "ak?,T4.jj12kjn@"
@@ -36,7 +36,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "eric@gmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": "qwerty"
         }
@@ -46,7 +46,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "ericgmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": "ak?,T4.jj12kjn@"
         }
@@ -56,7 +56,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "ericgmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": "ak?,T4.jj12kjn@"
         }
@@ -66,7 +66,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "ericgmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": "ak?,T4.jj12kjn@"
         }
@@ -76,7 +76,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": "ak?,T4.jj12kjn@"
         }
@@ -86,7 +86,7 @@ class TestUser(unittest.TestCase):
             "othername": "Kamau",
             "email": "ericgmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
+            "isAdmin": 1,
             "username": "Kamaa",
             "password": ""
         }
@@ -179,7 +179,7 @@ class TestUser(unittest.TestCase):
             self.assertEqual(result["data"], [{
                 "email": "eric@gmail.com",
                 "firstname": "Abraham",
-                "isAdmin": "True",
+                "isAdmin": 1,
                 "lastname": "Kirumba",
                 "othername": "Kamau",
                 "phoneNumber": "123456789",
