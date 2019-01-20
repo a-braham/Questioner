@@ -1,160 +1,70 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Questioner - Learn, share and develop as a community</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/home.css" />
-    <link rel="icon" type="image/png" href="img/logo.png" />
-    <style>
-        input[type=search] {
-            padding: 8px;
-            font-size: 14px;
-            border: none;
-            -webkit-border-radius: 3px;
-            width: 20%;
-            background: #f1f1f1;
-        }
-        .bt {
-            width: 5%;
-            padding: 8px;
-            background: #2196F3;
-            color: white;
-            font-size: 14px;
-            border: none;
-            -webkit-border-radius: 3px;
-            border-left: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar">
-        <a href="home.html" class="logo">Questioner</a>
-        <a href="home.html" class="navbar-item">Home</a>
-        <a href="meetups.html" class="navbar-item">Meetups</a>
-        <a href="tags.html" class="navbar-item">Tags</a>
-        <input type="search" placeholder="Search Question here" />
-        <button class="bt" type="submit">Search</button>
-        <a class="navbar-item url-link btn-signup" type="submit" href="">A.Grean</a>
-    </nav>
-
-    <div class="meetup-bar">
-        <ul>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="meetups.html">Active Meetups</a></h3>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
-        </ul>
-    </div>
-
-    <div class="content-bar">
-        <ul>
-            <div class="profile-bar">
-                <ul>
-                    <img class="profile-img" src="img/avatar.png" alt="Avatar">
-                    <h5 class="profile-name"><a class="url-link meetup-url" href="profile.html">A.Kirumba</a></h5>
-                    <!-- <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
-                    <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
-                    <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
-                    <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li> -->
-                </ul>
-            </div>
-            <div class="profile-list">
-                <ul>
-                    <h2 class="profile-h2"><a class="url-link meetup-url" href="#">Abraham Kirumba</a></h2>
-                    <li class="profile-item"><a class="url-link meetup-url" href="#">CTO at Sekure labs</a></li>
-                    <li class="profile-item"><a class="url-link meetup-url" href="#">IT Specialist with over 7+ years
-                            of experience in information security and digital forensics. Expert with a wide variety of
-                            security, engineering, networking, and operating system software. Possesses an Associate
-                            Degree in Information Security and Digital Forensics.</a></li>
-                    <li class="profile-item"><a class="url-link meetup-url" style="color:#2196F3" href="#">Edit Profile</a><a
-                            class="navbar-item url-link btn-signup" style="color:#fff" href="login.html">Logout</a></li>
-                </ul>
-            </div>
-            <!-- Reset password -->
-            <div class="form-bar">
-                <form style="margin-top: 5%">
-                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="password" placeholder="Type password"
-                        required><br><br>
-                    <input class="btn-form btn-margins btn-primary" value="Reset Password" type="submit"><br>
-                </form>
-            </div>
-        </ul>
-        <div class="reset-bar" style="margin-top: 3%; margin-left: 5%; background-color: #fff">
-            <div style="margin-top: 3%">
-                <h5 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="comment.html" style="font-family: serif; font-size: 120%; margin-top: -5px;">Top
-                        Questions for Scheduled Meetup</a></h5>
-                <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB"><a style="background-color: #5cb85c; padding: 2%;"
-                        class="btn btn-tags url-link meetup-url" href="#">1</a>That
-                    87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
-                    some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
-                    would be n...<a class="url-link" href="comment.html">(more)</a></p>
-                <p style="margin-left:6%; margin-right:6%; margin-top:-3%; font-family: serif; color: #ABABAB"><a style="background-color: #5cb85c; padding: 2%;"
-                        class="btn btn-tags url-link meetup-url" href="#">2</a>That
-                    87% of the Startups are unnecessary and don’t solve a real problem.Silicon Valley produced
-                    some great companies and a legacy for ages.Without Silicon Valley/Bay Area there probably
-                    would be n...<a class="url-link" href="comment.html">(more)</a></p>
-                <ul>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="tags-bar">
-        <ul>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">My Tags</a></h3>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Django</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Python</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Flask</a>
-            </li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Javascript</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Node.js</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">React Native</a>
-            </li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Html</a></li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Css</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Css5</a>
-            </li>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">My Questions</a></h3>
-            <li class="meetup-item">
-                <p style="color:#000000; font-size: 14px">You have posted on <a class="url-link" href="#">3</a>
-                    Questions</p>
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <li class="meetup-item">
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <li class="meetup-item">
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="#">My Comments</a></h3>
-            <li class="meetup-item">
-                <p style="color:#000000; font-size: 14px">You have commented on <a class="url-link" href="#">4</a>
-                    Questions</p>
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <li class="meetup-item">
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <li class="meetup-item">
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-            <li class="meetup-item">
-                <a style="font-size: 13px; color: #464646" class="url-link" href="view_question.html">Python</a>
-            </li>
-        </ul>
-    </div>
-
-    <footer class="footer">
-        <p>&copy; 2019 Questioner Andela</p>
-    </footer>
-</body>
-
+	<head>
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <title>Questioner - Learn, share and develop as a community</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+	    <link rel="stylesheet" type="text/css" href="styles/container.css" />
+	    <link rel="icon" type="image/png" href="img/logo.png" />
+	</head>
+	<body>
+		<div class="navbar">
+			<a href="#" id="logo">Questioner</a>
+	        <a href="index.html" id="navbar-item">Home</a>
+	        <a href="meetups.html" id="navbar-item">Meetups</a>
+	        <a href="tags.html" id="navbar-item">Tags</a>
+	        <input id="search" type="search" placeholder="Search Question here" />
+	        <button id="signup">Signup</button>
+		</div>
+		<div class="container">
+		  <div class="sub" id="left">
+	    	<ul>
+	    		<img class="profile-img" src="img/avatar.png" alt="Avatar">
+                <h4>Abraham Kirumba</h4>
+                <li class="user-item"><p id="profile">CTO at Sekure labs</p></li>
+                <li class="user-item"><p id="profile">IT Specialist with over 7+ years
+                        of experience in information security and digital forensics. Expert with a wide variety of
+                        security, engineering, networking, and operating system software. Possesses an Associate
+                        Degree in Information Security and Digital Forensics.</p></li>
+                <li class="user-item"><button id="signup" onclick="location.href='index.html' ">Logout</button></li>
+            </ul>
+			</div>  
+		  <div class="sub" id="mid">
+		    <div class="item">
+		    	<h4 class="q-h4">Top Questions for Scheduled Meetup</h4>
+		    	<ol>
+			    	<li><p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element...<a href="view_question.html" class="url-link link">more</a> </p></li>
+			    	<li><p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element...<a href="view_question.html" class="url-link link">more</a> </p></li>
+			    	<li><p>I'm attempting to completely recreate or reorganize the functionality of the LayersControl component in its own separate panel using react-leaflet. I have several filtered into their own and it works fine, but I'd like to customize the look and location of the Control element...<a href="view_question.html" class="url-link link">more</a> </p></li>
+		    	</ol>
+		    </div>
+		  </div>
+		  <div class="sub" id="right">
+		    <h2>Featured Tags</h2>
+		    <ul>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    </ul>
+		    <h2>My Questions</h2>
+		    <ol type="i">
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    </ol>
+		    <h2>My Comments</h2>
+		    <ol type="i">
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    	<li><a href="comment.html" class="url-link link">How do I get vectors out of nominal data from a database table for use in cosine similarity?</a></li>
+		    </ol>
+		  </div>
+		</div>
+		<footer class="footer">
+            <p>&copy; 2019 Questioner Andela</p>
+        </footer>
+	</body>
 </html>
