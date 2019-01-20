@@ -113,8 +113,8 @@ class TestQuestion(unittest.TestCase):
         result = json.loads(user_resp.data.decode('utf-8'))
         token = 'Bearer ' + result["token"]
         header = {"Authorization": token}
-        self.client.post("api/v2/questions", data=json.dumps(self.question), content_type="application/json")
-        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), content_type="application/json")
+        self.client.post("api/v2/questions", data=json.dumps(self.question), headers=header, content_type="application/json")
+        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)

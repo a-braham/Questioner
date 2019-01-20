@@ -187,30 +187,52 @@ def downvote(question_id):
 @question_bpv2.route('/<int:question_id>/comment', methods=['POST'])
 def comments(question_id):
     """A method to enable posting of comments based on user question """
-    question = questions.oneQuestion(question_id)
-    if question:
-        try:
-            data = request.get_json()
-        except Exception as e:
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    else:
+        auth_token = 'Bearer '
+    if auth_token:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            if not user:
+                return make_response(jsonify({
+                    "status": 400,
+                    "message": "Authentication failed"
+                })), 400
+            question = questions.oneQuestion(question_id)
+            if question:
+                try:
+                    data = request.get_json()
+                except Exception as e:
+                    return make_response(jsonify({
+                        "status": 400,
+                        "message": "Invalid or no data sent" + e
+                    }))
+                comment = data.get("comment")
+                if not comment:
+                    return make_response(jsonify({
+                        "status": 400,
+                        "message": "Comment posted is empty"
+                    }))
+                questions.create_comment(question_id, comment)
+                return make_response(jsonify({
+                    "status": 201,
+                    "data": [{
+                        "question": question_id,
+                        "comment": comment
+                    }]
+                })), 201
             return make_response(jsonify({
-                "status": 400,
-                "message": "Invalid or no data sent" + e
+                "status": 404,
+                "message": "Question not found"
             }))
-        comment = data.get("comment")
-        if not comment:
-            return make_response(jsonify({
-                "status": 400,
-                "message": "Comment posted is empty"
-            }))
-        questions.create_comment(question_id, comment)
         return make_response(jsonify({
-            "status": 201,
-            "data": [{
-                "question": question_id,
-                "comment": comment
-            }]
-        })), 201
+            "status": 400,
+            "message": "Authentication token failed"
+        })), 400
     return make_response(jsonify({
         "status": 404,
-        "message": "Question not found"
-    }))
+        "data": "Token not found"
+    })), 404
