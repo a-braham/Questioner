@@ -2,6 +2,19 @@ body{
     overflow-y: auto;
     background-color: #EEF9F1;
 }
+input[type=search] {
+    font-size: 14px;
+    -webkit-border-radius: 3px;
+    width: 25%;
+    background: #F8FCF9;
+    background-image: url("/home/greean/AndelaProjects/Questioner/ui/img/search.png");
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 8px 20px 8px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    border: 1px solid #1C680F;
+}
 .navbar{
     z-index: 10000;
     position: fixed;
@@ -91,10 +104,10 @@ body{
     list-style-type: none;
     background-color: #fff;
     width: 30%;
-    position: fixed;
     margin-top: 7%;
     margin-left: 35%;
-    height: max-content;
+    height: fit-content;
+    max-height: fit-content;
     border: 0.5px solid #CFCFCF;
     border-radius: 5px;
 }
@@ -394,6 +407,9 @@ h4{
     margin-left: 5%;
     margin-right: 5%;
     color: #ADADAD;
+}
+#log-footer{
+    margin-left: 30%;
 }
 .log-link{
     color: #0237BB;
