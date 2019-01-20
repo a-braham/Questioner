@@ -43,18 +43,14 @@ class TestMeetup(unittest.TestCase):
         }
 
         self.user = {
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "admin",
+            "password": "super"
         }
         self.test_DB = _init_db()
 
     def test_create_meetup(self):
         """ Test creation of meetup """
-        self.client.post(
-            "/api/v2/signup", data=json.dumps(self.u_register), content_type="application/json"
-        )
-        user_resp = self.client.post(
-            "/api/v2/login", data=json.dumps(self.user), content_type="application/json")
+        user_resp = self.client.post("/api/v2/login", data=json.dumps(self.user), content_type="application/json")
         result = json.loads(user_resp.data.decode('utf-8'))
         token = 'Bearer ' + result["token"]
         header = {"Authorization": token}

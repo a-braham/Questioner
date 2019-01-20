@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 import os, jwt
 from instance.config import Config
-from app.database import init_db
+from app.database import init_db, create_admin
 
 USERS = []
 SECRET_KEY = Config.SECRET_KEY
@@ -14,7 +14,9 @@ class UserModel(object):
     
     def __init__(self):
         self.DB = init_db()
+        self.admin = create_admin()
         self.users = USERS
+
     
     def generate_auth_token(self, username):
         """ Generate auth token """
