@@ -87,6 +87,12 @@
   margin-top: 2px;
   margin-left: 5%;
 }
+.url-link{
+  text-decoration: none;
+}
+.link{
+  color: #1C680F;
+}
 #left{
   margin-top: 5%;
   margin-left: 1%;
@@ -111,7 +117,11 @@
   background-color: #fff;
   border: 0.5px solid #CFCFCF;
 }
-
+#myBtn{
+  padding: 8px;
+  margin-top: 2px;
+  margin-left: 0%;
+}
 @media screen and (max-width: 992px) {
   #left{
     width: 50%;
