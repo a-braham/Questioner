@@ -4,12 +4,7 @@ import unittest
 import json
 import instance
 from app import create_app
-from app.database import _init_db, destroy_db
-from app.api.v2.models import user_models
-
-app = create_app("testing")
-users = user_models.UserModel()
-
+from app.database import DBOps
 
 class TestUser(unittest.TestCase):
     """ Test class for user endpoints """
@@ -17,8 +12,9 @@ class TestUser(unittest.TestCase):
     def setUp(self):
         """ Defining test variables """
 
-        app.config.from_object(instance.config.Testing)
+        app = create_app("testing")
         self.client = app.test_client()
+        self.client.testing = True
 
         self.user = {
             "firstname": "Abraham",
@@ -112,14 +108,21 @@ class TestUser(unittest.TestCase):
             "password": "hfkhkblllbkjvhcc"
         }
         # Initialize test db and create tables
-        self.test_db = _init_db()
+        with app.app_context():
+            self.test_db = DBOps.send_con()
 
     def test_user_signup(self):
         """ Test signup user """
+        response = self.client.post(
+                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            )
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["status"], 201)
+
         response1 = self.client.post(
             "/api/v2/signup", data=json.dumps(self.user1), content_type="application/json")
         result1 = json.loads(response1.data.decode('utf-8'))
-
         self.assertEqual(response1.status_code, 400)
         self.assertEqual(result1["status"], 400)
         self.assertEqual(result1["message"], "Password not valid")
@@ -166,33 +169,6 @@ class TestUser(unittest.TestCase):
 
     def test_get_users(self):
         """ Tests view posted meetups """
-
-        user = users.login(self.user["username"])
-        if not user:
-            response = self.client.post(
-                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
-            )
-            result = json.loads(response.data.decode('utf-8'))
-
-            self.assertEqual(response.status_code, 201)
-            self.assertEqual(result["status"], 201)
-            self.assertEqual(result["data"], [{
-                "email": "eric@gmail.com",
-                "firstname": "Abraham",
-                "isAdmin": "True",
-                "lastname": "Kirumba",
-                "othername": "Kamau",
-                "phoneNumber": "123456789",
-                "username": "Kamaa"
-            }])
-        else:
-            response = self.client.post(
-                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
-            )
-            result = json.loads(response.data.decode('utf-8'))
-            self.assertEqual(response.status_code, 400)
-            self.assertEqual(result["status"], 400)
-
         response = self.client.get(
             "/api/v2/get_users", content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
@@ -250,9 +226,7 @@ class TestUser(unittest.TestCase):
 
     def tearDown(self):
         """ Method to destroy test client """
-        app.testing = False
-        destroy_db()
-        self.test_db.close()
+        DBOps.destroy_db()
 
 
 if __name__ == "__main__":

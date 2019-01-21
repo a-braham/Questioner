@@ -6,7 +6,7 @@ import instance
 from app.api.v1.views import question_views
 from app.api.v1.models import question_models
 from app import create_app
-from app.database import _init_db, destroy_db
+from app.database import DBOps
 
 app = create_app("testing")
 
@@ -47,7 +47,8 @@ class TestQuestion(unittest.TestCase):
         self.comment = {
             "comment": "This is a comment"
         }
-        self.test_DB = _init_db()
+        with app.app_context():
+            self.test_db = DBOps.send_con()
 
     def test_create_question(self):
         """ Method to test creating question """
@@ -122,9 +123,7 @@ class TestQuestion(unittest.TestCase):
 
     def tearDown(self):
         """ Method to destroy test client """
-        app.testing = False
-        destroy_db()
-        self.test_DB.close()
+        DBOps.destroy_db()
 
 
 if __name__ == "__main__":

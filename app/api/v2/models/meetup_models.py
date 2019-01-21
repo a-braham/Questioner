@@ -1,7 +1,7 @@
 """ Models for handling Meetup data """
 
 from datetime import datetime, timedelta
-from app.database import init_db
+from app.database import DBOps
 
 MEETUPS = []
 RSVPS = []
@@ -13,7 +13,7 @@ class MeetUpModel(object):
         self.meetups = MEETUPS
         self.rsvps = RSVPS
 
-        self.MEETUPS = init_db()
+        self.MEETUPS = DBOps.send_con()
 
     def create_meetup(self, topic, location, happening_on, tags):
         """ A method to manipulate creation of meetups """

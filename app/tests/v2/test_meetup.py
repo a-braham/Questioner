@@ -5,7 +5,7 @@ import instance
 from app.api.v1.views import meetup_views
 from app.api.v1.models import meetup_models, user_models
 from app import create_app
-from app.database import _init_db, destroy_db
+from app.database import DBOps
 
 app = create_app("testing")
 users = user_models.UserModel()
@@ -46,7 +46,8 @@ class TestMeetup(unittest.TestCase):
             "username": "Kamaa",
             "password": "ak?,T4.jj12kjn@"
         }
-        self.test_DB = _init_db()
+        with app.app_context():
+            self.test_db = DBOps.send_con()
 
     def test_create_meetup(self):
         """ Test creation of meetup """
@@ -121,9 +122,7 @@ class TestMeetup(unittest.TestCase):
 
     def tearDown(self):
         """ Method to destroy test client """
-        app.testing = False
-        destroy_db()
-        self.test_DB.close()
+        DBOps.destroy_db()
 
 
 if __name__ == "__main__":
