@@ -99,6 +99,7 @@
 }
 .link{
   color: #1C680F;
+  font-size: 13px;
 }
 #left{
   margin-top: 5%;
@@ -118,6 +119,7 @@
 }
 #right{
   margin-top: 5%;
+  margin-bottom: 5%;
   width: 20%;
   margin-left: 1%;
   border-radius: 5px;
@@ -139,6 +141,9 @@
 #comment-btn{
   padding: 8px;
 }
+#profile{
+  color: #000000;
+}
 @media screen and (max-width: 992px) {
   #left{
     width: 50%;
@@ -151,6 +156,7 @@
   #right{
     width: 50%;
     margin-bottom: 10%;
+    height: max-content;
     border: 0.5px solid #CFCFCF;
   }
 }
