@@ -1,106 +1,69 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Questioner - Learn, share and develop as a community</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../styles/home.css" />
-    <link rel="icon" type="image/png" href="../img/logo.png" />
-    <style>
-        input[type=search] {
-            padding: 8px;
-            font-size: 14px;
-            border: none;
-            -webkit-border-radius: 3px;
-            width: 20%;
-            background: #f1f1f1;
-        }
-        .bt {
-            width: 5%;
-            padding: 8px;
-            background: #2196F3;
-            color: white;
-            font-size: 14px;
-            border: none;
-            -webkit-border-radius: 3px;
-            border-left: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar">
-        <a href="../home.html" class="logo">Questioner</a>
-        <a href="../home.html" class="navbar-item">Home</a>
-        <a href="../meetups.html" class="navbar-item">Meetups</a>
-        <a href="../tags.html" class="navbar-item">Tags</a>
-        <input type="search" placeholder="Search Question here" />
-        <button class="bt" type="submit">Search</button>
-        <a class="navbar-item url-link btn-signup" type="submit" href="">A.Grean</a>
-    </nav>
-
-    <div class="meetup-bar">
-        <ul>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="../meetups.html">Active Meetups</a></h3>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">UI/UX</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">Python</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">Team work</a></li>
-            <li class="meetup-item"><a class="url-link meetup-url" href="#">GDG</a></li>
-        </ul>
-    </div>
-
-    <div class="content-bar">
-        <ul>
-            <div class="reset-bar" style="overflow: auto; height: 78%; margin-top: 0%; margin-left: 0%; background-color: #fff">
-                <ul>
-                    <h3 style="margin-left:10%;" class="meetup-h3"><a class="url-link meetup-url" href="#" style="font-family: serif; font-size: 150%; margin-top: -5px;">Create
-                            Meetup</a></h3>
-                </ul>
-                <form style="margin-top: 5%; margin-block-start: 5%;">
-                    <label style="color:#585757" class="form-label">Topic</label><br>
-                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+	<head>
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <title>Questioner - Learn, share and develop as a community</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" type="text/css" href="../styles/styles.css" />
+	    <link rel="stylesheet" type="text/css" href="../styles/container.css" />
+	    <link rel="icon" type="image/png" href="../img/logo.png" />
+	</head>
+	<body>
+		<div class="navbar">
+			<a href="#" id="logo">Questioner</a>
+	        <a href="index.html" id="navbar-item">Home</a>
+	        <a href="meetups.html" id="navbar-item">Meetups</a>
+	        <a href="tags.html" id="navbar-item">Tags</a>
+	        <input id="search" type="search" placeholder="Search Question here" />
+	        <button id="signup">Admin</button>
+		</div>
+		<div class="container">
+		  <div class="sub" id="left">
+		    <h2>Upcoming Meetups</h2>
+		    <ul class="ul-item">
+		    	<li><p>How to see if a sub value is in masked value</p></li>
+		    	<li><p>How do I get vectors out of nominal data from a database table for use in cosine similarity?</p></li>
+		    	<li><p>Mac OS X 10.9 - setting permanent environment variables</p></li>
+		    	<li><p>Why are absolute units with media queries the CSS industry standard?</p></li>
+		    </ul>
+			</div>
+  
+		  <div class="sub" id="mid">
+		    <div class="item">
+		    	<h4 class="q-h4">Create Meetup</h4>
+		    	<form>
+                    <label class="form-label">Topic</label><br>
+                    <input class="form-input" type="text"
                         required><br>
-                    <label style="color:#585757" class="form-label">Location</label><br>
-                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                    <label class="form-label">Location</label><br>
+                    <input class="form-input" type="text"
                         required><br>
-                    <label style="color:#585757" class="form-label">Tags</label><br>
-                    <input style="border: 0.5px solid #BDE5F8;" class="form-input" type="text"
+                    <label class="form-label">Tags</label><br>
+                    <input class="form-input" type="text"
                         required><br>
-                    <label style="color:#585757" class="form-label">Description</label><br>
-                    <textarea style="border: 0.5px solid #BDE5F8; margin-left: 5%; border-radius: 5px;" rows="10" cols="44" name="comment" form="usrform"></textarea>
-                    <input style="width: 20%; margin-left: 40%" class="btn-form btn-margins btn-primary" value="Create"
+                    <label class="form-label">Date</label><br>
+                    <input class="form-input" type="date"
+                        required><br>
+                    <label class="form-label">Description</label><br>
+                    <textarea class="textarea"></textarea>
+                    <input class="form-btn" value="Create"
                         type="submit"><br>
                 </form>
-            </div>
-        </ul>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="tags-bar">
-        <ul>
-            <h3 class="meetup-h3"><a class="url-link meetup-url" href="../tags.html">Current Tags</a></h3>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Django</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Python</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Flask</a>
-            </li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Javascript</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Node.js</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">React Native</a>
-            </li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Html</a></li>
-            <li class="meetup-item"><a class="btn btn-tags url-link meetup-url" href="#">Css</a>
-                <a class="btn btn-tags url-link meetup-url" href="#">Css5</a>
-            </li>
-        </ul>
-    </div>
-
-    <footer class="footer">
-        <p>&copy; 2019 Questioner Andela</p>
-    </footer>
-</body>
-
+		    </div>		    
+		  </div>  
+		  <div class="sub" id="right">
+		    <h2>Featured Tags</h2>
+		    <ul>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    	<li><button class="btn-tags">Java</button><button class="btn-tags">Java</button></li>
+		    </ul>
+		  </div>
+		</div>
+		<footer class="footer">
+            <p>&copy; 2019 Questioner Andela</p>
+        </footer>
+	</body>
 </html>
