@@ -55,7 +55,6 @@ def create_question(func):
 @question_bpv2.route('/<int:question_id>', methods=['GET'])
 def question(question_id):
     """ Manipulates upvoting question """
-
     questionz = questions.oneQuestion(question_id)
     if questionz:
         quiz = [question for question in questionz]
@@ -70,169 +69,101 @@ def question(question_id):
 
 
 @question_bpv2.route('/<int:question_id>/upvote', methods=['PATCH'])
+@requires_auth
 def upvote(question_id):
     """ Manipulates upvoting question """
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split("Bearer ")[1]
-    else:
-        auth_token = 'Bearer '
-    if auth_token:
-        response = users.verify_auth_token(auth_token)
-        if isinstance(response, str):
-            user = users.login(username=response)
-            if not user:
-                return make_response(jsonify({
-                    "status": 400,
-                    "message": "Authentication failed"
-                })), 400
-            questionz = questions.oneQuestion(question_id)
-            if questionz:
-                try:
-                    data = request.get_json()
-                except:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Wrong input"
-                    })), 400
-                vote = int(data.get('votes'))
-                if vote not in [1]:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Vote not allowed"
-                    })), 400
-                if [question for question in questionz][6] not in [0, -1]:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Already voted"
-                    })), 400
-                votes = questions.upVote(question_id, vote)
-                return make_response(jsonify({
-                    "status": 200,
-                    "data": votes
-                    }))
+    questionz = questions.oneQuestion(question_id)
+    if questionz:
+        try:
+            data = request.get_json()
+        except:
             return make_response(jsonify({
-                "status": 404,
-                "message": "Question not found"
-            })), 404
-
+                "status": 400,
+                "message": "Wrong input"
+            })), 400
+        vote = int(data.get('votes'))
+        if vote not in [1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Vote not allowed"
+            })), 400
+        if [question for question in questionz][6] not in [0, -1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Already voted"
+            })), 400
+        votes = questions.upVote(question_id, vote)
         return make_response(jsonify({
-            "status": 400,
-            "message": "Authentication token failed"
-        })), 400
+            "status": 200,
+            "data": votes
+            }))
     return make_response(jsonify({
         "status": 404,
-        "data": "Token not found"
-    })), 404    
+        "message": "Question not found"
+    })), 404
 
 @question_bpv2.route('/<int:question_id>/downvote', methods=['PATCH'])
-def downvote(question_id):
+@requires_auth
+def downvote(func, question_id):
     """ Manipulates upvoting question """
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split("Bearer ")[1]
-    else:
-        auth_token = 'Bearer '
-    if auth_token:
-        response = users.verify_auth_token(auth_token)
-        if isinstance(response, str):
-            user = users.login(username=response)
-            if not user:
-                return make_response(jsonify({
-                    "status": 400,
-                    "message": "Authentication failed"
-                })), 400
-            questionz = questions.oneQuestion(question_id)
-            if questionz:
-                try:
-                    data = request.get_json()
-                except:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Wrong input"
-                    })), 400
-                vote = int(data.get('votes'))
-                if vote not in [1]:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Vote not allowed"
-                    })), 400
-                if [question for question in questionz][6] not in [0, 1]:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Already voted"
-                    })), 400
-                votes = questions.downVote(question_id, vote)
-                return make_response(jsonify({
-                    "status": 200,
-                    "data": votes
-                })), 200
+    questionz = questions.oneQuestion(question_id)
+    if questionz:
+        try:
+            data = request.get_json()
+        except:
             return make_response(jsonify({
-                "status": 404,
-                "message": "Question not found"
-            })), 404
-
+                "status": 400,
+                "message": "Wrong input"
+            })), 400
+        vote = int(data.get('votes'))
+        if vote not in [1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Vote not allowed"
+            })), 400
+        if [question for question in questionz][6] not in [0, 1]:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Already voted"
+            })), 400
+        votes = questions.downVote(question_id, vote)
         return make_response(jsonify({
-            "status": 400,
-            "message": "Authentication token failed"
-        })), 400
+            "status": 200,
+            "data": votes
+        })), 200
     return make_response(jsonify({
         "status": 404,
-        "data": "Token not found"
+        "message": "Question not found"
     })), 404
-
-
-    
 
 @question_bpv2.route('/<int:question_id>/comment', methods=['POST'])
+@requires_auth
 def comments(question_id):
     """A method to enable posting of comments based on user question """
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split("Bearer ")[1]
-    else:
-        auth_token = 'Bearer '
-    if auth_token:
-        response = users.verify_auth_token(auth_token)
-        if isinstance(response, str):
-            user = users.login(username=response)
-            if not user:
-                return make_response(jsonify({
-                    "status": 400,
-                    "message": "Authentication failed"
-                })), 400
-            question = questions.oneQuestion(question_id)
-            if question:
-                try:
-                    data = request.get_json()
-                except Exception as e:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Invalid or no data sent" + e
-                    }))
-                comment = data.get("comment")
-                if not comment:
-                    return make_response(jsonify({
-                        "status": 400,
-                        "message": "Comment posted is empty"
-                    }))
-                questions.create_comment(question_id, comment)
-                return make_response(jsonify({
-                    "status": 201,
-                    "data": [{
-                        "question": question_id,
-                        "comment": comment
-                    }]
-                })), 201
+    question = questions.oneQuestion(question_id)
+    if question:
+        try:
+            data = request.get_json()
+        except Exception as e:
             return make_response(jsonify({
-                "status": 404,
-                "message": "Question not found"
+                "status": 400,
+                "message": "Invalid or no data sent" + e
             }))
+        comment = data.get("comment")
+        if not comment:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Comment posted is empty"
+            }))
+        questions.create_comment(question_id, comment)
         return make_response(jsonify({
-            "status": 400,
-            "message": "Authentication token failed"
-        })), 400
+            "status": 201,
+            "data": [{
+                "question": question_id,
+                "comment": comment
+            }]
+        })), 201
     return make_response(jsonify({
         "status": 404,
-        "data": "Token not found"
-    })), 404
+        "message": "Question not found"
+    }))

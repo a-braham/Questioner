@@ -55,7 +55,6 @@ class UserValidation():
         else:
             return False
 
-
 def requires_auth(func):
     """ validation decorator. Validates if user is logged in before performing a task """
     @wraps(func)
@@ -78,10 +77,18 @@ def requires_auth(func):
                         "status": 400,
                         "message": "Authentication failed: Wrong username"
                     })), 400
+                return func(user, *args, *kwargs)
         except:
             return make_response(jsonify({
                 "status": 400,
                 "message": "Authentication failed: Invalid token"
             })), 400
-        return func(user, *args, *kwargs)
     return decorator_func
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
