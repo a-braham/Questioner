@@ -55,7 +55,6 @@ class UserValidation():
         else:
             return False
 
-
 def requires_auth(func):
     """ validation decorator. Validates if user is logged in before performing a task """
     @wraps(func)
@@ -72,7 +71,7 @@ def requires_auth(func):
         try:
             response = users.verify_auth_token(auth_token)
             if isinstance(response, str):
-                user = users.login(username=response)
+                user = users.login(username=response)[0]
                 if not user:
                     return make_response(jsonify({
                         "status": 400,
@@ -83,6 +82,32 @@ def requires_auth(func):
                 "status": 400,
                 "message": "Authentication failed: Invalid token"
             })), 400
+<<<<<<< HEAD
+        return func(user ,*args, *kwargs)
+    decorator_func.__name__ = func.__name__
+    return decorator_func
+
+def login_req():
+    auth_token = None
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    if not auth_token:
+        return make_response(jsonify({
+            "status": 401,
+            "data": "Unauthorized! Token required"
+        })), 401
+    try:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            return user
+    except:
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Authentication failed: Invalid token"
+        })), 400
+=======
         return func(user, *args, *kwargs)
     return decorator_func
 
@@ -115,3 +140,4 @@ def requires_admin(func):
             })), 400
         return func(user, *args, *kwargs)
     return decorator_func
+>>>>>>> c8df06f6e0244c74775bfada05d2dcb54dcad7ff
