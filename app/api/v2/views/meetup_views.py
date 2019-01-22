@@ -4,14 +4,14 @@ from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import meetup_models
 from ..models import user_models
 from werkzeug.exceptions import BadRequest
-from ..utils.validators import requires_auth
+from ..utils.validators import requires_auth, requires_admin
 
 meetup_bpv2 = Blueprint('meetupsv2', __name__, url_prefix='/api/v2/meetups')
 meetups = meetup_models.MeetUpModel()
 users = user_models.UserModel()
 
 @meetup_bpv2.route('', methods=['POST'])
-@requires_auth
+@requires_admin
 def create_meetup(func):
     """ A view to control creation of meetups """
 
