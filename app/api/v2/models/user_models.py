@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 import os, jwt
 from instance.config import Config
-from app.database import init_db
+from app.database import DBOps
 
 USERS = []
 SECRET_KEY = Config.SECRET_KEY
@@ -13,7 +13,7 @@ class UserModel(object):
     """ A class that maps user data """
     
     def __init__(self):
-        self.DB = init_db()
+        self.DB = DBOps.send_con()
         self.users = USERS
     
     def generate_auth_token(self, username):

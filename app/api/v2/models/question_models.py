@@ -1,8 +1,7 @@
 """ Models for handling Questions data """
 
 from datetime import datetime, timedelta
-from app.database import init_db
-
+from app.database import DBOps
 QUESTIONS = []
 
 
@@ -11,8 +10,8 @@ class QuestionModel(object):
 
     def __init__(self):
         self.questions = QUESTIONS
-        self.DB = init_db()
-
+        self.DB = DBOps.send_con()
+        
     def create_question(self, title, body, meetup, createdby, votes):
         """ A method to manipulate creation of questions """
 
