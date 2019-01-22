@@ -36,5 +36,6 @@ class DBOps:
             for table in tables:
                 cls.cursor.execute(table)
             cls.conn.commit()
+            return cls.conn
         except Exception as e:
             print("Database exception: %s" % e)

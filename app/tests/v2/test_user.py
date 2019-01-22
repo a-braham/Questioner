@@ -1,172 +1,70 @@
 """ Test for User endpoints """
-
-import unittest
+from .basetest import BaseTest
 import json
-import instance
-from app import create_app
-from app.database import DBOps
-
-class TestUser(unittest.TestCase):
-    """ Test class for user endpoints """
-
-    def setUp(self):
-        """ Defining test variables """
-
-        app = create_app("testing")
-        self.client = app.test_client()
-        self.client.testing = True
-
-        self.user = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "eric@gmail.com",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "phoneNumber": "123456789",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.user1 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "eric@gmail.com",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "qwerty"
-        }
-        self.user2 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "ericgmail.com",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.user3 = {
-            "firstname": "",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "ericgmail.com",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.user4 = {
-            "firstname": "Abraham",
-            "lastname": "",
-            "othername": "Kamau",
-            "email": "ericgmail.com",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.user5 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.user6 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
-            "othername": "Kamau",
-            "email": "ericgmail.com",
-            "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": ""
-        }
-
-        self.login = {
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.login1 = {
-            "username": "Kama",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.login2 = {
-            "username": "",
-            "password": "ak?,T4.jj12kjn@"
-        }
-        self.login3 = {
-            "username": "Kamaa",
-            "password": ""
-        }
-        self.login4 = {
-            "username": "Kamaa",
-            "password": "hfkhkblllbkjvhcc"
-        }
-        # Initialize test db and create tables
-        with app.app_context():
-            self.test_db = DBOps.send_con()
-
+class TestSignup(BaseTest):
+    """Test case class for testing user data for signup"""
     def test_user_signup(self):
         """ Test signup user """
-        response = self.client.post(
-                "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
-            )
+        response = self.signup()
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
 
-        response1 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user1), content_type="application/json")
+    def test_invalid_password(self):
+        response1 = self.invalid_password_signup()
         result1 = json.loads(response1.data.decode('utf-8'))
         self.assertEqual(response1.status_code, 400)
         self.assertEqual(result1["status"], 400)
         self.assertEqual(result1["message"], "Password not valid")
 
-        response2 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user2), content_type="application/json")
+    def test_invalid_email(self):
+        response2 = self.invalid_email_signup()
         result2 = json.loads(response2.data.decode('utf-8'))
 
         self.assertEqual(response2.status_code, 400)
         self.assertEqual(result2["status"], 400)
         self.assertEqual(result2["message"], "Invalid email")
 
-        response3 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user3), content_type="application/json")
+    def test_firstname_signup(self):
+        response3 = self.empty_firstname_signup()
         result3 = json.loads(response3.data.decode('utf-8'))
 
         self.assertEqual(response3.status_code, 400)
         self.assertEqual(result3["status"], 400)
         self.assertEqual(result3["message"], "Firstname is required")
 
-        response4 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user4), content_type="application/json")
+    def test_lastname_signup(self):
+        response4 = self.empty_last_name_signup()
         result4 = json.loads(response4.data.decode('utf-8'))
 
         self.assertEqual(response4.status_code, 400)
         self.assertEqual(result4["status"], 400)
         self.assertEqual(result4["message"], "Lastname is required")
 
-        response5 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user5), content_type="application/json")
+    def test_email_signup(self):
+        response5 = self.empty_email_signup()
         result5 = json.loads(response5.data.decode('utf-8'))
 
         self.assertEqual(response5.status_code, 400)
         self.assertEqual(result5["status"], 400)
         self.assertEqual(result5["message"], "email is required")
 
-        response6 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user6), content_type="application/json")
+    def test_password_signup(self):
+        response6 = self.empty_password_signup()
         result6 = json.loads(response6.data.decode('utf-8'))
 
         self.assertEqual(response6.status_code, 400)
         self.assertEqual(result6["status"], 400)
         self.assertEqual(result6["message"], "Password is required")
-
+    
+    def test_username_signup(self):
+        response7 = self.empty_username_signup()
+        result7 = json.loads(response7.data.decode('utf-8'))
+        self.assertEqual(response7.status_code, 400)
+        self.assertEqual(result7["status"], 400)
+        self.assertEqual(result7["message"], "Username is required")
+class TestUsers(BaseTest):
+    """Test case class for testing user data for login"""
     def test_get_users(self):
         """ Tests view posted meetups """
         response = self.client.get(
@@ -175,55 +73,53 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
 
+class TestLogin(BaseTest):
+    """Test case class for testing user data for login"""
     def test_user_login(self):
         """ Test login user """
-        response = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
+        response = self.login_()
         result = json.loads(response.data.decode('utf-8'))
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
         self.assertTrue(result["token"])
 
-        response1 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login1), content_type="application/json")
+    def test_wrong_username(self):
+        response1 = self.login_wrong_username()
         result1 = json.loads(response1.data.decode('utf-8'))
 
         self.assertEqual(response1.status_code, 404)
         self.assertEqual(result1["status"], 404)
         self.assertEqual(result1["message"], "User does not exist")
 
-        response2 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login2), content_type="application/json")
+    def test_empty_login_username(self):
+        response2 = self.login_empty_username()
         result2 = json.loads(response2.data.decode('utf-8'))
 
         self.assertEqual(response2.status_code, 400)
         self.assertEqual(result2["status"], 400)
         self.assertEqual(result2["message"], "Username is required")
 
-        response3 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login3), content_type="application/json")
+    def test_empty_login_password(self):
+        response3 = self.login_empty_password()
         result3 = json.loads(response3.data.decode('utf-8'))
 
         self.assertEqual(response3.status_code, 400)
         self.assertEqual(result3["status"], 400)
         self.assertEqual(result3["message"], "Password is required")
 
-        response4 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login4), content_type="application/json")
+    def test_incorrect_password(self):
+        response4 = self.login_incorrect_password()
         result4 = json.loads(response4.data.decode('utf-8'))
 
         self.assertEqual(response4.status_code, 400)
         self.assertEqual(result4["status"], 400)
         self.assertEqual(result4["message"], "Incorrect password")
 
-        # Test User Profile
-        response = self.client.get("/api/v2/profile", headers={
-                                   "Authorization": 'Bearer ' + json.loads(response.data.decode('utf-8'))['token']})
+class TestProfile(BaseTest):
+    """Test case class for testing user data for login"""
+    def test_user_profile(self):
+        response = self.user_profile()
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-
-
-if __name__ == "__main__":
-    unittest.main()
