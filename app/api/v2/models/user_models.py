@@ -19,7 +19,7 @@ class UserModel(object):
     def generate_auth_token(self, username):
         """ Generate auth token """
         try:
-            payload = {'exp': datetime.utcnow() + timedelta(days=0, seconds=120), 'iat': datetime.utcnow(), 'sub': username}
+            payload = {'exp': datetime.utcnow() + timedelta(days=0, seconds=12000), 'iat': datetime.utcnow(), 'sub': username}
             return jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
         except Exception as e:
             return e

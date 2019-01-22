@@ -71,24 +71,38 @@ def requires_auth(func):
         try:
             response = users.verify_auth_token(auth_token)
             if isinstance(response, str):
-                user = users.login(username=response)
+                user = users.login(username=response)[0]
                 if not user:
                     return make_response(jsonify({
                         "status": 400,
                         "message": "Authentication failed: Wrong username"
                     })), 400
-                return func(user, *args, *kwargs)
         except:
             return make_response(jsonify({
                 "status": 400,
                 "message": "Authentication failed: Invalid token"
             })), 400
+        return func(user ,*args, *kwargs)
+    decorator_func.__name__ = func.__name__
     return decorator_func
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if g.user is None:
-            return redirect(url_for('login', next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
+def login_req():
+    auth_token = None
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        auth_token = auth_header.split("Bearer ")[1]
+    if not auth_token:
+        return make_response(jsonify({
+            "status": 401,
+            "data": "Unauthorized! Token required"
+        })), 401
+    try:
+        response = users.verify_auth_token(auth_token)
+        if isinstance(response, str):
+            user = users.login(username=response)
+            return user
+    except:
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Authentication failed: Invalid token"
+        })), 400

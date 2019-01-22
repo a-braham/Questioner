@@ -3,7 +3,7 @@
 from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import question_models, user_models
 from werkzeug.exceptions import BadRequest
-from ..utils.validators import requires_auth
+from ..utils.validators import requires_auth, login_req
 
 question_bpv2 = Blueprint('questionsv2', __name__,
                           url_prefix='/api/v2/questions')
@@ -102,7 +102,7 @@ def upvote(question_id):
         "message": "Question not found"
     })), 404
 
-@question_bpv2.route('/<int:question_id>/downvote', methods=['PATCH'])
+@question_bpv2.route('/<question_id>/downvote', methods=['PATCH'])
 @requires_auth
 def downvote(func, question_id):
     """ Manipulates upvoting question """
@@ -136,11 +136,17 @@ def downvote(func, question_id):
         "message": "Question not found"
     })), 404
 
-@question_bpv2.route('/<int:question_id>/comment', methods=['POST'])
+@question_bpv2.route('/<int:q_id>/comment', methods=['POST'])
 @requires_auth
-def comments(question_id):
+def comments(user, q_id):
     """A method to enable posting of comments based on user question """
-    question = questions.oneQuestion(question_id)
+    # user = login_req()
+    # if not user:
+    #     return make_response(jsonify({
+    #         "status": 400,
+    #         "message": "Authentication failed: Wrong username"
+    #     })), 400
+    question = questions.oneQuestion(q_id)
     if question:
         try:
             data = request.get_json()
@@ -155,11 +161,11 @@ def comments(question_id):
                 "status": 400,
                 "message": "Comment posted is empty"
             }))
-        questions.create_comment(question_id, comment)
+        questions.create_comment(q_id, comment)
         return make_response(jsonify({
             "status": 201,
             "data": [{
-                "question": question_id,
+                "question": q_id,
                 "comment": comment
             }]
         })), 201
