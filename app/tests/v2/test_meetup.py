@@ -120,10 +120,5 @@ class TestMeetup(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
 
-    def tearDown(self):
-        """ Method to destroy test client """
-        DBOps.destroy_db()
-
-
 if __name__ == "__main__":
     unittest.main()

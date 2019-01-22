@@ -119,12 +119,6 @@ class TestQuestion(unittest.TestCase):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
-        
-
-    def tearDown(self):
-        """ Method to destroy test client """
-        DBOps.destroy_db()
-
 
 if __name__ == "__main__":
     unittest.main()
