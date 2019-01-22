@@ -115,6 +115,30 @@ class BaseTest(unittest.TestCase):
             "username": "Kamaa",
             "password": "hfkhkblllbkjvhcc"
         }
+        self.meetup = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-17 04:37:40",
+            "tags": ["RESTful API", "JSON Data"]
+        }
+        self.meetup1 = {}
+
+        self.rsvp = {
+            "rsvp": "yes",
+        }
+        self.question = {
+            "title": "Man",
+            "body": "Not Hot",
+            "meetup": 1,
+            "createdby": 1,
+            "votes": 0
+        }
+        self.vote = {
+            "votes": 1
+        }
+        self.comment = {
+            "comment": "This is a comment"
+        }
         # Initialize test db and create tables
         with app.app_context():
             self.test_db = DBOps.send_con()
@@ -184,6 +208,12 @@ class BaseTest(unittest.TestCase):
         response4 = self.client.post(
             "/api/v2/login", data=json.dumps(self.login4), content_type="application/json")
         return response4
+    def fetch_token(self):
+        user_resp = self.login_()
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = 'Bearer ' + result["token"]
+        header = {"Authorization": token}
+        return header
 
     def user_profile(self):
         res_data = self.login_()
@@ -191,6 +221,25 @@ class BaseTest(unittest.TestCase):
             "/api/v2/profile",
             headers={"Authorization": 'Bearer ' + json.loads(res_data.data.decode('utf-8'))['token']})
         return response
-
+    def post_meetup(self):
+        header = self.fetch_token()
+        response = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup), content_type="application/json")
+        return response
+    def meetup_empty_topic(self):
+        header = self.fetch_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup1), content_type="application/json")
+        return response1
+    def post_question(self):
+        header = self.fetch_token()
+        response = self.client.post(
+            "api/v2/questions", data=json.dumps(self.question), headers=header, content_type="application/json")
+        return response
+        
 if __name__ == "__main__":
     unittest.main()
