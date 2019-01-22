@@ -1,35 +1,16 @@
 from flask import Flask, make_response, jsonify
 from instance.config import app_config
-
-def resource_not_found(message):
-    """ Handling resource not found """
-    return make_response(jsonify({
-        "status": 404,
-        "message": str(message)
-    }))
-
-def method_not_allow(message):
-    """ Handling method not allowed error """
-
-    return make_response(jsonify({
-        "status": 405,
-        "message": str(message)
-    }))
-
-def server_internal_error(message):
-    """ Handling internal server error """
-    return make_response(jsonify({
-        "status": 500,
-        "message": str(message)
-    }))
-
+from .database import DBOps
 
 def create_app(config_name):
     """ Using the config file in instance folder to create app """
     app = Flask(__name__, instance_relative_config=True)
 
-    app.config.from_object(app_config)
+    app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False
+    with app.app_context():
+        DBOps.connect_to(app.config["DATABASE_URI"])
+        DBOps.init_db()
     
     # Version 1 blueprints
     from .api.v1.views import meetup_views, user_views, question_views

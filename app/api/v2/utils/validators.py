@@ -2,7 +2,7 @@ import re
 import jwt
 from werkzeug.security import check_password_hash
 from ..models.user_models import USERS
-from app.database import init_db
+from app.database import DBOps
 from ..models import user_models
 from functools import wraps
 from flask import request, jsonify, make_response
@@ -14,7 +14,7 @@ SECRET_KEY = Config.SECRET_KEY
 
 class UserValidation():
     def __init__(self):
-        self.users = init_db()
+        self.users = DBOps.send_con()
 
     def validate_password(self, password):
         exp = "^[a-zA-Z0-9@_+-.]{3,}$"
@@ -82,6 +82,7 @@ def requires_auth(func):
                 "status": 400,
                 "message": "Authentication failed: Invalid token"
             })), 400
+<<<<<<< HEAD
         return func(user ,*args, *kwargs)
     decorator_func.__name__ = func.__name__
     return decorator_func
@@ -106,3 +107,37 @@ def login_req():
             "status": 400,
             "message": "Authentication failed: Invalid token"
         })), 400
+=======
+        return func(user, *args, *kwargs)
+    return decorator_func
+
+def requires_admin(func):
+    """ validation decorator. Validates if user is logged and is admin in before performing a task """
+    @wraps(func)
+    def decorator_func(*args, **kwargs):
+        auth_token = None
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split("Bearer ")[1]
+        if not auth_token:
+            return make_response(jsonify({
+                "status": 401,
+                "data": "Unauthorized! Token required"
+            })), 401
+        try:
+            response = users.verify_auth_token(auth_token)
+            if isinstance(response, str):
+                user = users.selectAdmin(username=response)
+                if not user:
+                    return make_response(jsonify({
+                        "status": 400,
+                        "message": "Authentication failed: User is not admin"
+                    })), 400
+        except:
+            return make_response(jsonify({
+                "status": 400,
+                "message": "Authentication failed: Invalid token"
+            })), 400
+        return func(user, *args, *kwargs)
+    return decorator_func
+>>>>>>> c8df06f6e0244c74775bfada05d2dcb54dcad7ff
