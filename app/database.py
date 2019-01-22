@@ -1,51 +1,49 @@
 """ This sets up the database """
 
 import psycopg2, os
+<<<<<<< HEAD
 from flask import current_app, Flask
 from instance.config import Config, Testing
 from datetime import datetime
 from werkzeug.security import generate_password_hash
+=======
+from flask import current_app
+>>>>>>> e5ec976250a14405053e8571ec1a631f266dc35b
 
-app = Flask(__name__)
+class DBOps:
+    @classmethod
+    def connect_to(cls, url):
+        cls.conn = psycopg2.connect(url)
 
-def init_db():
-    """ Method to initialize the database """
-    with app.app_context():
-        url_db = Config.DATABASE_URL
-        conn = psycopg2.connect(url_db)
-        cursor = conn.cursor()
-        sql = current_app.open_resource('questioner.sql', mode='r')
-        cursor.execute(sql.read())
-        conn.commit()
-        return conn
+    @classmethod
+    def send_con(cls):
+        cls.cursor = cls.conn.cursor()
+        return cls.conn
 
-def connect_to(url):
-    conn = psycopg2.connect(url)
-    return conn
+    @classmethod
+    def init_db(cls):
+        """ Method to initialize the database """
+        try:
+            cls.cursor = cls.conn.cursor()
+            sql = current_app.open_resource('questioner.sql', mode='r')
+            cls.cursor.execute(sql.read())
+            cls.conn.commit()
+            cls.cursor.close()
+            return cls.conn
+        except Exception as e:
+            return("Database exception: %s" % e)
 
-def _init_db():
-    """ Initialize database for test """
-    with app.app_context():
-        conn = connect_to(Testing.DATABASE_TEST_URL)
-        destroy_db()
-        cursor = conn.cursor()
-        sql_file = current_app.open_resource('questioner.sql', mode='r')
-        cursor.execute(sql_file.read())
-        conn.commit()
-        return conn
-
-def destroy_db():
-    """ Destroy database for test """
-    with app.app_context():
-        test_db_url = Testing.DATABASE_TEST_URL
-        conn = connect_to(test_db_url)
-        cursor = conn.cursor()
-        users = "DROP TABLE IF EXISTS users CASCADE"
+    @classmethod
+    def destroy_db(cls):
+        """ Destroy database for test """
+        cls.cursor = cls.conn.cursor()
+        users = "DROP TABLE IF EXISTS users, meetups, questions, comments, rsvp CASCADE"
         tables = [users]
         try:
             for table in tables:
-                cursor.execute(table)
-            conn.commit()
+                cls.cursor.execute(table)
+            cls.conn.commit()
+            return cls.conn
         except Exception as e:
             print("Database exception: %s" % e)
 

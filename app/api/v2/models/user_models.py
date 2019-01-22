@@ -3,7 +3,11 @@
 from datetime import datetime, timedelta
 import os, jwt
 from instance.config import Config
+<<<<<<< HEAD
 from app.database import init_db, create_admin
+=======
+from app.database import DBOps
+>>>>>>> e5ec976250a14405053e8571ec1a631f266dc35b
 
 USERS = []
 SECRET_KEY = Config.SECRET_KEY
@@ -13,8 +17,12 @@ class UserModel(object):
     """ A class that maps user data """
     
     def __init__(self):
+<<<<<<< HEAD
         self.DB = init_db()
         self.admin = create_admin()
+=======
+        self.DB = DBOps.send_con()
+>>>>>>> e5ec976250a14405053e8571ec1a631f266dc35b
         self.users = USERS
 
     

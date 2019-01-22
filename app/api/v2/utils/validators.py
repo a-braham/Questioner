@@ -2,7 +2,7 @@ import re
 import jwt
 from werkzeug.security import check_password_hash
 from ..models.user_models import USERS
-from app.database import init_db
+from app.database import DBOps
 from ..models import user_models
 from functools import wraps
 from flask import request, jsonify, make_response
@@ -14,7 +14,7 @@ SECRET_KEY = Config.SECRET_KEY
 
 class UserValidation():
     def __init__(self):
-        self.users = init_db()
+        self.users = DBOps.send_con()
 
     def validate_password(self, password):
         exp = "^[a-zA-Z0-9@_+-.]{3,}$"
