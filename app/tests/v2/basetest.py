@@ -116,7 +116,11 @@ class BaseTest(unittest.TestCase):
             "location": "Nairobi",
             "happeningOn": "2019-01-17",
         }
-        self.meetup1 = {}
+        self.meetup1 = {
+            "topic": " ",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-17",
+        }
 
         self.rsvp = {
             "rsvp": "yes",
@@ -226,7 +230,7 @@ class BaseTest(unittest.TestCase):
         res_data = self.login_()
         response = self.client.get(
             "/api/v2/profile",
-            headers={"Authorization": 'Bearer ' + json.loads(res_data.data.decode('utf-8'))['token']})
+            headers={"Authorization": json.loads(res_data.data.decode('utf-8'))['token']})
         return response
     def post_meetup(self):
         header = self.admin_token()
@@ -245,7 +249,7 @@ class BaseTest(unittest.TestCase):
     def post_question(self):
         header = self.fetch_token()
         response = self.client.post(
-            "api/v2/questions", data=json.dumps(self.question), headers=header, content_type="application/json")
+            "api/v2/questions/meetup/1", data=json.dumps(self.question), headers=header, content_type="application/json")
         return response
         
 if __name__ == "__main__":
