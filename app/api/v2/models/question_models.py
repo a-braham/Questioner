@@ -45,34 +45,66 @@ class QuestionModel(object):
         cursor.close()
         return question
 
-    def upVote(self, qid, vote):
+    def upVote(self, qid, uid, vote):
         """ method to manipulate one question voting """
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        voted = 1
         cursor = self.DB.cursor()
+        cursor.execute(
+            """DELETE FROM voters WHERE u_id = '%s' AND voted = -1""" % (uid)
+        )
         cursor.execute("""UPDATE questions SET votes = votes + %d WHERE q_id = %d RETURNING votes;""" % (vote, int(qid)))
         data = cursor.fetchone()[0]
+        cursor.execute("""INSERT INTO voters (q_id, u_id, voted, created_at) VALUES ({}, {}, {},'{}')""".format(qid, uid, voted, created_at))
         self.DB.commit()
         cursor.close()
         return data
 
-    def downVote(self, qid, vote):
+    def downVote(self, qid, uid, vote):
         """ method to manipulate one question voting """
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        voted = -1
         cursor = self.DB.cursor()
+        cursor.execute(
+            """DELETE FROM voters WHERE u_id = '%s' AND voted = 1""" % (uid)
+        )
         cursor.execute("""UPDATE questions SET votes = votes - %d WHERE q_id = %d RETURNING votes;""" % (vote, int(qid)))
         data = cursor.fetchone()[0]
+        cursor.execute("""INSERT INTO voters (q_id, u_id, voted, created_at) VALUES ({}, {}, {},'{}')""".format(qid, uid, voted, created_at))
         self.DB.commit()
         cursor.close()
         return data
-      
-    def create_comment(self, question_id, comment):
+    def get_voted_up(self, uid):
+        """ method to manipulate votes data """
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM voters WHERE u_id = '%s' AND voted = 1""" % (uid)
+        )
+        user = cursor.fetchone()
+        cursor.close()
+        return user
+
+    def get_voted_down(self, uid):
+        """ method to manipulate votes data """
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM voters WHERE u_id = '%s' AND voted = -1""" % (uid)
+        )
+        user = cursor.fetchone()
+        cursor.close()
+        return user
+
+    def create_comment(self, question_id, comment, u_id):
         """ A model method to enable saving of comment data """
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         comments = {
             "question_id": question_id,
             "comment": comment,
+            "u_id": u_id,
             "created_at": created_at
         }
         cursor = self.DB.cursor()
-        query = """INSERT INTO comments (question_id, comment, created_at) VALUES (%(question_id)s, %(comment)s, %(created_at)s) RETURNING c_id"""
+        query = """INSERT INTO comments (question_id, u_id, comment, created_at) VALUES (%(question_id)s, %(u_id)s, %(comment)s, %(created_at)s) RETURNING c_id"""
         cursor.execute(query, comments)
         comm = cursor.fetchone()
         self.DB.commit()

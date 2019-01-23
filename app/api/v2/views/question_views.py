@@ -3,7 +3,7 @@
 from flask import Flask, Blueprint, request, make_response, jsonify
 from ..models import question_models, user_models
 from werkzeug.exceptions import BadRequest
-from ..utils.validators import requires_auth, login_req
+from ..utils.validators import requires_auth, requires_admin
 
 question_bpv2 = Blueprint('questionsv2', __name__,
                           url_prefix='/api/v2/questions')
@@ -12,9 +12,9 @@ users = user_models.UserModel()
 
 @question_bpv2.route('', methods=['POST'])
 @requires_auth
-def create_question(func):
+def create_question(user):
     """ A view to control creation of question """
-
+    user = users.login(user)[2]
     try:
         data = request.get_json()
     except:
@@ -26,7 +26,7 @@ def create_question(func):
     title = data.get('title')
     body = data.get('body')
     meetup = data.get('meetup')
-    createdby = data.get('createdby')
+    createdby = user
     votes = data.get('votes')
 
     if not title:
@@ -70,9 +70,10 @@ def question(question_id):
 
 @question_bpv2.route('/<int:question_id>/upvote', methods=['PATCH'])
 @requires_auth
-def upvote(question_id):
+def upvote(user, question_id):
     """ Manipulates upvoting question """
     questionz = questions.oneQuestion(question_id)
+    user = users.login(user)[2]
     if questionz:
         try:
             data = request.get_json()
@@ -87,26 +88,28 @@ def upvote(question_id):
                 "status": 400,
                 "message": "Vote not allowed"
             })), 400
-        if [question for question in questionz][6] not in [0, -1]:
+        usr = questions.get_voted_up(user)
+        if not usr:
+            votes = questions.upVote(question_id, user, vote)
             return make_response(jsonify({
-                "status": 400,
-                "message": "Already voted"
-            })), 400
-        votes = questions.upVote(question_id, vote)
+                "status": 200,
+                "data": votes
+            })), 200
         return make_response(jsonify({
-            "status": 200,
-            "data": votes
-            }))
+            "status": 400,
+            "message": "Not allowed to vote again"
+        })), 400
     return make_response(jsonify({
         "status": 404,
         "message": "Question not found"
     })), 404
 
-@question_bpv2.route('/<question_id>/downvote', methods=['PATCH'])
+@question_bpv2.route('/<int:question_id>/downvote', methods=['PATCH'])
 @requires_auth
-def downvote(func, question_id):
+def downvote(user, question_id):
     """ Manipulates upvoting question """
-    questionz = questions.oneQuestion(question_id)
+    questionz = questions.oneQuestion(int(question_id))
+    user = users.login(user)[2]
     if questionz:
         try:
             data = request.get_json()
@@ -121,16 +124,17 @@ def downvote(func, question_id):
                 "status": 400,
                 "message": "Vote not allowed"
             })), 400
-        if [question for question in questionz][6] not in [0, 1]:
+        usr = questions.get_voted_down(user)
+        if not usr:
+            votes = questions.downVote(question_id, user, vote)
             return make_response(jsonify({
-                "status": 400,
-                "message": "Already voted"
-            })), 400
-        votes = questions.downVote(question_id, vote)
+                "status": 200,
+                "data": votes
+            })), 200
         return make_response(jsonify({
-            "status": 200,
-            "data": votes
-        })), 200
+            "status": 400,
+            "message": "Not allowed to vote again"
+        })), 400
     return make_response(jsonify({
         "status": 404,
         "message": "Question not found"
@@ -140,13 +144,8 @@ def downvote(func, question_id):
 @requires_auth
 def comments(user, q_id):
     """A method to enable posting of comments based on user question """
-    # user = login_req()
-    # if not user:
-    #     return make_response(jsonify({
-    #         "status": 400,
-    #         "message": "Authentication failed: Wrong username"
-    #     })), 400
-    question = questions.oneQuestion(q_id)
+    question = questions.oneQuestion(q_id)[0]
+    user = users.login(user)[2]
     if question:
         try:
             data = request.get_json()
@@ -161,7 +160,7 @@ def comments(user, q_id):
                 "status": 400,
                 "message": "Comment posted is empty"
             }))
-        questions.create_comment(q_id, comment)
+        questions.create_comment(q_id, comment, user)
         return make_response(jsonify({
             "status": 201,
             "data": [{

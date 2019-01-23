@@ -59,7 +59,7 @@ def signup():
             "message": "Password is required"
         })), 400
 
-    if validator.validate_password(password):
+    if not validator.validate_password(password):
         return make_response(jsonify({
             "status": 400,
             "message": "Password not valid"
@@ -85,14 +85,6 @@ def signup():
 
     password = generate_password_hash(
         password, method='pbkdf2:sha256', salt_length=8)
-
-    # new_user = {}
-
-    # for key in data:
-    #     new_user[key] = data[key]
-
-    # new_user["isAdmin"] = False
-
     user = users.signup(
         firstname, lastname, othername, email, phone, username, password)
     return make_response(jsonify({

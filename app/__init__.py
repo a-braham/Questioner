@@ -11,6 +11,7 @@ def create_app(config_name):
     with app.app_context():
         DBOps.connect_to(app.config["DATABASE_URI"])
         DBOps.init_db()
+        DBOps.create_admin()
     
     # Version 1 blueprints
     from .api.v1.views import meetup_views, user_views, question_views
