@@ -41,9 +41,9 @@ class UserValidation():
     
     def validate_date(self, date):
         try:
-            datetime.datetime.strptime(date, '%Y-%m-%d')
+            datetime.strptime(date, '%Y-%m-%d')
         except ValueError:
-            raise ValueError("Incorrect date format")
+            return ValueError("Incorrect date format")
 
     def username_exists(self, username):
         cursor = self.users.cursor()

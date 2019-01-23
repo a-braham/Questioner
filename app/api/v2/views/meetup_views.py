@@ -42,7 +42,7 @@ def create_meetup(func):
             "message": "Meetup Date cannot be empty"
         })), 400
     validate = UserValidation()
-    if validate.validate_date:
+    if validate.validate_date(happeningOn):
         return make_response(jsonify({
             "status": 400,
             "message": "Use correct date time format"
@@ -54,8 +54,7 @@ def create_meetup(func):
             "status": 201,
             "data": [{"topic": topic,
                       "location": location,
-                      "happeningOn": happeningOn,
-                      "tags": tags}]})), 201
+                      "happeningOn": happeningOn}]})), 201
 
 
 @meetup_bpv2.route('/upcoming', methods=['GET'])
