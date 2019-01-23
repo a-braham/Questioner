@@ -63,7 +63,7 @@ class MeetUpModel(object):
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         rsvp = {
             "meetup_id": meetup_id,
-            "user": u_id,
+            "u_id": u_id,
             "rsvp": rsvp,
             "created_at": created_at
         }

@@ -99,7 +99,7 @@ def rsvps(user, meetup_id):
         rsvp=meetups.create_rsvps(rsvp_data, meetup_id, user)
         return make_response(jsonify({
             "status": 201,
-            "data": rsvp
+            "message": "Reserved!"
             })), 201
     return make_response(jsonify({
         "status": 404,
