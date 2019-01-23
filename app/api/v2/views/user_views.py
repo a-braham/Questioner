@@ -59,7 +59,7 @@ def signup():
             "message": "Password is required"
         })), 400
 
-    if validator.validate_password(password):
+    if not validator.validate_password(password):
         return make_response(jsonify({
             "status": 400,
             "message": "Password not valid"

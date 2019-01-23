@@ -15,10 +15,10 @@ class MeetUpModel(object):
 
         self.MEETUPS = DBOps.send_con()
 
-    def create_meetup(self, topic, location, happening_on, tags):
+    def create_meetup(self, topic, location, happening_on):
         """ A method to manipulate creation of meetups """
 
-        created_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        created_on = datetime.now().strftime("%Y-%m-%d")
         # tags = []
         # images = []
         meetup = {
@@ -26,10 +26,9 @@ class MeetUpModel(object):
             "location": location,
             "created_on": created_on,
             "happening_on": happening_on,
-            "tags": tags,
         }
         cursor = self.MEETUPS.cursor()
-        query = """INSERT INTO meetups (topic, location, created_at, happening_on, tags) VALUES (%(topic)s, %(location)s, %(created_on)s, %(happening_on)s, %(tags)s) RETURNING m_id"""
+        query = """INSERT INTO meetups (topic, location, created_at, happening_on) VALUES (%(topic)s, %(location)s, %(created_on)s, %(happening_on)s) RETURNING m_id"""
         cursor.execute(query, meetup)
         meetup = cursor.fetchone()
         self.MEETUPS.commit()
@@ -59,16 +58,17 @@ class MeetUpModel(object):
         cursor.close()
         return meetup
 
-    def create_rsvps(self, rsvp, meetup_id):
+    def create_rsvps(self, rsvp, meetup_id, u_id):
         """ A method to create rsvp record """
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         rsvp = {
             "meetup_id": meetup_id,
+            "user": u_id,
             "rsvp": rsvp,
             "created_at": created_at
         }
         cursor = self.MEETUPS.cursor()
-        query = """INSERT INTO rsvp (meetup_id, rsvp, created_at) VALUES (%(meetup_id)s, %(rsvp)s, %(created_at)s) RETURNING r_id"""
+        query = """INSERT INTO rsvp (meetup_id, u_id, rsvp, created_at) VALUES (%(meetup_id)s, %(u_id)s, %(rsvp)s, %(created_at)s) RETURNING r_id"""
         cursor.execute(query, rsvp)
         rs = cursor.fetchone()
         self.MEETUPS.commit()
