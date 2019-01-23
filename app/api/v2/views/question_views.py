@@ -15,7 +15,6 @@ users = user_models.UserModel()
 def create_question(user):
     """ A view to control creation of question """
     user = users.login(user)[2]
-    print(user)
     try:
         data = request.get_json()
     except:
@@ -109,8 +108,6 @@ def upvote(user, question_id):
 @requires_auth
 def downvote(user, question_id):
     """ Manipulates upvoting question """
-    print(question_id)
-    print(user)
     questionz = questions.oneQuestion(int(question_id))
     user = users.login(user)[2]
     if questionz:
@@ -149,8 +146,6 @@ def comments(user, q_id):
     """A method to enable posting of comments based on user question """
     question = questions.oneQuestion(q_id)[0]
     user = users.login(user)[2]
-    print(user)
-    print(question)
     if question:
         try:
             data = request.get_json()

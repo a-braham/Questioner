@@ -30,7 +30,8 @@ class TestDownvote(BaseTest):
 class TestComments(BaseTest):
     def test_comments(self):
         """ Test run to test comments endpoints """
-        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), content_type="application/json")
+        header = self.fetch_token()
+        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)

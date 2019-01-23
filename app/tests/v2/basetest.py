@@ -15,111 +15,106 @@ class BaseTest(unittest.TestCase):
         self.client.testing = True
 
         self.user = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "eric@gmail.com",
-            "isAdmin": "True",
-            "username": "Kamaa",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
         }
         self.user1 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "eric@gmail.com",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
+            "username": "cyro",
             "password": "qwerty"
         }
         self.user2 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "ericgmail.com",
+            "email": "cyrgmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
         }
         self.user3 = {
             "firstname": "",
-            "lastname": "Kirumba",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "ericgmail.com",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
         }
         self.user4 = {
-            "firstname": "Abraham",
+            "firstname": "Cyrus",
             "lastname": "",
             "othername": "Kamau",
-            "email": "ericgmail.com",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
         }
         self.user5 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
             "email": "",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
         }
         self.user6 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "ericgmail.com",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "isAdmin": "True",
-            "username": "Kamaa",
+            "username": "cyro",
             "password": ""
         }
         self.user7 = {
-            "firstname": "Abraham",
-            "lastname": "Kirumba",
+            "firstname": "Cyrus",
+            "lastname": "Kariuki",
             "othername": "Kamau",
-            "email": "eric@gmail.com",
-            "isAdmin": "True",
-            "username": "",
+            "email": "cyrus@gmail.com",
             "phoneNumber": "123456789",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "",
+            "password": "@0x.b6pV"
         }
 
         self.login = {
-            "username": "Kamaa",
-            "password": "ak?,T4.jj12kjn@"
+            "username": "cyro",
+            "password": "@0x.b6pV"
+        }
+        self.admin = {
+            "username": "admin",
+            "password": "super"
         }
         self.login1 = {
             "username": "Kama",
-            "password": "ak?,T4.jj12kjn@"
+            "password": "@0x.b6pV"
         }
         self.login2 = {
             "username": "",
-            "password": "ak?,T4.jj12kjn@"
+            "password": "@0x.b6pV"
         }
         self.login3 = {
-            "username": "Kamaa",
+            "username": "cyro",
             "password": ""
         }
         self.login4 = {
-            "username": "Kamaa",
+            "username": "cyro",
             "password": "hfkhkblllbkjvhcc"
         }
         self.meetup = {
             "topic": "Python",
             "location": "Nairobi",
-            "happeningOn": "2019-01-17 04:37:40",
-            "tags": ["RESTful API", "JSON Data"]
+            "happeningOn": "2019-01-17",
         }
         self.meetup1 = {}
 
@@ -188,6 +183,11 @@ class BaseTest(unittest.TestCase):
         response = self.client.post(
             "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
         return response
+    
+    def login_admin(self):
+        response = self.client.post(
+            "/api/v2/login", data=json.dumps(self.admin), content_type="application/json")
+        return response
 
     def login_wrong_username(self):
         response1 = self.client.post(
@@ -211,7 +211,14 @@ class BaseTest(unittest.TestCase):
     def fetch_token(self):
         user_resp = self.login_()
         result = json.loads(user_resp.data.decode('utf-8'))
-        token = 'Bearer ' + result["token"]
+        token = result["token"]
+        header = {"Authorization": token}
+        return header
+
+    def admin_token(self):
+        user_resp = self.login_admin()
+        result = json.loads(user_resp.data.decode('utf-8'))
+        token = result["token"]
         header = {"Authorization": token}
         return header
 
@@ -222,14 +229,14 @@ class BaseTest(unittest.TestCase):
             headers={"Authorization": 'Bearer ' + json.loads(res_data.data.decode('utf-8'))['token']})
         return response
     def post_meetup(self):
-        header = self.fetch_token()
+        header = self.admin_token()
         response = self.client.post(
             "/api/v2/meetups",
             headers=header,
             data=json.dumps(self.meetup), content_type="application/json")
         return response
     def meetup_empty_topic(self):
-        header = self.fetch_token()
+        header = self.admin_token()
         response1 = self.client.post(
             "/api/v2/meetups",
             headers=header,
