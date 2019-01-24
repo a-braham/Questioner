@@ -1,6 +1,7 @@
 """ Views for handling meetup endpoints """
 
 from flask import Flask, Blueprint, request, make_response, jsonify
+from datetime import datetime
 from ..models import meetup_models
 from ..models import user_models
 from werkzeug.exceptions import BadRequest
@@ -46,6 +47,11 @@ def create_meetup(func):
         return make_response(jsonify({
             "status": 400,
             "message": "Use correct date time format"
+        })), 400
+    if happeningOn < datetime.now().strftime("%Y-%m-%d"):
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Date cannot be in the past"
         })), 400
     else:
         meetups.create_meetup(
