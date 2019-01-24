@@ -114,12 +114,12 @@ class BaseTest(unittest.TestCase):
         self.meetup = {
             "topic": "Python",
             "location": "Nairobi",
-            "happeningOn": "2019-01-17",
+            "happeningOn": "2019-01-25"
         }
         self.meetup1 = {
             "topic": " ",
             "location": "Nairobi",
-            "happeningOn": "2019-01-17",
+            "happeningOn": "2019-02-30",
         }
 
         self.rsvp = {
