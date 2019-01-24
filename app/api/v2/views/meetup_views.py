@@ -106,6 +106,24 @@ def rsvps(user, meetup_id):
         "message": "Meetup not found"
     })), 404
 
+@meetup_bpv2.route('/<int:meetup_id>/tags', methods=['POST'])
+@requires_admin
+def tags(user, meetup_id):
+    """ A method for sending rsvps """
+    meetup = meetups.view_one_meetup(meetup_id)
+    data = request.get_json()
+    tag_data = data.get('tags')
+    if meetup:
+        tag=meetups.create_tags(tag_data, meetup_id)
+        return make_response(jsonify({
+            "status": 201,
+            "data": tag
+            })), 201
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Meetup not found"
+    })), 404
+
 
 @meetup_bpv2.route('/<int:meetup_id>/delete', methods=['DELETE'])
 @requires_admin
