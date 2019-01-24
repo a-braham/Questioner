@@ -21,27 +21,27 @@ CREATE TABLE IF NOT EXISTS questions (
     q_id SERIAL PRIMARY KEY NOT NULL, 
     title VARCHAR (255) NOT NULL, 
     body VARCHAR (500) NOT NULL, 
-    meetup INTEGER REFERENCES meetups(m_id) ON DELETE RESTRICT, 
-    created_by INTEGER REFERENCES users(u_id) ON DELETE RESTRICT, 
+    meetup INTEGER REFERENCES meetups(m_id) ON DELETE CASCADE, 
+    created_by INTEGER REFERENCES users(u_id) ON DELETE CASCADE, 
     created_at TIMESTAMP, votes INTEGER DEFAULT 0);
 
 CREATE TABLE IF NOT EXISTS comments (
     c_id SERIAL PRIMARY KEY NOT NULL, 
-    question_id INTEGER REFERENCES questions(q_id) ON DELETE RESTRICT, 
-    u_id INTEGER REFERENCES users(u_id) ON DELETE RESTRICT, 
+    question_id INTEGER REFERENCES questions(q_id) ON DELETE CASCADE, 
+    u_id INTEGER REFERENCES users(u_id) ON DELETE CASCADE, 
     comment VARCHAR (500) NOT NULL, 
     created_at TIMESTAMP);
 
 CREATE TABLE IF NOT EXISTS rsvp (
     r_id SERIAL PRIMARY KEY NOT NULL, 
-    meetup_id INTEGER REFERENCES meetups(m_id) ON DELETE RESTRICT, 
+    meetup_id INTEGER REFERENCES meetups(m_id) ON DELETE CASCADE, 
     rsvp VARCHAR (50) NOT NULL, 
-    u_id INTEGER REFERENCES users(u_id) ON DELETE RESTRICT, 
+    u_id INTEGER REFERENCES users(u_id) ON DELETE CASCADE, 
     created_at TIMESTAMP);
 
 CREATE TABLE IF NOT EXISTS tags (
     t_id SERIAL PRIMARY KEY NOT NULL, 
-    meetup_id INTEGER REFERENCES meetups(m_id) ON DELETE RESTRICT, 
+    meetup_id INTEGER REFERENCES meetups(m_id) ON DELETE CASCADE, 
     tags VARCHAR ARRAY NOT NULL, 
     created_at TIMESTAMP);
 
