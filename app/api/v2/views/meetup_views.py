@@ -26,7 +26,7 @@ def create_meetup(func):
     location = data.get('location')
     happeningOn = data.get('happeningOn')
 
-    if not topic:
+    if not topic.strip():
         return make_response(jsonify({
             "status": 400,
             "message": "Topic cannot be empty"
@@ -106,41 +106,37 @@ def rsvps(user, meetup_id):
         "message": "Meetup not found"
     })), 404
 
+@meetup_bpv2.route('/<int:meetup_id>/tags', methods=['POST'])
+@requires_admin
+def tags(user, meetup_id):
+    """ A method for sending rsvps """
+    meetup = meetups.view_one_meetup(meetup_id)
+    data = request.get_json()
+    tag_data = data.get('tags')
+    if meetup:
+        tag=meetups.create_tags(tag_data, meetup_id)
+        return make_response(jsonify({
+            "status": 201,
+            "data": tag
+            })), 201
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Meetup not found"
+    })), 404
+
 
 @meetup_bpv2.route('/<int:meetup_id>/delete', methods=['DELETE'])
 @requires_admin
 def meetup_delete(user, meetup_id):
     """ A method for sending rsvps """
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split("Bearer ")[1]
-    else:
-        auth_token = 'Bearer '
-    if auth_token:
-        response = users.verify_auth_token(auth_token)
-        if isinstance(response, str):
-            user = users.login(username=response)
-            if not user:
-                return make_response(jsonify({
-                    "status": 400,
-                    "message": "Authentication failed"
-                })), 400
-            meetup = meetups.view_one_meetup(meetup_id)
-            if meetup:
-                meetups.delete_meetup(meetup_id)
-                return make_response(jsonify({
-                    "status": 201,
-                    "message": "Meetup deleted!!:"
-                    })), 201
-            return make_response(jsonify({
-                "status": 404,
-                "message": "Meetup not found"
-            })), 404
+    meetup = meetups.view_one_meetup(meetup_id)
+    if meetup:
+        meetups.delete_meetup(meetup_id)
         return make_response(jsonify({
-            "status": 400,
-            "message": "Authentication token failed"
-        })), 400
+            "status": 201,
+            "message": "Meetup deleted!!:"
+            })), 201
     return make_response(jsonify({
         "status": 404,
-        "data": "Token not found"
+        "message": "Meetup not found"
     })), 404

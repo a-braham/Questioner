@@ -28,7 +28,7 @@ def signup():
     username = data.get('username')
     password = data.get('password')
 
-    if not firstname:
+    if not firstname.strip():
         return make_response(jsonify({
             "status": 400,
             "message": "Firstname is required"
@@ -69,6 +69,22 @@ def signup():
         return make_response(jsonify({
             "status": 400,
             "message": "Invalid email"
+        })), 400
+    if not validator.validate_text(firstname):
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Invalid firstname, must be characters"
+        })), 400
+    if not validator.validate_text(lastname):
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Invalid lastname, must be characters"
+        })), 400
+    
+    if not validator.validate_number(phone):
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Invalid phone"
         })), 400
 
     if validator.username_exists(username):
@@ -164,31 +180,11 @@ def get_users():
 
 
 @user_bpv2.route('/profile', methods=['GET'])
-def profile():
+@requires_auth
+def profile(user):
     """ Method to get logged in user """
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split("Bearer ")[1]
-    else:
-        auth_token = 'Bearer '
-    if auth_token:
-        response = users.verify_auth_token(auth_token)
-        if isinstance(response, str):
-            user = users.login(username=response)
-            if not user:
-                return make_response(jsonify({
-                    "status": 400,
-                    "message": "Authentication failed"
-                })), 400
-            return make_response(jsonify({
-                "status": 200,
-                "data": user
-            })), 200
-        return make_response(jsonify({
-            "status": 400,
-            "message": "Authentication token failed"
-        })), 400
+    user = users.login(user)
     return make_response(jsonify({
-        "status": 404,
-        "data": "Token not found"
-    })), 404
+        "status": 200,
+        "data": user
+    })), 200

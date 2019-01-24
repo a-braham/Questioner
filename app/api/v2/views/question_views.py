@@ -1,7 +1,7 @@
 """ Views for handling quetion endpoints """
 
 from flask import Flask, Blueprint, request, make_response, jsonify
-from ..models import question_models, user_models
+from ..models import question_models, user_models, meetup_models
 from werkzeug.exceptions import BadRequest
 from ..utils.validators import requires_auth, requires_admin
 
@@ -9,12 +9,19 @@ question_bpv2 = Blueprint('questionsv2', __name__,
                           url_prefix='/api/v2/questions')
 questions = question_models.QuestionModel()
 users = user_models.UserModel()
+meetups = meetup_models.MeetUpModel()
 
-@question_bpv2.route('', methods=['POST'])
+@question_bpv2.route('meetup/<int:meetup_id>', methods=['POST'])
 @requires_auth
-def create_question(user):
+def create_question(user, meetup_id):
     """ A view to control creation of question """
     user = users.login(user)[2]
+    meetup = meetups.view_one_meetup(meetup_id)[0]
+    if not meetup:
+        return make_response(jsonify({
+            "status": 404,
+            "message": "Meetup not found"
+        })), 404
     try:
         data = request.get_json()
     except:
@@ -25,7 +32,7 @@ def create_question(user):
 
     title = data.get('title')
     body = data.get('body')
-    meetup = data.get('meetup')
+    meetup = meetup
     createdby = user
     votes = data.get('votes')
 

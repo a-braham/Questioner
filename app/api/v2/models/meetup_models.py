@@ -75,6 +75,22 @@ class MeetUpModel(object):
         cursor.close()
         return rs
 
+    def create_tags(self, tags, meetup_id):
+        """ A method to create rsvp record """
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        tag = {
+            "meetup_id": meetup_id,
+            "tags": tags,
+            "created_at": created_at
+        }
+        cursor = self.MEETUPS.cursor()
+        query = """INSERT INTO tags (meetup_id, tags, created_at) VALUES (%(meetup_id)s, %(tags)s, %(created_at)s) RETURNING t_id"""
+        cursor.execute(query, tag)
+        tag = cursor.fetchone()
+        self.MEETUPS.commit()
+        cursor.close()
+        return tag
+
     def delete_meetup(self, m_id):
         """ A method to delete meetup record """
         cursor = self.MEETUPS.cursor()

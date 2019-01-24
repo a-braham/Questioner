@@ -75,6 +75,15 @@ class UserValidation():
             return True
         else:
             return False
+    
+    def validate_text(self, name):
+        """Method to validate characters """
+        exp = "^[A-Za-z]+$"
+        return re.match(exp, name)
+    def validate_number(self, number):
+        """Method to validate characters """
+        exp = "^[0-9]+$"
+        return re.match(exp, number)
 
 def requires_admin(func):
     """ validation decorator. Validates if user is logged in is admin"""

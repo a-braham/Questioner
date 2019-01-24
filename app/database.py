@@ -34,13 +34,17 @@ class DBOps:
     def destroy_db(cls):
         """ Destroy database for test """
         cls.cursor = cls.conn.cursor()
-        users = "DROP TABLE IF EXISTS users, meetups, questions, comments, rsvp CASCADE"
-        tables = [users]
+        users = "DROP TABLE IF EXISTS users CASCADE"
+        meetups = "DROP TABLE IF EXISTS meetups CASCADE"
+        questions = "DROP TABLE IF EXISTS questions CASCADE"
+        comments = "DROP TABLE IF EXISTS comments CASCADE"
+        rsvp = "DROP TABLE IF EXISTS rsvp CASCADE"
+        tags = "DROP TABLE IF EXISTS tags CASCADE"
+        tables = [users, meetups, questions, comments, rsvp, tags]
         try:
             for table in tables:
                 cls.cursor.execute(table)
-            cls.conn.commit()
-            return cls.conn
+                cls.conn.commit()
         except Exception as e:
             print("Database exception: %s" % e)
     @classmethod
