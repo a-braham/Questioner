@@ -177,73 +177,73 @@ class BaseTest(unittest.TestCase):
 
     def signup(self):
         response = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            "/api/v2/auth/signup", data=json.dumps(self.user), content_type="application/json"
         )
         return response
 
     def invalid_password_signup(self):
         response1 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user1), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user1), content_type="application/json")
         return response1
 
     def invalid_email_signup(self):
         response2 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user2), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user2), content_type="application/json")
         return response2
 
     def empty_firstname_signup(self):
         response3 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user3), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user3), content_type="application/json")
         return response3
 
     def empty_last_name_signup(self):
         response4 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user4), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user4), content_type="application/json")
         return response4
 
     def empty_email_signup(self):
         response5 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user5), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user5), content_type="application/json")
         return response5
 
     def empty_password_signup(self):
         response6 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user6), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user6), content_type="application/json")
         return response6
 
     def empty_username_signup(self):
         response7 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user7), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user7), content_type="application/json")
         return response7
 
     def login_(self):
         response = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login), content_type="application/json")
         return response
     
     def login_admin(self):
         response = self.client.post(
-            "/api/v2/login", data=json.dumps(self.admin), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.admin), content_type="application/json")
         return response
 
     def login_wrong_username(self):
         response1 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login1), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login1), content_type="application/json")
         return response1
 
     def login_empty_username(self):
         response2 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login2), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login2), content_type="application/json")
         return response2
 
     def login_empty_password(self):
         response3 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login3), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login3), content_type="application/json")
         return response3
 
     def login_incorrect_password(self):
         response4 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login4), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login4), content_type="application/json")
         return response4
     def fetch_token(self):
         user_resp = self.login_()

@@ -55,17 +55,21 @@ Crowd-source questions for a meetup. Questioner helps the meetup organizer prior
 
 ## Testing API endpoints
 
--------------------------------------------------------------------------------------------------------------
-| Endpoint                            				| HTTP Verb   | Functionality           			    |
-| ------------------------------------------------- | ----------- | ---------------------------------------- 
-| /api/v1/meetups                  				    | POST        | Create a meetup record     			    |
-| /api/v1/meetups/<meetup_id>          				| GET         | Fetch a specific meetup record   		|
-| /api/v1/meeetups/upcoming/          		 		| GET         | Fetch all upcoming meetup records       |
-| /api/v1/questions                				    | POST        | Create a question for a specific meetup |
-| /api/v1/questions/<question_id>/upvote			| PATCH       | Up-vote a specific question        	    |
-| /api/v1/questions/<question_id>/downvote			| PATCH       | Down-vote a specific question       	|
-| /api/v1/add_meetups/<meetup_id>/rsvps   			| POST        | Create a question for a specific meetup |
--------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+| Endpoint                            				| HTTP Verb   | Functionality           			   |
+|---------------------------------------------------|-------------|--------------------------------------- |
+| /api/v1/auth/signup                  				| POST        | Create a user account     		       |
+| /api/v1/auth/login                  				| POST        | Login to the account     		       |
+| /api/v1/meetups                  				    | POST        | Create a meetup record     			   |
+| /api/v1/meetups/<meetup_id>          				| GET         | Fetch a specific meetup record   	   |
+| /api/v1/meeetups/upcoming/          		 		| GET         | Fetch all upcoming meetup records      |
+| /api/v1/meetups/<meetup_id>/rsvps   			    | POST        | Create a question for a specific meetup|
+| /api/v1/meetups/<meetup_id>/tags   			    | POST        | Create a question for a specific meetup|
+| /api/v1/meetup/<meetup_id>/question               | POST        | Create a question for a specific meetup|
+| /api/v1/questions/<question_id>/upvote			| PATCH       | Up-vote a specific question        	   |
+| /api/v1/questions/<question_id>/downvote			| PATCH       | Down-vote a specific question          |
+| /api/v1/questions/<question_id>/comment   		| POST        | Create a question for a specific meetup|
+------------------------------------------------------------------------------------------------------------
 
 #### Run tests
     ```
