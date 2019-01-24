@@ -137,7 +137,7 @@ def comments(user, q_id):
             return make_response(jsonify({
                 "status": 400,
                 "message": "Comment posted is empty"
-            }))
+            })), 400
         validate = UserValidation()
         if validate.validate_comment(q_id, user, comment):
             return make_response(jsonify({

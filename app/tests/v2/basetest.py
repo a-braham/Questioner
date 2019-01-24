@@ -121,22 +121,55 @@ class BaseTest(unittest.TestCase):
             "location": "Nairobi",
             "happeningOn": "2019-02-30",
         }
-
+        self.meetup2 = {
+            "topic": "Python",
+            "location": "",
+            "happeningOn": "2019-01-25"
+        }
+        self.meetup3 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": ""
+        }
+        self.meetup4 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-25 12:54:43"
+        }
+        self.meetup5 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-22"
+        }
         self.rsvp = {
             "rsvp": "yes",
+        }
+        self.tags = {
+            "tags": ["Python", "Django"]
+        }
+        self.rsvp1 = {
+            "rsvp": "yes22",
         }
         self.question = {
             "title": "Man",
             "body": "Not Hot",
-            "meetup": 1,
-            "createdby": 1,
-            "votes": 0
+        }
+        self.question1 = {
+            "title": "",
+            "body": "Not Hot"
+        }
+        self.question2 = {
+            "title": "Man",
+            "body": ""
         }
         self.vote = {
             "votes": 1
         }
         self.comment = {
             "comment": "This is a comment"
+        }
+        self.comment1 = {
+            "comment": ""
         }
         # Initialize test db and create tables
         with app.app_context():
@@ -246,11 +279,53 @@ class BaseTest(unittest.TestCase):
             headers=header,
             data=json.dumps(self.meetup1), content_type="application/json")
         return response1
+    def meetup_empty_location(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup2), content_type="application/json")
+        return response1
+    def meetup_empty_date(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup3), content_type="application/json")
+        return response1
+    def invalid_date_format(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup4), content_type="application/json")
+        return response1
+    def invalid_date_time(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup5), content_type="application/json")
+        return response1
     def post_question(self):
         header = self.fetch_token()
         response = self.client.post(
             "api/v2/meetup/1/question", data=json.dumps(self.question), headers=header, content_type="application/json")
         return response
+    def empty_title(self):
+        header = self.fetch_token()
+        response1 = self.client.post(
+            "/api/v2/meetup/1/question",
+            headers=header,
+            data=json.dumps(self.question1), content_type="application/json")
+        return response1
+    def empty_body(self):
+        header = self.fetch_token()
+        response1 = self.client.post(
+            "/api/v2/meetup/1/question",
+            headers=header,
+            data=json.dumps(self.question2), content_type="application/json")
+        return response1
         
 if __name__ == "__main__":
     unittest.main()
