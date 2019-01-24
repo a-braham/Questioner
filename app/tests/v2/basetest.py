@@ -249,7 +249,7 @@ class BaseTest(unittest.TestCase):
     def post_question(self):
         header = self.fetch_token()
         response = self.client.post(
-            "api/v2/questions/meetup/1", data=json.dumps(self.question), headers=header, content_type="application/json")
+            "api/v2/meetup/1/question", data=json.dumps(self.question), headers=header, content_type="application/json")
         return response
         
 if __name__ == "__main__":

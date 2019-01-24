@@ -2,19 +2,21 @@ import re
 import jwt
 from werkzeug.security import check_password_hash
 from app.database import DBOps
-from ..models import user_models
+from ..models import user_models, meetup_models
 from functools import wraps
 from flask import request, jsonify, make_response
 from instance.config import Config
 from datetime import datetime
 
 users = user_models.UserModel()
+meetups = meetup_models.MeetUpModel()
 SECRET_KEY = Config.SECRET_KEY
 
 
 class UserValidation():
     def __init__(self):
         self.users = DBOps.send_con()
+        self.meetups = DBOps.send_con()
 
     def validate_password(self, password):
         special=['$','@','#']
@@ -84,6 +86,26 @@ class UserValidation():
         """Method to validate characters """
         exp = "^[0-9]+$"
         return re.match(exp, number)
+    def validate_meetup(self, topic, location, happening_on):
+        cursor = self.meetups.cursor()
+        cursor.execute(
+            """SELECT * FROM meetups WHERE topic = '%s' AND location = '%s' AND happening_on = '%s'""" % (topic, location, happening_on)
+        )
+        usr = cursor.fetchone()
+        if usr:
+            return True
+        else:
+            return False
+    def validate_comment(self, q_id, u_id, comment):
+        cursor = self.meetups.cursor()
+        cursor.execute(
+            """SELECT * FROM comments WHERE question_id = '%s' AND u_id = '%s' AND comment = '%s'""" % (q_id, u_id, comment)
+        )
+        usr = cursor.fetchone()
+        if usr:
+            return True
+        else:
+            return False
 
 def requires_admin(func):
     """ validation decorator. Validates if user is logged in is admin"""

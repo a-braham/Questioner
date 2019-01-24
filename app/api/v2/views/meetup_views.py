@@ -53,6 +53,11 @@ def create_meetup(func):
             "status": 400,
             "message": "Date cannot be in the past"
         })), 400
+    if validate.validate_meetup(topic, location, happeningOn):
+        return make_response(jsonify({
+            "status": 400,
+            "message": "Another meetup with the same topic, location and date exists"
+        })), 400
     else:
         meetups.create_meetup(
             topic, location, happeningOn)
@@ -137,10 +142,10 @@ def meetup_delete(user, meetup_id):
     """ A method for sending rsvps """
     meetup = meetups.view_one_meetup(meetup_id)
     if meetup:
-        meetups.delete_meetup(meetup_id)
+        delet = meetups.delete_meetup(meetup_id)
         return make_response(jsonify({
             "status": 201,
-            "message": "Meetup deleted!!:"
+            "message": delet
             })), 201
     return make_response(jsonify({
         "status": 404,
