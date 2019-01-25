@@ -8,7 +8,7 @@ users = user_models.UserModel()
 validator = UserValidation()
 
 
-@user_bpv2.route('/signup', methods=['POST'])
+@user_bpv2.route('auth/signup', methods=['POST'])
 def signup():
     """ A view to control creation of users """
 
@@ -116,7 +116,7 @@ def signup():
     })), 201
 
 
-@user_bpv2.route('/login', methods=['POST'])
+@user_bpv2.route('auth/login', methods=['POST'])
 def login():
     """ A view to control users login """
     try:

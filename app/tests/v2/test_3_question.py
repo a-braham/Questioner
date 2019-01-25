@@ -7,11 +7,25 @@ class TestPostQuestion(BaseTest):
     """ Test class to test Questions """
     def test_create_question(self):
         """ Method to test creating question """
+        response = self.post_meetup()
         response = self.post_question()
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)
-class TestUpvote(BaseTest):
+    def test_empty_title(self):
+        response1 = self.empty_title()
+        restult1 = json.loads(response1.data.decode('utf-8'))
+        self.assertEqual(response1.status_code, 400)
+        self.assertEqual(restult1["status"], 400)
+        self.assertEqual(restult1["message"], "Title cannot be empty")
+    def test_empty_body(self):
+        response1 = self.empty_body()
+        restult1 = json.loads(response1.data.decode('utf-8'))
+        self.assertEqual(response1.status_code, 400)
+        self.assertEqual(restult1["status"], 400)
+        self.assertEqual(restult1["message"], "Body cannot be empty")
+
+class TestVote(BaseTest):
     def test_upvote(self):
         """ Testing upvoting endpoint """
         header = self.fetch_token()
@@ -19,7 +33,6 @@ class TestUpvote(BaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
-class TestDownvote(BaseTest):
     def test_downvote(self):
         """ Testing downvoting endpoint """
         header = self.fetch_token()
@@ -32,6 +45,25 @@ class TestComments(BaseTest):
         """ Test run to test comments endpoints """
         header = self.fetch_token()
         response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment), headers=header, content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["status"], 201)
+    def test_empty_comment(self):
+        header = self.fetch_token()
+        response = self.client.post("api/v2/questions/1/comment", data=json.dumps(self.comment1), headers=header, content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(result["status"], 400)
+        self.assertEqual(result["message"], "Comment posted is empty")
+    
+class TestDelete(BaseTest):
+    """ Test deleting meetup """
+    def test_delete_meetup(self):
+        """ Tests view posted meetups """
+        header = self.admin_token()
+
+        response = self.client.delete(
+            "/api/v2/meetups/1/delete", headers=header, content_type="application/json")
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["status"], 201)

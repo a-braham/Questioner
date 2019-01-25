@@ -16,7 +16,7 @@ before_script:
     - export DATABASE_TEST_URL="dbname='questioner_test' user='postgres' host='localhost' password=''"
 
 script:
-    - coverage run --source=app -m pytest && coverage report
+    - coverage run --source=app/api -m pytest && coverage report
 
 after_success:
     - coveralls

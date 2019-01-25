@@ -121,16 +121,46 @@ class BaseTest(unittest.TestCase):
             "location": "Nairobi",
             "happeningOn": "2019-02-30",
         }
-
+        self.meetup2 = {
+            "topic": "Python",
+            "location": "",
+            "happeningOn": "2019-01-25"
+        }
+        self.meetup3 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": ""
+        }
+        self.meetup4 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-25 12:54:43"
+        }
+        self.meetup5 = {
+            "topic": "Python",
+            "location": "Nairobi",
+            "happeningOn": "2019-01-22"
+        }
         self.rsvp = {
             "rsvp": "yes",
+        }
+        self.tags = {
+            "tags": ["Python", "Django"]
+        }
+        self.rsvp1 = {
+            "rsvp": "yes22",
         }
         self.question = {
             "title": "Man",
             "body": "Not Hot",
-            "meetup": 1,
-            "createdby": 1,
-            "votes": 0
+        }
+        self.question1 = {
+            "title": "",
+            "body": "Not Hot"
+        }
+        self.question2 = {
+            "title": "Man",
+            "body": ""
         }
         self.vote = {
             "votes": 1
@@ -138,79 +168,82 @@ class BaseTest(unittest.TestCase):
         self.comment = {
             "comment": "This is a comment"
         }
+        self.comment1 = {
+            "comment": ""
+        }
         # Initialize test db and create tables
         with app.app_context():
             self.test_db = DBOps.send_con()
 
     def signup(self):
         response = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user), content_type="application/json"
+            "/api/v2/auth/signup", data=json.dumps(self.user), content_type="application/json"
         )
         return response
 
     def invalid_password_signup(self):
         response1 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user1), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user1), content_type="application/json")
         return response1
 
     def invalid_email_signup(self):
         response2 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user2), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user2), content_type="application/json")
         return response2
 
     def empty_firstname_signup(self):
         response3 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user3), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user3), content_type="application/json")
         return response3
 
     def empty_last_name_signup(self):
         response4 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user4), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user4), content_type="application/json")
         return response4
 
     def empty_email_signup(self):
         response5 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user5), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user5), content_type="application/json")
         return response5
 
     def empty_password_signup(self):
         response6 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user6), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user6), content_type="application/json")
         return response6
 
     def empty_username_signup(self):
         response7 = self.client.post(
-            "/api/v2/signup", data=json.dumps(self.user7), content_type="application/json")
+            "/api/v2/auth/signup", data=json.dumps(self.user7), content_type="application/json")
         return response7
 
     def login_(self):
         response = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login), content_type="application/json")
         return response
     
     def login_admin(self):
         response = self.client.post(
-            "/api/v2/login", data=json.dumps(self.admin), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.admin), content_type="application/json")
         return response
 
     def login_wrong_username(self):
         response1 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login1), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login1), content_type="application/json")
         return response1
 
     def login_empty_username(self):
         response2 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login2), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login2), content_type="application/json")
         return response2
 
     def login_empty_password(self):
         response3 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login3), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login3), content_type="application/json")
         return response3
 
     def login_incorrect_password(self):
         response4 = self.client.post(
-            "/api/v2/login", data=json.dumps(self.login4), content_type="application/json")
+            "/api/v2/auth/login", data=json.dumps(self.login4), content_type="application/json")
         return response4
     def fetch_token(self):
         user_resp = self.login_()
@@ -246,11 +279,53 @@ class BaseTest(unittest.TestCase):
             headers=header,
             data=json.dumps(self.meetup1), content_type="application/json")
         return response1
+    def meetup_empty_location(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup2), content_type="application/json")
+        return response1
+    def meetup_empty_date(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup3), content_type="application/json")
+        return response1
+    def invalid_date_format(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup4), content_type="application/json")
+        return response1
+    def invalid_date_time(self):
+        header = self.admin_token()
+        response1 = self.client.post(
+            "/api/v2/meetups",
+            headers=header,
+            data=json.dumps(self.meetup5), content_type="application/json")
+        return response1
     def post_question(self):
         header = self.fetch_token()
         response = self.client.post(
-            "api/v2/questions/meetup/1", data=json.dumps(self.question), headers=header, content_type="application/json")
+            "api/v2/meetup/1/question", data=json.dumps(self.question), headers=header, content_type="application/json")
         return response
+    def empty_title(self):
+        header = self.fetch_token()
+        response1 = self.client.post(
+            "/api/v2/meetup/1/question",
+            headers=header,
+            data=json.dumps(self.question1), content_type="application/json")
+        return response1
+    def empty_body(self):
+        header = self.fetch_token()
+        response1 = self.client.post(
+            "/api/v2/meetup/1/question",
+            headers=header,
+            data=json.dumps(self.question2), content_type="application/json")
+        return response1
         
 if __name__ == "__main__":
     unittest.main()

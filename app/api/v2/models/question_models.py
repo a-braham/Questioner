@@ -94,7 +94,7 @@ class QuestionModel(object):
         cursor.close()
         return user
 
-    def create_comment(self, question_id, comment, u_id):
+    def create_comment(self, question_id, u_id, comment):
         """ A model method to enable saving of comment data """
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         comments = {

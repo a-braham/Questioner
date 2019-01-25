@@ -93,10 +93,13 @@ class MeetUpModel(object):
 
     def delete_meetup(self, m_id):
         """ A method to delete meetup record """
-        cursor = self.MEETUPS.cursor()
-        cursor.execute(
-            """DELETE FROM meetups WHERE m_id = '%s'""" % (m_id)
-        )
-        self.MEETUPS.commit()
-        cursor.close()
-        return
+        try:
+            cursor = self.MEETUPS.cursor()
+            cursor.execute(
+                """DELETE FROM meetups WHERE m_id = '%s'""" % (m_id)
+            )
+            self.MEETUPS.commit()
+            cursor.close()
+            return ("Meetup deleted!!")
+        except Exception as e:
+            return "Cannot delete meetup", str(e)
