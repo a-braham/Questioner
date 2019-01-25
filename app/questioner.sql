@@ -51,3 +51,8 @@ CREATE TABLE IF NOT EXISTS voters (
     u_id INTEGER NOT NULL, 
     voted INTEGER NOT NULL, 
     created_at TIMESTAMP);
+
+CREATE TABLE IF NOT EXISTS blascklist (
+    b_id SERIAL PRIMARY KEY NOT NULL, 
+    token VARCHAR (500) NOT NULL, 
+    created_at TIMESTAMP);

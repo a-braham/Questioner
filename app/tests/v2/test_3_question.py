@@ -25,6 +25,22 @@ class TestPostQuestion(BaseTest):
         self.assertEqual(restult1["status"], 400)
         self.assertEqual(restult1["message"], "Body cannot be empty")
 
+class TestViewQuestion(BaseTest):
+    def test_view_question(self):
+        """ Tests view posted questions """
+        response = self.client.get(
+            "/api/v2/questions/1", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["status"], 200)
+    def test_view_question_notfound(self):
+        """ Tests view posted questions not found """
+        response = self.client.get(
+            "/api/v2/questions/10", content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(result["status"], 404)
+
 class TestVote(BaseTest):
     def test_upvote(self):
         """ Testing upvoting endpoint """
@@ -40,6 +56,22 @@ class TestVote(BaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
+    def test_vote_question_notagain(self):
+        """ Tests view posted questions not found """
+        header = self.fetch_token()
+        response = self.client.patch(
+            "/api/v2/questions/1/upvote", headers=header, content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(result["status"], 400)
+    def test_vote_question_notfound(self):
+        """ Tests view posted questions not found """
+        header = self.fetch_token()
+        response = self.client.patch(
+            "/api/v2/questions/10/downvote", headers=header, content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(result["status"], 404)
 class TestComments(BaseTest):
     def test_comments(self):
         """ Test run to test comments endpoints """
@@ -55,6 +87,13 @@ class TestComments(BaseTest):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(result["status"], 400)
         self.assertEqual(result["message"], "Comment posted is empty")
+    def test_comment_question_notfound(self):
+        """ Tests view posted questions not found """
+        header = self.fetch_token()
+        response = self.client.post("api/v2/questions/1p/comment", data=json.dumps(self.comment1), headers=header, content_type="application/json")
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(result["status"], 404)
     
 class TestDelete(BaseTest):
     """ Test deleting meetup """

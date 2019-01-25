@@ -88,3 +88,19 @@ class UserModel(object):
         user = cursor.fetchone()
         cursor.close()
         return user
+
+    def blacklist(self, token):
+        """ Method to manipulate addition of new users into the database"""
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        b_token = {
+            "token": token,
+            "created_at": created_at
+        }
+
+        cursor = self.DB.cursor()
+        query = """INSERT INTO blascklist (token, created_at) VALUES (%(token)s, %(created_at)s) RETURNING b_id"""
+        cursor.execute(query, b_token)
+        user = cursor.fetchone()[0]
+        self.DB.commit()
+        cursor.close()
+        return user

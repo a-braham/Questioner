@@ -39,6 +39,7 @@ class TestPostMeetup(BaseTest):
         self.assertEqual(response1.status_code, 400)
         self.assertEqual(restult1["status"], 400)
         self.assertEqual(restult1["message"], "Date cannot be in the past")
+    
 
 class TestViewMeetup(BaseTest):
     def test_view_meetup(self):
