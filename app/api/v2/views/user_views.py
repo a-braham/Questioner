@@ -188,3 +188,14 @@ def profile(user):
         "status": 200,
         "data": user
     })), 200
+
+@user_bpv2.route('auth/logout', methods=['POST'])
+@requires_auth
+def blacklist(user):
+    """ Method to blacklist token for loggin out """
+    auth_token = request.headers['Authorization']
+    b_token = users.blacklist(auth_token)
+    return make_response(jsonify({
+        "status": 200,
+        "Token": b_token
+    }))
