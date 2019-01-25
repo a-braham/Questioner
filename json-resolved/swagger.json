@@ -1,0 +1,668 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Crowd-source questions for a meetup. Questioner helps the meetup organizer prioritize questions to be answered. Other users can vote on asked questions and they bubble to the top or bottom of the log.",
+    "version" : "1.0.0",
+    "title" : "Questioner API",
+    "contact" : {
+      "email" : "kirumba.kamau@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://questioner-system.herokuapp.com/api/v2"
+    }
+  },
+  "host" : "questioner-system.herokuapp.com",
+  "basePath" : "/api/v2",
+  "tags" : [ {
+    "name" : "User Authentication"
+  }, {
+    "name" : "Get User(s)"
+  }, {
+    "name" : "Meetups"
+  }, {
+    "name" : "Questions"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "User Authentication" ],
+        "summary" : "Creates user in the database",
+        "description" : "By passing in the appropriate values, you can create an account\n",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Signup"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully saved",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Signup"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "User Authentication" ],
+        "summary" : "Logs in the user",
+        "description" : "Login the user",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Login"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully Logged in",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Login"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        }
+      }
+    },
+    "/get_users" : {
+      "get" : {
+        "tags" : [ "Get User(s)" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully fetched"
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        }
+      }
+    },
+    "/profile" : {
+      "get" : {
+        "tags" : [ "Get User(s)" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully fetched"
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/meetups" : {
+      "post" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "Admin create meetup",
+        "description" : "A meetup can only be created when authenticated. Only the admin has the authentication to create a meetup",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Meetup"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Meetup"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/meetups/upcoming" : {
+      "get" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully fetched",
+            "schema" : {
+              "type" : "object"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        }
+      }
+    },
+    "/meetups/{mid}" : {
+      "get" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "mid",
+          "in" : "path",
+          "description" : "Get one meetup",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully fetched",
+            "schema" : {
+              "type" : "object"
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/meetups/{meetup_id}/rsvps" : {
+      "post" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "meetup_id",
+          "in" : "path",
+          "description" : "Perform Rsvps",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/RSVPs"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully rsvp",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/RSVPs"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/meetups/{meetup_id}/delete" : {
+      "delete" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "meetup_id",
+          "in" : "path",
+          "description" : "Get one meetup",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully deleted"
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/meetups/{meetup_id}/tags" : {
+      "post" : {
+        "tags" : [ "Meetups" ],
+        "summary" : "adds a list of tags",
+        "description" : "Adds a list of tags to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "meetup_id",
+          "in" : "path",
+          "description" : "Perform Adding a Tags",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Tags"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully added tags",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Tags"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/questions/meetup/{meetup_id}" : {
+      "post" : {
+        "tags" : [ "Questions" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "meetup_id",
+          "in" : "path",
+          "description" : "Get one meetup and send data",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Question"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully saved",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Question"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/questions/{question_id}" : {
+      "get" : {
+        "tags" : [ "Questions" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "question_id",
+          "in" : "path",
+          "description" : "Get one question",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully fetched"
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        }
+      }
+    },
+    "/questions/{question_id}/upvote" : {
+      "patch" : {
+        "tags" : [ "Questions" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "question_id",
+          "in" : "path",
+          "description" : "Do voting up",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Vote"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully voted",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Vote"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/questions/{question_id}/downvote" : {
+      "patch" : {
+        "tags" : [ "Questions" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "question_id",
+          "in" : "path",
+          "description" : "Do voting down",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Vote"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully voted",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Vote"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    },
+    "/questions/{q_id}/comment" : {
+      "post" : {
+        "tags" : [ "Questions" ],
+        "summary" : "adds an inventory item",
+        "description" : "Adds an item to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "q_id",
+          "in" : "path",
+          "description" : "Do comments",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "in" : "body",
+          "name" : "inventoryItem",
+          "description" : "Inventory item to add",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Comment"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully commented",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Comment"
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameters"
+          }
+        },
+        "security" : [ {
+          "Bearer" : [ ]
+        } ]
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "Bearer" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "Signup" : {
+      "type" : "object",
+      "required" : [ "email", "firstname", "lastname", "othername", "password", "phoneNumber", "username" ],
+      "properties" : {
+        "firstname" : {
+          "type" : "string",
+          "example" : "Abraham"
+        },
+        "lastname" : {
+          "type" : "string",
+          "example" : "Kamau"
+        },
+        "othername" : {
+          "type" : "string",
+          "example" : "Kirumba"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "akk@gmail.com"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "716302016"
+        },
+        "username" : {
+          "type" : "string",
+          "example" : "abu"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "k?,T4.2kjn@"
+        }
+      }
+    },
+    "Login" : {
+      "type" : "object",
+      "required" : [ "password", "username" ],
+      "properties" : {
+        "username" : {
+          "type" : "string",
+          "example" : "abu"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "k?,T4.2kjn@"
+        }
+      }
+    },
+    "Meetup" : {
+      "required" : [ "happeningOn", "location", "topic" ],
+      "properties" : {
+        "topic" : {
+          "type" : "string",
+          "example" : "Python meetup"
+        },
+        "location" : {
+          "type" : "string",
+          "example" : "Nairobi"
+        },
+        "happeningOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2019-2-04"
+        }
+      }
+    },
+    "UpcomingMeetups" : {
+      "properties" : {
+        "topic" : {
+          "type" : "string",
+          "example" : "Python meetup"
+        },
+        "location" : {
+          "type" : "string",
+          "example" : "Nairobi"
+        },
+        "happeningOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2019-2-04"
+        }
+      }
+    },
+    "OneMeetup" : {
+      "properties" : {
+        "topic" : {
+          "type" : "string",
+          "example" : "Python meetup"
+        },
+        "location" : {
+          "type" : "string",
+          "example" : "Nairobi"
+        },
+        "happeningOn" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2019-2-04"
+        }
+      }
+    },
+    "RSVPs" : {
+      "required" : [ "rsvp" ],
+      "properties" : {
+        "rsvp" : {
+          "type" : "string",
+          "example" : "maybe"
+        }
+      }
+    },
+    "Tags" : {
+      "required" : [ "tags" ],
+      "properties" : {
+        "tags" : {
+          "type" : "string",
+          "example" : ""
+        }
+      }
+    },
+    "Question" : {
+      "required" : [ "body", "title" ],
+      "properties" : {
+        "title" : {
+          "type" : "string",
+          "example" : "My first question"
+        },
+        "body" : {
+          "type" : "string",
+          "example" : "This is my first question on APIs"
+        }
+      }
+    },
+    "Vote" : {
+      "required" : [ "votes" ],
+      "properties" : {
+        "votes" : {
+          "type" : "integer",
+          "example" : 1
+        }
+      }
+    },
+    "Comment" : {
+      "required" : [ "comment" ],
+      "properties" : {
+        "comment" : {
+          "type" : "string",
+          "example" : "The big four agenda is taking the wrong turn boyz"
+        }
+      }
+    }
+  }
+}
