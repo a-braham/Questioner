@@ -24,6 +24,7 @@ def create_meetup(func):
             "message": "Wrong input"
         })), 400
     topic = data.get('topic')
+    description = data.get('description')
     location = data.get('location')
     happeningOn = data.get('happeningOn')
 
@@ -60,7 +61,7 @@ def create_meetup(func):
         })), 400
     else:
         meetups.create_meetup(
-            topic, location, happeningOn)
+            topic, description, location, happeningOn)
         return make_response(jsonify({
             "status": 201,
             "data": [{"topic": topic,
