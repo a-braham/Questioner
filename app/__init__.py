@@ -1,10 +1,12 @@
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 from instance.config import app_config
 from .database import DBOps
 
 def create_app(config_name):
     """ Using the config file in instance folder to create app """
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
 
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False
