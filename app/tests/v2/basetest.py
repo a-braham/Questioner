@@ -113,8 +113,9 @@ class BaseTest(unittest.TestCase):
         }
         self.meetup = {
             "topic": "Python",
+            "description": "Welcome to Westmasters first Open House. During this Valentine themed special meeting, you have a chance to learn, experience and interact with all things Toastmasters. Westmasters is a Toastmasters club that is part of Toastmasters International, the world wide leader in communication and leadership development.Westmasters offers a unique opportunity to people working or residing in Westlands to improve their confidence and competence in public speaking in a fun and friendly environment. Join us for this Open House meeting where members practice speaking in front of others and afterwards receive positive and helpful evaluations. Choose to take part in an impromptu speaking session that lets you gain in confidence speaking on short notice. Hear testimonies from Toastmasters who have gained from the program and get the chance to ask questions. Meet like minded people happy and ready to help you grow in your journey of self improvement. Westmasters is open to all persons over the age of 18. Our meetings are well structured and always start and end on time. We meet on the 3rd Floor, Nomad Lounge, Misha Towers, Westlands Road, Nairobi. Parking is available. There is a Sh.300 meeting fee which you can pay with cash or mpesa on the day of the meeting. Other than that just come ready to learn and enjoy yourself.",
             "location": "Nairobi",
-            "happeningOn": "2019-01-25"
+            "happeningOn": "2019-05-03"
         }
         self.meetup1 = {
             "topic": " ",
