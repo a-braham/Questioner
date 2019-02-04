@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS meetups (
     m_id SERIAL PRIMARY KEY NOT NULL, 
     topic VARCHAR (255) NOT NULL, 
+    description VARCHAR (2048) NOT NULL, 
     location VARCHAR (100) NOT NULL, 
     happening_on TIMESTAMP, 
     created_at TIMESTAMP);

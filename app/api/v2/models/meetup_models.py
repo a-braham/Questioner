@@ -15,7 +15,7 @@ class MeetUpModel(object):
 
         self.MEETUPS = DBOps.send_con()
 
-    def create_meetup(self, topic, location, happening_on):
+    def create_meetup(self, topic, description, location, happening_on):
         """ A method to manipulate creation of meetups """
 
         created_on = datetime.now().strftime("%Y-%m-%d")
@@ -23,12 +23,13 @@ class MeetUpModel(object):
         # images = []
         meetup = {
             "topic": topic,
+            "description": description,
             "location": location,
             "created_on": created_on,
             "happening_on": happening_on,
         }
         cursor = self.MEETUPS.cursor()
-        query = """INSERT INTO meetups (topic, location, created_at, happening_on) VALUES (%(topic)s, %(location)s, %(created_on)s, %(happening_on)s) RETURNING m_id"""
+        query = """INSERT INTO meetups (topic, description, location, created_at, happening_on) VALUES (%(topic)s, %(description)s, %(location)s, %(created_on)s, %(happening_on)s) RETURNING m_id"""
         cursor.execute(query, meetup)
         meetup = cursor.fetchone()
         self.MEETUPS.commit()
