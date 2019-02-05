@@ -68,6 +68,16 @@ class UserModel(object):
         user = cursor.fetchone()
         cursor.close()
         return user
+
+    def getLoggedin(self, username):
+        """ Get logged in user by using username """
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM users WHERE username = '%s'""" % (username)
+        )
+        user = cursor.fetchone()
+        cursor.close()
+        return user
         
     def get_users(self):
         """ Getting user records """
