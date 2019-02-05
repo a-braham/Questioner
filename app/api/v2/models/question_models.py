@@ -45,6 +45,16 @@ class QuestionModel(object):
         cursor.close()
         return question
 
+    def allQuestions(self, mid):
+        """Method to fetch all questions under specified meetup """
+        cursor = self.DB.cursor()
+        cursor.execute(
+            """SELECT * FROM questions WHERE meetup = '%s'""" % (mid)
+        )
+        questions = cursor.fetchall()
+        cursor.close()
+        return questions
+
     def upVote(self, qid, uid, vote):
         """ method to manipulate one question voting """
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

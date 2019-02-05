@@ -74,6 +74,21 @@ def question(question_id):
         "message": "Question not found"
     })), 404
 
+@question_bpv2.route('/meetup/<int:meetup_id>/questions', methods=['GET'])
+def allQuestion(meetup_id):
+    """ Manipulates getting all question related to certain meetup """
+    questionz = questions.allQuestions(meetup_id)
+    if questionz:
+        quiz = [question for question in questionz]
+        return make_response(jsonify({
+            "status": 200,
+            "data": quiz
+        })), 200
+    return make_response(jsonify({
+        "status": 404,
+        "message": "Meetup not found"
+    })), 404
+
 
 @question_bpv2.route('/questions/<int:question_id>/<votes>', methods=['PATCH'])
 @requires_auth
