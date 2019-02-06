@@ -86,7 +86,7 @@ def allQuestion(meetup_id):
         })), 200
     return make_response(jsonify({
         "status": 404,
-        "message": "Meetup not found"
+        "message": "There are no questions on this meetup"
     })), 404
 
 
@@ -99,7 +99,7 @@ def upvote(user, question_id, votes):
     if questionz:
         if votes == "upvote":
             vote = 1
-            usr = questions.get_voted_up(user)
+            usr = questions.get_voted_up(user, question_id)
             if not usr:
                 votes = questions.upVote(question_id, user, vote)
                 return make_response(jsonify({
@@ -112,7 +112,7 @@ def upvote(user, question_id, votes):
             })), 400
         elif votes == "downvote":
             vote = 1
-            usr = questions.get_voted_down(user)
+            usr = questions.get_voted_down(user, question_id)
             if not usr:
                 votes = questions.downVote(question_id, user, vote)
                 return make_response(jsonify({

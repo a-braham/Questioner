@@ -84,21 +84,21 @@ class QuestionModel(object):
         self.DB.commit()
         cursor.close()
         return data
-    def get_voted_up(self, uid):
+    def get_voted_up(self, uid, qid):
         """ method to manipulate votes data """
         cursor = self.DB.cursor()
         cursor.execute(
-            """SELECT * FROM voters WHERE u_id = '%s' AND voted = 1""" % (uid)
+            """SELECT * FROM voters WHERE u_id = '%s' AND voted = 1 AND q_id = '%s'""" % (uid, qid)
         )
         user = cursor.fetchone()
         cursor.close()
         return user
 
-    def get_voted_down(self, uid):
+    def get_voted_down(self, uid, qid):
         """ method to manipulate votes data """
         cursor = self.DB.cursor()
         cursor.execute(
-            """SELECT * FROM voters WHERE u_id = '%s' AND voted = -1""" % (uid)
+            """SELECT * FROM voters WHERE u_id = '%s' AND voted = -1 AND q_id = '%s'""" % (uid, qid)
         )
         user = cursor.fetchone()
         cursor.close()
