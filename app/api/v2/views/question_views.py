@@ -172,3 +172,17 @@ def comments(user, q_id):
         "message": "Question not found"
     }))
   
+@question_bpv2.route('/questions/<int:question_id>/comments', methods=['GET'])
+def get_comments(question_id):
+    """ Manipulates getting question """
+    questionz = questions.get_comments(question_id)
+    if questionz:
+        comment = [comment for comment in questionz]
+        return make_response(jsonify({
+            "status": 200,
+            "data": comment
+        })), 200
+    return make_response(jsonify({
+        "status": 404,
+        "message": "There are no comments found under that question"
+    })), 404
