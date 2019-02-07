@@ -107,16 +107,32 @@ def rsvps(user, meetup_id):
             "status": 400,
             "message": "Wrong imput: Enter either --yes--, --no--, --maybe--"
         })), 400
+    rsvp_exist = meetups.search_rsvp(meetup_id, user)
+    if rsvp_exist:
+        meetups.update_rsvp(rsvp_data, meetup_id, user)
+        return make_response(jsonify({
+            "status": 200,
+            "message": "RSVP set!"
+            })), 200
     if meetup:
         rsvp=meetups.create_rsvps(rsvp_data, meetup_id, user)
         return make_response(jsonify({
             "status": 201,
-            "message": "Reserved!"
+            "message": "RSVP set!"
             })), 201
     return make_response(jsonify({
         "status": 404,
         "message": "Meetup not found"
     })), 404
+
+@meetup_bpv2.route('/<int:meetup_id>/rsvps_count', methods=['GET'])
+def count_rsvps(meetup_id):
+    """ A view to get rsvps count """
+
+    return make_response(jsonify({
+        "status": 200,
+        "data": meetups.count_rsvp(meetup_id)
+    })), 200
 
 @meetup_bpv2.route('/<int:meetup_id>/tags', methods=['POST'])
 @requires_admin

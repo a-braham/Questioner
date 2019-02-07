@@ -75,6 +75,37 @@ class MeetUpModel(object):
         self.MEETUPS.commit()
         cursor.close()
         return rs
+    def count_rsvp(self, mid):
+        """ A method to view one meetup """
+        cursor = self.MEETUPS.cursor()
+        cursor.execute(
+            """SELECT COUNT(r_id) FROM rsvp WHERE rsvp = 'yes' and meetup_id = '%s'""" % (mid)
+        )
+        rsvps = cursor.fetchall()
+        cursor.close()
+        return rsvps
+
+    def search_rsvp(self, mid, uid):
+        """ A method to view one meetup """
+        cursor = self.MEETUPS.cursor()
+        cursor.execute(
+            """SELECT * FROM rsvp WHERE meetup_id = '%s' AND u_id = '%s'""" % (mid, uid)
+        )
+        rsvps = cursor.fetchone()
+        cursor.close()
+        return rsvps
+
+    def update_rsvp(self, rsvp, mid, uid):
+        """ A method to view one meetup """
+        cursor = self.MEETUPS.cursor()
+        cursor.execute(
+            """UPDATE rsvp set rsvp = '%s' WHERE meetup_id = '%s' AND u_id = '%s' RETURNING rsvp;""" % (rsvp, mid, uid)
+        )
+        rsvps = cursor.fetchone()[0]
+        self.MEETUPS.commit()
+        cursor.close()
+        return rsvps
+
 
     def create_tags(self, tags, meetup_id):
         """ A method to create rsvp record """
