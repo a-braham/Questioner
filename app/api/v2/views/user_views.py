@@ -183,7 +183,7 @@ def get_users():
 @requires_auth
 def profile(user):
     """ Method to get logged in user """
-    user = users.login(user)
+    user = users.getLoggedin(user)
     return make_response(jsonify({
         "status": 200,
         "data": user
